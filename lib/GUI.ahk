@@ -191,7 +191,7 @@ return
 				footerWidth := (buttonWidth * 2) + buttonSpacing
 				
 				Gui, font, s7 c%footerColor%
-				Gui, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h10 0x200 Center hwndFOOTER, c0bra v%VERSION%
+				Gui, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h10 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
 			}
 			
 		gui, show, x%XPOS% y%YPOS%, c0bra Main GUI

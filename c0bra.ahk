@@ -30,7 +30,6 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 
 	global COBRA 				:= A_ScriptDir
 	global cobraPath			:= A_ScriptFullPath
-	global USER_SETTINGS 		:= A_ScriptDir "\user\user_settings.ini"		
 	global buttonSettings 		:= A_ScriptDir "\config\Buttons.C0bra"
 	global guiSettings 			:= A_ScriptDir "\config\Gui.C0bra"
 	global c0braSettings 	 	:= A_ScriptDir "\config\Settings.C0bra"
@@ -39,11 +38,6 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 	global tabList				:= ""
 	global disableCloseList		:= ""
 	
-	GUI_SETTINGS 	:= A_ScriptDir "\config\Gui.ini"
-	C0BRA_INFO 		:= A_ScriptDir "\c0bra_info.ini"
-
-	FileRead, VERSION, version
-
 	Guis 	 := JSON_Load(guiSettings)
 	Settings := JSON_Load(c0braSettings)
 	
@@ -95,31 +89,31 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 
 	;{___  The Closer  ___}
 	
-		closerHKActions := {}
-		closerHK := Settings.theCloser.hotkey
-		
-		for key, value in Settings.theCloser.disableIfActive
+	closerHKActions := {}
+	closerHK := Settings.theCloser.hotkey
+	
+	for key, value in Settings.theCloser.disableIfActive
+	{
+		if (key != "")
 		{
-			if (key != "")
-			{
-				GroupAdd, NoRunGroup, % key
-				closerHKActions.Insert(key, value)
-			}
+			GroupAdd, NoRunGroup, % key
+			closerHKActions.Insert(key, value)
 		}
-		Hotkey, IfWinNotActive, ahk_group NoRunGroup
-		Hotkey, %closerHK%, theCloser
+	}
+	Hotkey, IfWinNotActive, ahk_group NoRunGroup
+	Hotkey, %closerHK%, theCloser
 	
 	;}
 	
 	
 	;{___ Google search and website hotkeys ___}
 	
-		Hotkey, IfWinActive, c0bra Main GUI
-		Hotkey, Enter, ButtonPress
-		Hotkey, NumpadEnter, ButtonPress
-		Hotkey, ^Enter, ButtonPress
-		Hotkey, ^NumpadEnter, ButtonPress
-		Hotkey, IfWinActive
+	Hotkey, IfWinActive, c0bra Main GUI
+	Hotkey, Enter, ButtonPress
+	Hotkey, NumpadEnter, ButtonPress
+	Hotkey, ^Enter, ButtonPress
+	Hotkey, ^NumpadEnter, ButtonPress
+	Hotkey, IfWinActive
 		
 	;}
 
@@ -136,8 +130,8 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 	Menu, Sub, Add, Creators - Nugh && Shugh, TrayText
 	Menu, Sub, Disable, Creators - Nugh && Shugh
 	Menu, Sub, Add
-	Menu, Sub, Add, Version %version%, TrayText
-	Menu, Sub, Disable, Version %version%
+	Menu, Sub, Add, % "Version " Settings.version, TrayText
+	Menu, Sub, Disable, % "Version " Settings.version
 	
 	Menu, Tray, Add, About, :Sub
 	
@@ -261,18 +255,10 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 ;}
 
 
-
-
-;{___ Includes ____________________________________________________________________________
-
-	#Include <Gui>
-	#Include <Methods>
-	#Include <Class_CTLCOLORS>
-	#Include <cIni>
-	#Include <ColorChooser>
-	;~ #Include <cButton>
-	
-;}
-
+#Include <Gui>
+#Include <Methods>
+#Include <Class_CTLCOLORS>
+#Include <cIni>
+#Include <ColorChooser>
 
 
