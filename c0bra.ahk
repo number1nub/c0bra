@@ -22,7 +22,7 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 		{
 			TrayTip, %3%, %4%, 2000, 1
 		}
-	}
+	} ;}
 	
 		
 
@@ -46,7 +46,6 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 
 
 ;{___  Register Hotkeys  __________________________________________________________________
-
 
 	
 	for key, value in Settings.mainHotkey.disableIfActive
@@ -83,11 +82,10 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 	Hotkey, IfWinNotActive, ahk_group NoRunGroup
 		Hotkey, % mainHotkey, mainTrigger 
 	Hotkey, ifwinactive,
-	#if
-	;}
+	#if	;}
 
 
-	;{___  The Closer  ___}
+;{___  The Closer  ___}
 	
 	closerHKActions := {}
 	closerHK := Settings.theCloser.hotkey
@@ -101,23 +99,18 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 		}
 	}
 	Hotkey, IfWinNotActive, ahk_group NoRunGroup
-	Hotkey, %closerHK%, theCloser
-	
-	;}
+	Hotkey, %closerHK%, theCloser	;}
 	
 	
-	;{___ Google search and website hotkeys ___}
+;{___ Google search and website hotkeys ___}
 	
 	Hotkey, IfWinActive, c0bra Main GUI
 	Hotkey, Enter, ButtonPress
 	Hotkey, NumpadEnter, ButtonPress
 	Hotkey, ^Enter, ButtonPress
 	Hotkey, ^NumpadEnter, ButtonPress
-	Hotkey, IfWinActive
-		
-	;}
+	Hotkey, IfWinActive	;}
 
-;}
 
 
 ;{___  Tray Icon/Menu  ____________________________________________________________________

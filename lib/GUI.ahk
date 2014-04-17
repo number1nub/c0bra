@@ -75,7 +75,7 @@ return
 
 		currGui := 1
 		
-		ButtonList := {}
+		ButtonList := []
 		mainButtons := ""
 		
 		Guis 	:= JSON_Load(guiSettings)
@@ -256,7 +256,7 @@ return
 			YPOS := y + CONTROL_POSY - buttonSpacing
 		}
 		
-		ChildrenList := {}
+		ChildrenList := []
 		childrenButtons := ""
 		
 		For key, value in ButtonList[A_GuiControl].Children
@@ -343,7 +343,7 @@ return
 		Gui, 1:Destroy
 		
 		slrSettings := JSON_Load(slrButtonSettings)
-		slrList := {}
+		slrList := []
 		slrButtons := ""
 		
 		For key, value in slrSettings

@@ -1,34 +1,27 @@
-{
-    "1": {
+[
+    {
         "BackColor":                 888888,
         "HlBackColor":               "aqua",
         "HlTextColor":               454545,
         "Text":                      "Default",
         "TextColor":                 "White"
     },
-    "2": {
+    {
         "BackColor":                 454545,
         "HlBackColor":               "Aqua",
         "HlTextColor":               454545,
         "Text":                      "GO",
         "TextColor":                 "White"
     },
-    "3": {
+    {
         "BackColor":                 454545,
-        "Children": {
-            "1":                     "Excel",
-            "2":                     "Word",
-            "3":                     "Creo",
-            "4":                     "TrueCrypt",
-            "5":                     "AHK CMD",
-            "6":                     "KeePass"
-        },
+        "Children":                  [ "Excel", "Word", "Creo", "TrueCrypt", "AHK CMD", "KeePass" ],
         "HlBackColor":               "Aqua",
         "HlTextColor":               454545,
         "Text":                      "Programs",
         "TextColor":                 "White"
     },
-    "4": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "Excel",
@@ -40,7 +33,7 @@
         "Text":                      "Excel",
         "TextColor":                 "White"
     },
-    "5": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "WinWord",
@@ -52,7 +45,7 @@
         "Text":                      "Word",
         "TextColor":                 "White"
     },
-    "6": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Users\\e205658\\Documents\\creo\\Creo Runner.ahk",
@@ -64,21 +57,15 @@
         "Text":                      "Creo",
         "TextColor":                 "White"
     },
-    "7": {
+    {
         "BackColor":                 454545,
-        "Children": {
-            "1":                     "c0bra",
-            "2":                     "SkyDrive",
-            "3":                     "AHK",
-            "4":                     "DropBox",
-            "5":                     "WFT Calc Sheets"
-        },
+        "Children":                  [ "c0bra", "SkyDrive", "AHK", "DropBox", "WFT Calc Sheets" ],
         "HlBackColor":               "Aqua",
         "HlTextColor":               454545,
         "Text":                      "Folders",
         "TextColor":                 "White"
     },
-    "8": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\SkyDrive\\AHK\\c0bra",
@@ -90,7 +77,7 @@
         "Text":                      "c0bra",
         "TextColor":                 "White"
     },
-    "9": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\SkyDrive",
@@ -102,7 +89,7 @@
         "Text":                      "SkyDrive",
         "TextColor":                 "White"
     },
-    "10": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\SkyDrive\\AHK",
@@ -114,24 +101,15 @@
         "Text":                      "AHK",
         "TextColor":                 "White"
     },
-    "11": {
+    {
         "BackColor":                 454545,
-        "Children": {
-            "1":                     "Calc Sheet",
-            "2":                     "O-Ring Calc",
-            "3":                     "Averager",
-            "4":                     "Snap Ring Calc",
-            "5":                     "P27737 Folder",
-            "6":                     "B/C",
-            "7":                     "RFM Form",
-            "8":                     "P24447 Folder"
-        },
+        "Children":                  [ "Calc Sheet", "O-Ring Calc", "Averager", "Snap Ring Calc", "P27737 Folder", "B/C", "RFM Form", "P24447 Folder" ],
         "HlBackColor":               "Aqua",
         "HlTextColor":               454545,
         "Text":                      "Weatherford",
         "TextColor":                 "White"
     },
-    "12": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "\\\\Spencerroad1\\groups-2\\E\\Groups\\Engineering\\Packers\\Guidelines & Check Lists\\Calcs\\Calculations RevF.xlsm",
@@ -143,7 +121,7 @@
         "Text":                      "Calc Sheet",
         "TextColor":                 "White"
     },
-    "13": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "\\\\Spencerroad1\\groups-2\\E\\Groups\\Engineering\\Packers\\Guidelines & Check Lists\\Calcs\\ORing Calculator.xlsm",
@@ -155,23 +133,15 @@
         "Text":                      "O-Ring Calc",
         "TextColor":                 "White"
     },
-    "14": {
+    {
         "BackColor":                 454545,
-        "Children": {
-            "1":                     "Pass Viewer",
-            "2":                     "JSON Edit",
-            "3":                     "Resize Enable",
-            "4":                     "Startup Files",
-            "5":                     "RegExr",
-            "6":                     "USurf",
-            "7":                     "Environment Vars"
-        },
+        "Children":                  [ "Pass Viewer", "JSON Edit", "Resize Enable", "Startup Files", "RegExr", "USurf", "Environment Vars" ],
         "HlBackColor":               "Aqua",
         "HlTextColor":               454545,
         "Text":                      "DB Tools",
         "TextColor":                 "White"
     },
-    "15": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Dropbox\\Tools & Apps\\Bullet PassView\\BulletsPassView.exe",
@@ -183,7 +153,7 @@
         "Text":                      "Pass Viewer",
         "TextColor":                 "White"
     },
-    "16": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Dropbox\\Tools & Apps\\JSONedit\\JSONedit.exe",
@@ -195,7 +165,7 @@
         "Text":                      "JSON Edit",
         "TextColor":                 "White"
     },
-    "17": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Dropbox\\Tools & Apps\\ResizeEnable\\ResizeEnableRunner.exe",
@@ -207,7 +177,7 @@
         "Text":                      "Resize Enable",
         "TextColor":                 "White"
     },
-    "18": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Dropbox\\Tools & Apps\\Startup Files\\WhatInStartup.exe",
@@ -219,7 +189,7 @@
         "Text":                      "Startup Files",
         "TextColor":                 "White"
     },
-    "19": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Dropbox\\Tools & Apps\\RegEx Tools\\RegExr\\RegExr.exe",
@@ -231,7 +201,7 @@
         "Text":                      "RegExr",
         "TextColor":                 "White"
     },
-    "20": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Dropbox",
@@ -243,7 +213,7 @@
         "Text":                      "DropBox",
         "TextColor":                 "White"
     },
-    "21": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "%A_Desktop%\\..\\Downloads\\UltraSurf\\UltraSurf\\U1304.exe",
@@ -255,7 +225,7 @@
         "Text":                      "USurf",
         "TextColor":                 "White"
     },
-    "22": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "\\\\Spencerroad1\\groups-2\\E\\Groups\\Engineering\\Packers\\Guidelines & Check Lists\\Calcs",
@@ -267,7 +237,7 @@
         "Text":                      "WFT Calc Sheets",
         "TextColor":                 "White"
     },
-    "23": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\SkyDrive\\AHK\\Weatherford\\Averager.ahk",
@@ -279,7 +249,7 @@
         "Text":                      "Averager",
         "TextColor":                 "White"
     },
-    "24": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\SkyDrive\\Weatherford\\Lower Snap Ring Stress.xls",
@@ -291,7 +261,7 @@
         "Text":                      "Snap Ring Calc",
         "TextColor":                 "White"
     },
-    "25": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "Z:\\Active\\P27737",
@@ -303,7 +273,7 @@
         "Text":                      "P27737 Folder",
         "TextColor":                 "White"
     },
-    "26": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Program Files\\TrueCrypt\\TrueCrypt.exe",
@@ -315,7 +285,7 @@
         "Text":                      "TrueCrypt",
         "TextColor":                 "White"
     },
-    "27": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\SkyDrive\\Weatherford\\BC.exe",
@@ -327,7 +297,7 @@
         "Text":                      "B/C",
         "TextColor":                 "White"
     },
-    "28": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Users\\Rameen\\SkyDrive\\AHK\\Tools\\AHK CMD.ahk",
@@ -339,7 +309,7 @@
         "Text":                      "AHK CMD",
         "TextColor":                 "White"
     },
-    "29": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\SkyDrive\\Weatherford\\RFM Form.xlsm",
@@ -351,7 +321,7 @@
         "Text":                      "RFM Form",
         "TextColor":                 "White"
     },
-    "30": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Dropbox\\Tools & Apps\\Edit Environment Vars\\rapidee.exe",
@@ -363,7 +333,7 @@
         "Text":                      "Environment Vars",
         "TextColor":                 "White"
     },
-    "31": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "C:\\Program Files (x86)\\KeePass Password Safe 2\\KeePass.exe",
@@ -375,7 +345,7 @@
         "Text":                      "KeePass",
         "TextColor":                 "White"
     },
-    "32": {
+    {
         "BackColor":                 454545,
         "Cmd": {
             "Arg":                   "Z:\\Active\\P24447",
@@ -387,4 +357,4 @@
         "Text":                      "P24447 Folder",
         "TextColor":                 "White"
     }
-}
+]
