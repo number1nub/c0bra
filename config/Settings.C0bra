@@ -1,34 +1,23 @@
 {
-  "buttonTypes": [
-    "AHK Edit",
-    "Bookmarks",
-    "File",
-    "Folder",
-    "Macro",
-    "Outlook",
-    "Program",
-    "Shortcut",
-    "Text",
-    "User Function",
-    "User Label"
-  ],
-  "mainHotkey": {
-    "disableIfActive": [ "AutoCAD", "Creo Parametric" ],
-    "holdAction": "[R] C:\\SkyDrive\\AHK\\c0bra",
-    "mainHotkey": "MButton"
-  },
-  "theCloser": {
-    "closeTabIfActive": [ "SciTEWindow", "Chrome_WidgetWin_1", "IEFrame", "firefox", "Microsoft Visual Studio", "XLMAIN", "Visual Basic" ],
-    "disableIfActive": [ "Remote Desktop Connection" ],
-    "hotkey": "~Lbutton & RButton"
-  },
-  "userHotkeys": {
-    "!MButton": "[R] C:\\SkyDrive\\AHK\\GUI Tools\\Get Color Code.ahk",
-    "^!F6": "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
-    "^!MButton": "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
-    "^+u": "[F] ToggleCase( \"U\" )",
-    "^MButton": "[R] C:\\SkyDrive\\AHK\\To-Do\\To-Do.ahk",
-    "~#MButton": "[L] MeasurePixels"
-  },
-  "version": "2.3.1"
+	"version":                       "2.3.2",
+    "mainHotkey": {
+		"mainHotkey":                "MButton",
+        "holdAction":                "[R] C:\\SkyDrive\\AHK\\c0bra",
+        "disableIfActive":           [ "AutoCAD", "Creo Parametric" ]
+    },
+    "theCloser": {
+		"hotkey":                    "~Lbutton & RButton",
+        "closeTabIfActive":          [ "SciTEWindow", "Chrome_WidgetWin_1", "IEFrame", "firefox", "Microsoft Visual Studio", "XLMAIN", "Visual Basic" ],
+        "disableIfActive":           [ "Remote Desktop Connection" ]
+    },
+    "userHotkeys": {
+        "!MButton":                  "[R] C:\\SkyDrive\\AHK\\GUI Tools\\Get Color Code.ahk",
+        "^!F6":                      "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
+        "^!MButton":                 "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
+        "^+u":                       "[F] ToggleCase( \"U\" )",
+        "^MButton":                  "[R] C:\\SkyDrive\\AHK\\To-Do\\To-Do.ahk",
+        "^u":                        "[F] ToggleCase( \"L\" )",
+        "~#MButton":                 "[L] MeasurePixels"
+    },
+    "buttonTypes":                   [ "AHK Edit", "Bookmarks", "File", "Folder", "Macro", "Outlook", "Program", "Run", "Shortcut", "Text", "User Function", "User Label" ]
 }

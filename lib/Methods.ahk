@@ -104,7 +104,7 @@
 		buttons[buttonKey].HlTextColor := aColor[4]
 		
 		if (Children)
-			buttons[buttonKey].Children := {}
+			buttons[buttonKey].Children := []
 			
 		if (aParent)
 		{
