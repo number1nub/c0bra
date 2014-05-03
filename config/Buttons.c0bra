@@ -318,7 +318,7 @@
     "27": {
         "BackColor":                 454545,
         "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\Weatherford\\BC.exe",
+            "Arg":                   "C:\\SkyDrive\\Weatherford\\Calculators\\BC.exe",
             "Type":                  "P"
         },
         "HlBackColor":               "Aqua",

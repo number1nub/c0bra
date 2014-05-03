@@ -11,7 +11,7 @@ SetTitleMatchMode, 2
 OnMessage(0x200, "WM_MOUSEMOVE")
 
 
-;{___ Handle CMD Parameters _______________________________________________________________
+;{==== Handle CMD Parameters ====>>
 
 	if 0 > 0
 	{
@@ -23,8 +23,9 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 			TrayTip, %3%, %4%, 2000, 1
 		}
 	}
+;}<<==== Handle CMD Parameters ====
 	
-		
+
 
 ;{___ Global Constants ____________________________________________________________________
 

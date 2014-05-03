@@ -1,56 +1,34 @@
 {
-	"version":                       "2.3.1",
-    "mainHotkey": 
-    {
-		"mainHotkey":                "MButton",
-        "holdAction":                "[R] C:\\SkyDrive\\AHK\\c0bra",
-        "disableIfActive": 
-        {
-            "1":                     "AutoCAD",
-            "2":                     "Creo Parametric"
-        }        
-    },
-    "theCloser": 
-    {
-        "closeTabIfActive":
-        {
-            "1":                     "SciTEWindow",
-            "2":                     "Chrome_WidgetWin_1",
-            "3":                     "IEFrame",
-            "4":                     "firefox",
-            "5":                     "Microsoft Visual Studio",
-            "6":                     "XLMAIN",
-            "7":                     "Visual Basic"
-        },
-        "disableIfActive":
-        {
-            "1":                     "Remote Desktop Connection"
-        },
-        "hotkey":                    "~Lbutton & RButton"
-    },
-    "userHotkeys": 
-    {
-        "!MButton":                  "[R] C:\\SkyDrive\\AHK\\GUI Tools\\Get Color Code.ahk",
-        "^!F6":                      "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
-        "^!MButton":                 "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
-        "^+u":                       "[F] ToggleCase( \"U\" )",
-        "^MButton":                  "[R] C:\\SkyDrive\\AHK\\To-Do\\To-Do.ahk",
-        "^u":                        "[F] ToggleCase( \"L\" )",
-        "~#MButton":                 "[L] MeasurePixels"
-    },
-    "buttonTypes":
-    {
-        "1":                         "AHK Edit",
-        "2":                         "Bookmarks",
-        "3":                         "File",
-        "4":                         "Folder",
-        "5":                         "Macro",
-        "6":                         "Outlook",
-        "7":                         "Program",
-        "8":                         "Run",
-        "9":                         "Shortcut",
-        "10":                        "Text",
-        "11":                        "User Function",
-        "12":                        "User Label"
-    }
+  "buttonTypes": [
+    "AHK Edit",
+    "Bookmarks",
+    "File",
+    "Folder",
+    "Macro",
+    "Outlook",
+    "Program",
+    "Shortcut",
+    "Text",
+    "User Function",
+    "User Label"
+  ],
+  "mainHotkey": {
+    "disableIfActive": [ "AutoCAD", "Creo Parametric" ],
+    "holdAction": "[R] C:\\SkyDrive\\AHK\\c0bra",
+    "mainHotkey": "MButton"
+  },
+  "theCloser": {
+    "closeTabIfActive": [ "SciTEWindow", "Chrome_WidgetWin_1", "IEFrame", "firefox", "Microsoft Visual Studio", "XLMAIN", "Visual Basic" ],
+    "disableIfActive": [ "Remote Desktop Connection" ],
+    "hotkey": "~Lbutton & RButton"
+  },
+  "userHotkeys": {
+    "!MButton": "[R] C:\\SkyDrive\\AHK\\GUI Tools\\Get Color Code.ahk",
+    "^!F6": "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
+    "^!MButton": "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
+    "^+u": "[F] ToggleCase( \"U\" )",
+    "^MButton": "[R] C:\\SkyDrive\\AHK\\To-Do\\To-Do.ahk",
+    "~#MButton": "[L] MeasurePixels"
+  },
+  "version": "2.3.1"
 }
