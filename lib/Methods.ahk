@@ -520,9 +520,9 @@ modReplace(str)
 		WinGetTitle, winTitle, ahk_id %win%
 		WinGetClass, winClass, ahk_id %win%
 		
-		if winTitle contains %tabList%
+		if winTitle contains %closeTabWinList%
 			Send, {Blind}^{F4}
-		else if winClass contains %tabList%
+		else if winClass contains %closeTabWinList%
 			Send, {Blind}^{F4}
 		else
 			WinClose, ahk_id %win%

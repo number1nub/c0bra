@@ -783,7 +783,7 @@ return
 				return
 			}
 			
-			else if A_ThisMenuItem in %disableList%
+			else if A_ThisMenuItem in %disableMainHKList%
 			{
 				Gui, Destroy
 				

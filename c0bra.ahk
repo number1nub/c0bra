@@ -7,118 +7,90 @@ SetWorkingDir, %A_ScriptDir%
 CoordMode, Mouse, Screen
 SetTitleMatchMode, 2
 
-
 OnMessage(0x200, "WM_MOUSEMOVE")
 
 
 ;{==== Handle CMD Parameters ====>>
 
-	if 0 > 0
+if 0 > 0
+{
+	DetectHiddenWindows, On
+	WinKill, % "ahk_id " %1%
+	
+	if 2 = /prompt
 	{
-		DetectHiddenWindows, On
-		WinKill, % "ahk_id " %1%
-		
-		if 2 = /prompt
-		{
-			TrayTip, %3%, %4%, 2000, 1
-		}
+		TrayTip, %3%, %4%, 2000, 1
 	}
+}
+	
 ;}<<==== Handle CMD Parameters ====
-	
 
 
-;{___ Global Constants ____________________________________________________________________
+;{===== Global Constants ====>>>
 
-	global COBRA 				:= A_ScriptDir
-	global cobraPath			:= A_ScriptFullPath
-	global buttonSettings 		:= A_ScriptDir "\config\Buttons.C0bra"
-	global guiSettings 			:= A_ScriptDir "\config\Gui.C0bra"
-	global c0braSettings 	 	:= A_ScriptDir "\config\Settings.C0bra"
-	global slrButtonSettings 	:= A_ScriptDir "\config\SLRButtons.C0bra"	
-	global disableList			:= ""
-	global tabList				:= ""
-	global disableCloseList		:= ""
-	
-	Guis 	 := JSON_Load(guiSettings)
-	Settings := JSON_Load(c0braSettings)
-	
-;}
+global COBRA 				:= A_ScriptDir
+global cobraPath			:= A_ScriptFullPath
+global buttonSettings 		:= A_ScriptDir "\config\Buttons.C0bra"
+global guiSettings 			:= A_ScriptDir "\config\Gui.C0bra"
+global c0braSettings 	 	:= A_ScriptDir "\config\Settings.C0bra"
+global slrButtonSettings 	:= A_ScriptDir "\config\SLRButtons.C0bra"	
+global disableMainHKList	:= ""
+global closeTabWinList		:= ""
+global disableCloseList		:= ""
 
+Guis 	 := JSON_Load(guiSettings)
+Settings := JSON_Load(c0braSettings)
 
-
-;{___  Register Hotkeys  __________________________________________________________________
+;}<<<==== Global Constants =====
 
 
-	
-	for key, value in Settings.mainHotkey.disableIfActive
-	{
-		disableList := ((disableList != "") ? (disableList ",") : "") value
-		GroupAdd, NoRunGroup, % value
-	}
-	
-	for key, value in Settings.theCloser.disableIfActive
-	{
-		disableCloseList := ((disableCloseList != "") ? (disableCloseList ",") : "") value
-		GroupAdd, NoCloserGroup, % value
-	}		
-			
-	for key, value in Settings.theCloser.closeTabIfActive
-		tabList := ((tabList != "") ? (tabList ",") : "") value
-	
-	;
-	; User Hotkeys
-	;
-	for key, value in Settings.userHotkeys
-		Hotkey, % key, superShorts
-	
-	;
-	; Main Hotkey
-	;
-	mainHotkey := Settings.mainHotkey.mainHotkey
-	for key, value in Settings.mainHotkey.disableIfActive
-	{
-		if (value != "")
-			GroupAdd, NoRunGroup, % value
-	}
-	#If !(GetKeyState("LWin", "P") && GetKeyState("Alt", "P"))
-	Hotkey, IfWinNotActive, ahk_group NoRunGroup
-		Hotkey, % mainHotkey, mainTrigger 
-	Hotkey, ifwinactive,
-	#if
-	;}
+;{===== User Custom Hotkeys ====>>>
+
+for key, value in Settings.userHotkeys
+	Hotkey, % key, superShorts
+
+;}<<<==== User Custom Hotkeys =====
 
 
-	;{___  The Closer  ___}
-	
-	closerHKActions := {}
-	closerHK := Settings.theCloser.hotkey
-	
-	for key, value in Settings.theCloser.disableIfActive
-	{
-		if (key != "")
-		{
-			GroupAdd, NoRunGroup, % key
-			closerHKActions.Insert(key, value)
-		}
-	}
-	Hotkey, IfWinNotActive, ahk_group NoRunGroup
-	Hotkey, %closerHK%, theCloser
-	
-	;}
-	
-	
-	;{___ Google search and website hotkeys ___}
-	
-	Hotkey, IfWinActive, c0bra Main GUI
-	Hotkey, Enter, ButtonPress
-	Hotkey, NumpadEnter, ButtonPress
-	Hotkey, ^Enter, ButtonPress
-	Hotkey, ^NumpadEnter, ButtonPress
-	Hotkey, IfWinActive
-		
-	;}
+;{===== Main c0bra Hotkey ====>>>
 
-;}
+mainHotkey := Settings.mainHotkey.mainHotkey
+
+for key, value in Settings.mainHotkey.disableIfActive
+{
+	disableMainHKList := ((disableMainHKList != "") ? (disableMainHKList ",") : "") value
+	GroupAdd, NoRunGroup, % value
+}
+Hotkey, IfWinNotActive, ahk_group NoRunGroup
+	Hotkey, % mainHotkey, mainTrigger	
+Hotkey, ifwinactive,
+
+;}<<<==== Main c0bra Hotkey ===== 
+
+
+;{===== The Closer Hotkeys ====>>>
+
+closerHK := Settings.theCloser.hotkey
+
+for key, value in Settings.theCloser.disableIfActive
+{
+	disableCloseList := ((disableCloseList != "") ? (disableCloseList ",") : "") value
+	GroupAdd, NoCloserGroup, % value
+}				
+for key, value in Settings.theCloser.closeTabIfActive
+	closeTabWinList := ((closeTabWinList != "") ? (closeTabWinList ",") : "") value
+
+Hotkey, IfWinNotActive, ahk_group NoCloserGroup
+Hotkey, %closerHK%, theCloser
+
+;}<<<==== The Closer Hotkeys =====
+
+
+Hotkey, IfWinActive, c0bra Main GUI
+Hotkey, Enter, ButtonPress
+Hotkey, IfWinActive
+
+
 
 
 ;{___  Tray Icon/Menu  ____________________________________________________________________
@@ -186,7 +158,7 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 			Menu, SubSearch1, DeleteAll
 			Menu, SubSearch1, Add, Add to no-run list, QuickEditMenu
 			Menu, SubSearch1, Add
-			Loop, Parse, disableList, `,
+			Loop, Parse, disableMainHKList, `,
 				Menu, SubSearch1, Add, %A_LoopField%, QuickEditMenu
 			
 		;}
@@ -207,7 +179,7 @@ OnMessage(0x200, "WM_MOUSEMOVE")
 				Menu, SubSearch3, DeleteAll
 				Menu, SubSearch3, Add, Add to close tab list, QuickEditMenu
 				Menu, SubSearch3, Add
-				Loop, Parse, tabList, `,
+				Loop, Parse, closeTabWinList, `,
 					Menu, SubSearch3, Add, %A_LoopField%, QuickEditMenu
 				
 			;}
