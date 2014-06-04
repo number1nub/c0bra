@@ -1,209 +1,200 @@
 
+;{===== Main Hotkey Handler ====>>>
+
+mainTrigger:		
+	HKHoldTime := 475	;Min. time to hold HK to trigger hold event
+	
+	sTime := A_TickCount
+	loop
+	{
+		Sleep, 20
+		if ((A_TickCount - sTime) > HKHoldTime)
+			goto, MainTrigger_Held
+		getkeystate, keyVar, % Settings.mainHotkey.mainHotkey, P
+		IfEqual, keyVar, U, break
+	}
+	goto, MainTrigger_Pressed
 return
 
-;{ Main Trigger for c0bra
-;_______________________
 
-	mainTrigger:		
-		HKHoldTime := 475	;Min. time to hold HK to trigger hold event
-		
-		sTime := A_TickCount
-		loop
-		{
-			Sleep, 20
-			if ((A_TickCount - sTime) > HKHoldTime)
-				goto, MainTrigger_Held
-			getkeystate, keyVar, %mainHotkey%, P
-			IfEqual, keyVar, U, break
-		}
-		goto, MainTrigger_Pressed
-	return
-	
-	
-	MainTrigger_Held:		
-		Execute(Settings.mainHotkey.holdAction, "Held Main Hotkey")
-	return
+MainTrigger_Held:		
+	Execute(Settings.mainHotkey.holdAction, "Held Main Hotkey")
+return
 
 
-	MainTrigger_Pressed:
-		If (WinExist("c0bra Main GUI"))
-		{
-			if WinActive("c0bra Main GUI")
-				SLR_GUI()
-			else
-			{
-				Gui, Destroy
-				goto, Gui
-			}
-		}
+MainTrigger_Pressed:
+	If (WinExist("c0bra Main GUI"))
+	{
+		if WinActive("c0bra Main GUI")
+			SLR_GUI()
 		else
 		{
-			IfWinExist SLR
-			{
-				IfWinActive SLR
-					goto Gui
-				else
-					WinActivate SLR
-			}
-			else
-				goto Gui
+			Gui, Destroy
+			goto, Gui
 		}
-		
-	return
-	
-;}
-	
-	
-;{ GUI Code 
-;__________
-
-
-; MAIN GUI CALL
-;______________
-
-	Gui:
-
-	Gui, 1:Destroy
-	Gui, 2:Destroy
-	
-	MouseGetPos, XPOS, YPOS
-	
-	guiOldPos:
-	
-	; Set variables from json file
-	;_____________________________
-
-		currGui := 1
-		
-		ButtonList := []
-		mainButtons := ""
-		
-		Guis 	:= JSON_Load(guiSettings)
-		Buttons := JSON_Load(buttonSettings)
-		
-		buttonSpacing 		:= Guis.mainGui.buttonSpacing
-		buttonWidth 		:= Guis.mainGui.buttonWidth
-		buttonHeight 		:= Guis.mainGui.buttonHeight
-		search 				:= Guis.mainGui.search
-		textSize 			:= Guis.mainGui.textSize
-		textBold 			:= Guis.mainGui.textBold
-		lastButWidth 		:= (buttonWidth * 2) + (buttonSpacing * 2)
-		sideLastButWidth 	:= lastButWidth - (4 * buttonSpacing)
-		footerColor			:= Guis.mainGui.footerColor
-		
-		For key, value in Buttons
+	}
+	else
+	{
+		IfWinExist SLR
 		{
-			tempButton := value.text
-			ButtonList.Insert(value.text, value)
-			if (ButtonList[tempButton].Level = "")
-				mainButtons .= (mainButtons ? "," : "") value.text
+			IfWinActive SLR
+				goto Gui
+			else
+				WinActivate SLR
+		}
+		else
+			goto Gui
+	}
+	
+return
+
+;}<<<==== Main Hotkey Handler =====
+
+
+	
+
+
+
+;{===== Create Main GUI ====>>>
+
+Gui:
+
+Gui, 1:Destroy
+Gui, 2:Destroy
+
+MouseGetPos, XPOS, YPOS
+
+guiOldPos:
+	; Set variables from json file
+	currGui := 1
+	
+	ButtonList := []
+	mainButtons := ""
+	
+	Guis 	:= JSON_Load(guiSettings)
+	Buttons := JSON_Load(buttonSettings)
+	
+	buttonSpacing 		:= Guis.mainGui.buttonSpacing
+	buttonWidth 		:= Guis.mainGui.buttonWidth
+	buttonHeight 		:= Guis.mainGui.buttonHeight
+	search 				:= Guis.mainGui.search
+	textSize 			:= Guis.mainGui.textSize
+	textBold 			:= Guis.mainGui.textBold
+	lastButWidth 		:= (buttonWidth * 2) + (buttonSpacing * 2)
+	sideLastButWidth 	:= lastButWidth - (4 * buttonSpacing)
+	footerColor			:= Guis.mainGui.footerColor
+	
+	For key, value in Buttons
+	{
+		tempButton := value.text
+		ButtonList.Insert(value.text, value)
+		if (ButtonList[tempButton].Level = "")
+			mainButtons .= (mainButtons ? "," : "") value.text
+		
+		allButtons .= (allButtons ? "," : "") value.text
+	}
+	
+	; Start Gui Call
+	Gui, Color, % Guis.mainGui.guiBackColor
+
+	gui, -caption +ToolWindow +AlwaysOnTop
+	gui, margin, %buttonSpacing%, %buttonSpacing%
+	
+	; Google Search and Go Button - if enabled
+	;_________________________________________
+		
+		if (search)
+		{
+			searchTextSize := Guis.search.searchTextSize
+			searchHeight := Guis.search.searchHeight
+			searchBackText := Guis.search.searchBackText
+			goWidth := Guis.search.goWidth
+			xGo := (buttonWidth * 2) + (buttonSpacing * 2) - goWidth
+			searchWidth := (buttonWidth * 2) - goWidth
+			searchTextWidth := searchWidth - 8
+			searchTextColor := Guis.search.searchTextColor
+							
+			Gui, font, s%searchTextSize% w400
+			Gui, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 vGSEARCH,
+			Gui, Add, Text, xp yp-1 w%searchTextWidth% h%searchHeight%-2 0x200 Center +backgroundtrans hwndBackSearch, %searchBackText%
 			
-			allButtons .= (allButtons ? "," : "") value.text
+			gui, font, s%textSize% w%textBold% c%searchTextColor%
+			
+			Gui, Add, text, x%xGo% y%buttonSpacing% w%goWidth% h%searchHeight% 0x200 Center gButtonPress hwndGO, GO
+				CTLCOLORS.Attach(GO, ButtonList.GO.BackColor, ButtonList.GO.TextColor)
 		}
 		
-	; Start Gui Call
-	;_______________
+	; Don't add the following buttons to the main gui
+	;________________________________________________
+
+		StringReplace, mainButtons, mainButtons, GO`,
+		StringReplace, mainButtons, mainButtons, Default`,
+		
+		
+	; Add Main Gui Buttons
+	;_____________________
 	
-		Gui, Color, % Guis.mainGui.guiBackColor
-
-		gui, -caption +ToolWindow +AlwaysOnTop
-		gui, margin, %buttonSpacing%, %buttonSpacing%
+		gui, font, s%textSize% w%textBold%
 		
-		; Google Search and Go Button - if enabled
-		;_________________________________________
+		loop, Parse, mainButtons, `,
+			KEY_COUNT := A_Index
+
+		loop, Parse, mainButtons, `,
+		{
+			A_HWND := "back" A_Index
 			
-			if (search)
+			
+			if (A_Index = 1) ; first key
 			{
-				searchTextSize := Guis.search.searchTextSize
-				searchHeight := Guis.search.searchHeight
-				searchBackText := Guis.search.searchBackText
-				goWidth := Guis.search.goWidth
-				xGo := (buttonWidth * 2) + (buttonSpacing * 2) - goWidth
-				searchWidth := (buttonWidth * 2) - goWidth
-				searchTextWidth := searchWidth - 8
-				searchTextColor := Guis.search.searchTextColor
-								
-				Gui, font, s%searchTextSize% w400
-				Gui, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 vGSEARCH,
-				Gui, Add, Text, xp yp-1 w%searchTextWidth% h%searchHeight%-2 0x200 Center +backgroundtrans hwndBackSearch, %searchBackText%
-				
-				gui, font, s%textSize% w%textBold% c%searchTextColor%
-				
-				Gui, Add, text, x%xGo% y%buttonSpacing% w%goWidth% h%searchHeight% 0x200 Center gButtonPress hwndGO, GO
-					CTLCOLORS.Attach(GO, ButtonList.GO.BackColor, ButtonList.GO.TextColor)
+				Gui, Add, text, x%buttonSpacing% y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
+					CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
+				continue
 			}
 			
-		; Don't add the following buttons to the main gui
-		;________________________________________________
-
-			StringReplace, mainButtons, mainButtons, GO`,
-			StringReplace, mainButtons, mainButtons, Default`,
-			
-			
-		; Add Main Gui Buttons
-		;_____________________
-		
-			gui, font, s%textSize% w%textBold%
-			
-			loop, Parse, mainButtons, `,
-				KEY_COUNT := A_Index
-
-			loop, Parse, mainButtons, `,
+			else if (mod(A_Index, 2)) ; odd key
 			{
-				A_HWND := "back" A_Index
-				
-				
-				if (A_Index = 1) ; first key
+				if (A_Index = KEY_COUNT) ; odd last key
 				{
-					Gui, Add, text, x%buttonSpacing% y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
+					lastButton := A_LoopField
+					Gui, Add, text, x%buttonSpacing% y+%buttonSpacing% w%LastButWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
 						CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
 					continue
 				}
 				
-				else if (mod(A_Index, 2)) ; odd key
-				{
-					if (A_Index = KEY_COUNT) ; odd last key
-					{
-						lastButton := A_LoopField
-						Gui, Add, text, x%buttonSpacing% y+%buttonSpacing% w%LastButWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
-							CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
-						continue
-					}
-					
-					Gui, Add, text, x%buttonSpacing% y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
-						CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
-					continue
-				}
-				
-				else ; even key
-				{
-					Gui, Add, text, x+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
-						CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
-					continue
-				}
+				Gui, Add, text, x%buttonSpacing% y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
+					CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
+				continue
 			}
 			
-		; Footer call
-		;____________
-			
-			if (guis.mainGui.footer)
+			else ; even key
 			{
-				footerWidth := (buttonWidth * 2) + buttonSpacing
-				
-				Gui, font, s7 c%footerColor%
-				Gui, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h10 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
+				Gui, Add, text, x+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
+					CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
+				continue
 			}
+		}
+		
+	; Footer call
+	;____________
+		
+		if (guis.mainGui.footer)
+		{
+			footerWidth := (buttonWidth * 2) + buttonSpacing
 			
-		gui, show, x%XPOS% y%YPOS%, c0bra Main GUI
+			Gui, font, s7 c%footerColor%
+			Gui, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h10 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
+		}
 		
-		; Insert SLR buttons back into mainButtons variable
-		;__________________________________________________
-		
-			mainButtons .= ",GO"
+	gui, show, x%XPOS% y%YPOS%, c0bra Main GUI
+	
+	; Insert SLR buttons back into mainButtons variable
+	;__________________________________________________
+	
+		mainButtons .= ",GO"
 
-	return
+return
 
-;}
+;}<<<==== Create Main GUI =====
 
 
 ;{ Side Gui Call

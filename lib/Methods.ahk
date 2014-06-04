@@ -1,8 +1,6 @@
 
 
 ;{ ___ WM_Mousemove
-;______________
-
 	WM_MOUSEMOVE()
 	{
 		global
@@ -19,8 +17,6 @@
 		
 
 		; Still In same control --> Do Nothing 
-		;_____________________________________
-		
 			if (PREV_HWND = thisHwnd)
 			{
 				SetBatchLines, % BBU
@@ -28,8 +24,6 @@
 			}
 		
 		; Button in Bookmarks in selected.. change prevtext to Bookmarks for same color scheme as bookmark button
-		;________________________________________________________________________________________________________
-
 			if !(thisWin = "c0bra SLR")
 			{
 				if controlText not in %allButtons%
@@ -42,8 +36,6 @@
 			}
 		
 		; Set previous and current button color schemes for highlighting
-		;_______________________________________________________________
-		
 			prevBColor := prevWin = "c0bra SLR" ? slrList[PrevText].BackColor : ButtonList[PrevText].BackColor
 			prevTColor := prevWin = "c0bra SLR" ? slrList[PrevText].TextColor : ButtonList[PrevText].TextColor
 
@@ -51,8 +43,6 @@
 			curHlTColor := thisWin = "c0bra SLR" ? slrList[controlText].HlTextColor : ButtonList[controlText].HlTextColor
 
 		; Just entered a non-button control --> switch previous control to 'non-hover' colors
-		;____________________________________________________________________________________
-		
 			if (thisHwnd = backsearch || thisHwnd = "" || controlname = "" || thisHwnd = FOOTER || !InStr(controlName, "static"))
 			{
 				CTLCOLORS.Change(PREV_HWND, prevBColor, prevTColor)
@@ -62,14 +52,10 @@
 			}
 		
 		; New button --> change the colors
-		;_________________________________
-		
 			CTLCOLORS.Change(PREV_HWND, prevBColor, prevTColor)
 			CTLCOLORS.Change(thisHwnd, curHlBColor, curHlTColor)
 		
 		; Set control text and hwnd for next hover
-		;_________________________________________
-		
 			PREV_HWND := thisHwnd
 			PrevText := controltext
 			prevWin := thisWin
@@ -80,8 +66,6 @@
 	
 	
 ;{ ___ JSON Button add
-;_________________
-	
 	addButton(aText, CMD, typeCmd, argsCmd, aColor, Children, aParent)
 	{
 		global buttons, buttonSettings
@@ -124,8 +108,6 @@
 
 
 ;{ ___ JSON Button delete
-;____________________
-
 	deleteButton(aText)
 	{
 		global buttons, buttonSettings
@@ -174,8 +156,6 @@
 
 
 ;{ ___ Button Duplicate Check
-;________________________
-
 	buttonCheck(jObject, bName)
 	{
 		for key, value in jObject
@@ -191,8 +171,6 @@
 
 
 ;{ ___ RELOAD ME
-;___________
-
 	reloadMe:	
 		Reload	
 	return
@@ -205,66 +183,62 @@
 ;}
 	
 	
-;{ ___ Tray text for tray icon
-;_________________________
 
-	TrayText:
+
+;{===== Tray Menu Handler ====>>>
+
+TrayText:
 		
-		;
-		; Main hotkey change
-		;
-		if (A_ThisMenuItem = "Trigger: " mainHotkey)
-		{
-			InputBox, newTrigger, c0bra Trigger, Enter new c0bra trigger hotkey(s)`nCurrent Hotkey - %mainHotkey%`nExample 1 - ^!1`nExample 2 - ^#1,,,,,,,, % mainHotkey
-			if ErrorLevel
-				return
-			
-			Settings.mainHotkey.mainHotkey := newTrigger
-			JSON_Save(Settings, c0braSettings)
-			Run, %cobraPath% %A_ScriptHwnd% /prompt "Main Hotkey Changed" %newTrigger%
-		}
-		;
-		; Add new user hotkey
-		;
-		else if (A_ThisMenuItem = "New hotkey")
-		{
-			InputBox, newTrigger, New Hotkey, Hotkey trigger:
-			If (ErrorLevel || !newTrigger)
-				return
-			InputBox, newAction, New Hotkey, % "Hotkey action:`n(use either [F], [L], [R] or [P])"
-			If (ErrorLevel || !newAction)
-				return
-			
-			Settings.userHotkeys[newTrigger] := newAction
-			JSON_Save(Settings, c0braSettings)
-			Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Added Hotkey <" modReplace(newTrigger) ">"" ""`nACTION:`n" newAction "`n """
-		}
-		;
-		; Edit/Delete existing hotkey
-		;
-		else if (RegExMatch(A_ThisMenuItem, "i)^<(?P<Trigger>.+?)> - <(?P<Action>.+)>$", hk))
-		{
-			InputBox, newTrigger, Edit Hotkey, % "Hotkey trigger:`n`n(To DELETE hotkey, input blank value)",,400,175,,,,, % hkTrigger
-			If (ErrorLevel)
-				return		
-			if (!newTrigger)
-			{
-				Settings.userHotkeys.Remove(hkTrigger)
-				JSON_Save(Settings, c0braSettings)
-				Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Deleted Hotkey <" modReplace(hkTrigger) ">"" ."
-			}
-			InputBox, newAction, Edit Hotkey, % "Hotkey action:",,600,160,,,,, % hkAction
-			If (ErrorLevel || !newAction)
-				return
-			Settings.userHotkeys.Remove(hkTrigger)
-			Settings.userHotkeys[newTrigger] := newAction
-			JSON_Save(Settings, c0braSettings)
-			Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Updated Hotkey <" modReplace(hkTrigger) ">"" ""`nUPDATED TRIGGER: <" modReplace(newTrigger) ">`n`nUPDATED ACTION:`n" newAction "`n `n"""
-		}
-	return
-	
-;}
+	;{```` Change Main Hotkey ````}
+	if (A_ThisMenuItem = "Trigger: " mainHotkey)
+	{
+		InputBox, newTrigger, c0bra Trigger, Enter new c0bra trigger hotkey(s)`nCurrent Hotkey - %mainHotkey%`nExample 1 - ^!1`nExample 2 - ^#1,,,,,,,, % mainHotkey
+		if ErrorLevel
+			return		
+		Settings.mainHotkey.mainHotkey := newTrigger
+		JSON_Save(Settings, c0braSettings)
+		Run, %cobraPath% %A_ScriptHwnd% /prompt "Main Hotkey Changed" %newTrigger%
+	}
 
+	;{```` Add new user hotkey ````}
+	else if (A_ThisMenuItem = "Add New Hotkey")
+	{
+		InputBox, newTrigger, New Hotkey, Hotkey trigger:
+		If (ErrorLevel || !newTrigger)
+			return
+		InputBox, newAction, New Hotkey, % "Hotkey action:`n(use either [F], [L], [R] or [P])"
+		If (ErrorLevel || !newAction)
+			return
+		
+		Settings.userHotkeys[newTrigger] := newAction
+		JSON_Save(Settings, c0braSettings)
+		Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Added Hotkey <" modReplace(newTrigger) ">"" ""`nACTION:`n" newAction "`n """
+	}
+	;
+	; Edit/Delete existing hotkey
+	;
+	else if (RegExMatch(A_ThisMenuItem, "i)^<(?P<Trigger>.+?)> - <(?P<Action>.+)>$", hk))
+	{
+		InputBox, newTrigger, Edit Hotkey, % "Hotkey trigger:`n`n(To DELETE hotkey, input blank value)",,400,175,,,,, % hkTrigger
+		If (ErrorLevel)
+			return		
+		if (!newTrigger)
+		{
+			Settings.userHotkeys.Remove(hkTrigger)
+			JSON_Save(Settings, c0braSettings)
+			Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Deleted Hotkey <" modReplace(hkTrigger) ">"" ."
+		}
+		InputBox, newAction, Edit Hotkey, % "Hotkey action:",,600,160,,,,, % hkAction
+		If (ErrorLevel || !newAction)
+			return
+		Settings.userHotkeys.Remove(hkTrigger)
+		Settings.userHotkeys[newTrigger] := newAction
+		JSON_Save(Settings, c0braSettings)
+		Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Updated Hotkey <" modReplace(hkTrigger) ">"" ""`nUPDATED TRIGGER: <" modReplace(newTrigger) ">`n`nUPDATED ACTION:`n" newAction "`n `n"""
+	}
+return
+
+;}<<<==== Tray Menu Handler =====
 
 
 
@@ -280,8 +254,6 @@ modReplace(str)
 
 
 ;{ ___ Determine if mouse position is on left or right of gui midpoint
-;_________________________________________________________________
-
 	ON_LEFT(CONTROL_POSX)
 	{
 		global
@@ -298,8 +270,6 @@ modReplace(str)
 
 
 ;{ ___ Google Search
-;_______________
-
 	Google(GSEARCH)
 	{
 		GSEARCH := RegExReplace(GSEARCH, "i)\s", "+")
@@ -310,196 +280,183 @@ modReplace(str)
 ;}
 
 
-;{ ___ Get Modifiers
-;___________________
-;
-; Function: GetModifiers
-; Description:
-;		Returns a string of symbols representing which modifier keys are currently being held down.
-;			^ = Ctrl
-;			! = ALt
-;			+ = Shift
-;			# = Win
-; Syntax: GetModifiers()
-; Parameters:
-;		None
-; Return Value:
-;		Returns a string containing the character representation of the modifier keys
-; Example:
-;		; Assuming Ctrl and Alt are currently held down
-;		mods := GetModifiers()
-;		MsgBox Current modifiers are %mods%.	; MsgBox Output: Current modifiers are ^!.
-;
-	GetModifiers()
-	{
-		Modifiers := GetKeyState("Ctrl", "P") ? "^" : ""
-		Modifiers .= GetKeyState("Alt", "P") ? "!" : ""
-		Modifiers .= GetKeyState("Shift", "P") ? "+" : ""
-		Modifiers .= GetKeyState("LWin", "P") ? "#" : ""
 
-		Return, Modifiers
+/*!
+	Function: GetModifiers()
+		Returns a string of symbols representing which modifier keys are currently being held down. ^ = Ctrl ! = ALt
+		+ = Shift # = Win
+
+	Returns:
+		Returns a string containing the character representation of the modifier keys
+
+	Example:
+		> ; Assuming Ctrl and Alt are currently held down
+		> mods := GetModifiers()
+		> MsgBox Current modifiers are %mods%.	; MsgBox Output: Current modifiers are ^!.
+*/
+GetModifiers()
+{
+	Modifiers := GetKeyState("Ctrl", "P") ? "^" : ""
+	Modifiers .= GetKeyState("Alt", "P") ? "!" : ""
+	Modifiers .= GetKeyState("Shift", "P") ? "+" : ""
+	Modifiers .= GetKeyState("LWin", "P") ? "#" : ""
+
+	Return, Modifiers
+}
+	
+
+
+
+ColorPicker(attribute)
+{	
+	MsgBox, 4096, c0bra Colors, Choose the %attribute% color.
+	
+	theColor := RegExReplace(ColorChooser(), "i)0x")
+	if !(theColor)
+		return
+
+	if ((theLen := StrLen(theColor)) < 6)
+	{
+		if (theLen = 5)
+			theColor := "0" theColor
+		else if (theLen = 4)
+			theColor := "00" theColor
+		else if (theLen = 3)
+			theColor := "000" theColor
+		else if (theLen = 2)
+			theColor := "0000" theColor
+		else if (theLen = 1)
+			theColor := "00000" theColor
+	}
+
+	if !(theColor)
+		return
+
+	SetFormat, integer, d
+	return % theColor
+}
+	
+
+
+GET_COLOR(command, REG_COLOR)
+{
+	Array := Object()
+
+	command := RegExReplace(command, "\s+", " ")
+	RegExMatch(command, ";\K.+?$", Description)
+	command := RegExReplace(command, ";" Description "$")
+	command := Trimmer((Description && ReturnDescription) ? Description : command)
+	
+	RegExMatch(command, "^\[.+\]\s*\{\K(.+),(.+),(.+),(.+)\}", THE_COLOR)
+	
+	If (REG_COLOR)
+	{
+		Array.Insert(THE_COLOR1)
+		Array.Insert(THE_COLOR3)
+	} 
+	else 
+	{
+		Array.Insert(THE_COLOR2)
+		Array.Insert(THE_COLOR4)
 	}
 	
-;}
+	return Array
+}
+	
 
 
-;{ ___ Color Picker
-;__________________
 
-	ColorPicker(attribute)
-	{	
-		MsgBox, 4096, c0bra Colors, Choose the %attribute% color.
-		
-		theColor := RegExReplace(ColorChooser(), "i)0x")
-		if !(theColor)
-			return
-
-		if ((theLen := StrLen(theColor)) < 6)
+Execute(command, Txt)
+{
+	If (!command)
+		return
+	;
+	; Remove duplicate spaces
+	;
+	command := RegExReplace(command, "\s+", " ")
+	;
+	; Get command description from in-line comment if one
+	; exists, and remove the description from the command string
+	;
+	RegExMatch(command, ";\K.+?$", Description)
+	command := RegExReplace(command, ";" Description "$")
+	command := Trimmer((Description && ReturnDescription) ? Description : command)
+	
+	Transform, command, Deref, % command
+	
+	;~~~~~~~~~~~~~~~~~~~~~~
+	;[F] FUNCTION AS ACTION
+	
+		If (RegExMatch(command, "i)^\[F\]\s(?P<Func>\w+)(\(\s*(?P<Params>.+?)\s*\))?", m) && IsFunc(mFunc))
 		{
-			if (theLen = 5)
-				theColor := "0" theColor
-			else if (theLen = 4)
-				theColor := "00" theColor
-			else if (theLen = 3)
-				theColor := "000" theColor
-			else if (theLen = 2)
-				theColor := "0000" theColor
-			else if (theLen = 1)
-				theColor := "00000" theColor
+			If mParams
+			{
+				Loop, Parse, mParams, CSV
+					param%A_Index% := Trimmer(A_LoopField)
+			}
+			
+			%mFunc%(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+			Gui, 1:Destroy
 		}
-
-		if !(theColor)
-			return
-
-		SetFormat, integer, d
-		return % theColor
-	}
 	
-;}
-
-
-;{ ___ Get Color
-;_______________
-
-	GET_COLOR(command, REG_COLOR)
-	{
-		Array := Object()
-
-		command := RegExReplace(command, "\s+", " ")
-		RegExMatch(command, ";\K.+?$", Description)
-		command := RegExReplace(command, ";" Description "$")
-		command := Trimmer((Description && ReturnDescription) ? Description : command)
-		
-		RegExMatch(command, "^\[.+\]\s*\{\K(.+),(.+),(.+),(.+)\}", THE_COLOR)
-		
-		If (REG_COLOR)
+	;~~~~~~~~~~~~~~~~~~~
+	;[L] LABEL AS ACTION
+	
+		Else If (RegExMatch(command, "i)^\[L\]\s\K.+", Label) && IsLabel(Label))
 		{
-			Array.Insert(THE_COLOR1)
-			Array.Insert(THE_COLOR3)
-		} 
-		else 
-		{
-			Array.Insert(THE_COLOR2)
-			Array.Insert(THE_COLOR4)
+			Gui, 1:Destroy
+			Gosub, %LABEL%
 		}
 		
-		return Array
-	}
+		
+	; [R] Run as Action
 	
-;}
-
-
-;{ ___ Execute Command
-;_____________________
-
-	Execute(command, Txt)
-	{
-		If !command ; if command is blank
-			Return
+		Else if RegExMatch(command, "i)^\[R\]\s\K.+", runPath)
+		{
+			Gui, 1:Destroy
+			Run, % runPath,, UseErrorLevel
+			If ErrorLevel
+				MsgBox, 262160, Run :, Error with this command!`n%Path%, 1
+		}
 		
-		command := RegExReplace(command, "\s+", " ") ; Deletes duplicated spaces and tabs
-		RegExMatch(command, ";\K.+?$", Description) ; Extracts the description if there is one
-		command := RegExReplace(command, ";" Description "$") ; Removes the description from the command
-		command := Trimmer((Description && ReturnDescription) ? Description : command) ; Trims beginning/ending spaces and tabs ( = Trim() )
-		
-		Transform, command, Deref, % command
-		
-		;~~~~~~~~~~~~~~~~~~~~~~
-		;[F] FUNCTION AS ACTION
-		
-			If (RegExMatch(command, "i)^\[F\]\s(?P<Func>\w+)(\(\s*(?P<Params>.+?)\s*\))?", m) && IsFunc(mFunc))
-			{
-				If mParams
-				{
-					Loop, Parse, mParams, CSV
-						param%A_Index% := Trimmer(A_LoopField)
-				}
-				
-				%mFunc%(param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
-				Gui, 1:Destroy
-			}
-		
-		;~~~~~~~~~~~~~~~~~~~
-		;[L] LABEL AS ACTION
-		
-			Else If (RegExMatch(command, "i)^\[L\]\s\K.+", Label) && IsLabel(Label))
-			{
-				Gui, 1:Destroy
-				Gosub, %LABEL%
-			}
 			
-			
-		; [R] Run as Action
-		;__________________
-		
-			Else if RegExMatch(command, "i)^\[R\]\s\K.+", runPath)
-			{
-				Gui, 1:Destroy
-				Run, % runPath,, UseErrorLevel
-				If ErrorLevel
-					MsgBox, 262160, Run :, Error with this command!`n%Path%, 1
-			}
-			
+	;~~~~~~~~~~~~~~~~~~~~~
+	;[P] PROGRAM AS ACTION
+	
+		else if RegExMatch(command, "i)^\[P\]\s\K.+", theProgram)
+		{
+			Gui, 1:Destroy
+			SetTitleMatchMode, 2
+			SplitPath, theProgram, programName,,,programNameNoExt
 				
-		;~~~~~~~~~~~~~~~~~~~~~
-		;[P] PROGRAM AS ACTION
-		
-			else if RegExMatch(command, "i)^\[P\]\s\K.+", theProgram)
-			{
-				Gui, 1:Destroy
-				SetTitleMatchMode, 2
-				SplitPath, theProgram, programName,,,programNameNoExt
-					
-				Process, Exist, % programName ".exe"
-				if !ErrorLevel
-					Process, Exist, % programName " *32.exe"
+			Process, Exist, % programName ".exe"
+			if !ErrorLevel
+				Process, Exist, % programName " *32.exe"
 
-				If (WinExist(programNameNoExt) || ErrorLevel)
-				{
-					WinShow, %programNameNoExt% ahk_pid %ErrorLevel%
-					WinActivate, %programNameNoExt% ahk_pid %ErrorLevel%
-					WinRestore, %programNameNoExt% ahk_pid %ErrorLevel%
-				}
-				else
-					Run % theProgram
-
-				SetTitleMatchMode, 1
+			If (WinExist(programNameNoExt) || ErrorLevel)
+			{
+				WinShow, %programNameNoExt% ahk_pid %ErrorLevel%
+				WinActivate, %programNameNoExt% ahk_pid %ErrorLevel%
+				WinRestore, %programNameNoExt% ahk_pid %ErrorLevel%
 			}
-				
-				
-		;~~~~~~~~~~~~~~~~~~~~~~
-		; SIDE GUI AS ACTION
-			
 			else
-				SIDE_GUI()
-	}
-	
-;}
+				Run % theProgram
+
+			SetTitleMatchMode, 1
+		}
+			
+			
+	;~~~~~~~~~~~~~~~~~~~~~~
+	; SIDE GUI AS ACTION
+		
+		else
+			SIDE_GUI()
+}
+
+
 
 
 ;{ ___ Trimmer
-;__________________
-
 	Trimmer(str, omitchars=" `t")
 	{ ; Allow to use Trim() with AutoHotkey basic
 		If !StrLen(omitchars)
@@ -513,8 +470,6 @@ modReplace(str)
 
 
 ;{ ___ theCloser
-;_______________
-
 	theCloser:
 		mousegetpos,,, win
 		WinGetTitle, winTitle, ahk_id %win%
@@ -585,8 +540,6 @@ ToggleCase(toCase = "U", origStr = "")
 
 
 ;{___ CopyTo
-;___________
-
 	CopyTo:
 		GetKeyState, keyState, Alt, P
 		if (keyState = "D")
@@ -645,8 +598,6 @@ GetSelection(CutTxt=0, NoRestore=0)
 
 
 ;{ ___ StrUpper
-;______________
-
 	/*!
 		Function: StrUpper(v)
 			Converts the given string to upper case
@@ -664,8 +615,6 @@ GetSelection(CutTxt=0, NoRestore=0)
 
 
 ;{ ___ StrLower
-;______________
-
 	/*!
 		Function: StrLower(v)
 			Converts the given string to lower case
@@ -684,8 +633,6 @@ GetSelection(CutTxt=0, NoRestore=0)
 
 
 ;{ ___ Save Selection
-;____________________
-
 	/*!
 		Function: SaveSelection()
 			Saves the user's selection in a txt file
@@ -719,8 +666,6 @@ GetSelection(CutTxt=0, NoRestore=0)
 
 
 ;{ ___ Copy to notepad
-;_____________________
-
 	/*!
 		Function: CopyToNotepad()
 			Copies the selected text into a new Notepad window
@@ -754,8 +699,6 @@ GetSelection(CutTxt=0, NoRestore=0)
 
 
 ;{ ___ Copy to run
-;_________________
-
 	/*!
 		Function: CopyToRun()
 			Copies the current selected text into a Run command window.
@@ -785,8 +728,6 @@ GetSelection(CutTxt=0, NoRestore=0)
 
 
 ;{ ___ Get SciTEpath
-;___________________
-
 	/*!
 		Function: GetSciTEpath()
 			Returns the full path to SciTE on the current machine.
@@ -863,6 +804,20 @@ Volume(dwn = 0)
 	SoundSet, % dwn ? "-5" : "+5"
 	SoundGet, curVol
 	TrayTip, Volume, % round(curVol), 1
+}
+
+
+/*!
+	Function: RMApp_NCHITTEST()
+		Determines what part of a window the mouse is currently over.
+*/
+RMApp_NCHITTEST()
+{		
+   CoordMode, Mouse, Screen
+   MouseGetPos, x, y, z
+   SendMessage, 0x84, 0, (x&0xFFFF)|(y&0xFFFF)<<16,, ahk_id %z%
+   RegExMatch("ERROR TRANSPARENT NOWHERE CLIENT CAPTION SYSMENU SIZE MENU HSCROLL VSCROLL MINBUTTON MAXBUTTON LEFT RIGHT TOP TOPLEFT TOPRIGHT BOTTOM BOTTOMLEFT BOTTOMRIGHT BORDER OBJECT CLOSE HELP", "(?:\w+\s+){" ErrorLevel+2&0xFFFFFFFF "}(?<AREA>\w+\b)", HT)
+   Return HTAREA
 }
 
 
