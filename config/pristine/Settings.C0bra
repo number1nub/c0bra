@@ -1,5 +1,5 @@
 {
-    "Version": "2.4.4",
+    "Version": "2.5.0",
     "mainHotkey": {
         "mainHotkey": "MButton",
         "holdAction": "[R] explore %APPDATA%\\c0bra",

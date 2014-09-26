@@ -56,5 +56,5 @@
         "^MButton":                  "[R] C:\\SkyDrive\\AHK\\To-Do\\To-Do.ahk",
         "~#MButton":                 "[L] MeasurePixels"
     },
-    "Version":                       "2.4.4"
+    "Version":                       "2.5.0"
 }
