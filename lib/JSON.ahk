@@ -25,7 +25,7 @@ $(path, val = "") {
     Loop, Parse, path, \. 
     { 
         if (val != "") { 
-            if (last = A_loopfield){ 
+            if (last = A_loopfield) { 
                 tempObj[A_loopfield] := val 
                 continue 
             } else if (!tempObj[A_Loopfield]) 
@@ -62,23 +62,24 @@ JSON_load(filename) {
     file.close() 
     if (jsonString == "") 
         JSON_error("No file found, or blank file.") 
-    return JSON_from(jsonString) 
+    return JSON_from(jsonString, filename) 
 } 
 
 ;  Error handling                                                        ; 
-JSON_error(s){ 
-    Msgbox, % "[" . A_now . "] " . s 
+JSON_error(s)
+{ 
+    Msgbox, % "[" A_now "] " s 
     Exit 
 } 
 
 ;  Escape / unescape json keys and values                                ; 
-JSON_escape(s){ 
+JSON_escape(s) { 
     StringReplace, s, s, \\, \\\\, All 
     StringReplace, s, s, ', \\',   All 
     StringReplace, s, s, ", \\",   All 
     return s 
 } 
-JSON_unescape(s){ 
+JSON_unescape(s) { 
     StringReplace, s, s, \\\\, \\, All 
     StringReplace, s, s, \\', ',   All 
     StringReplace, s, s, \\", ",   All 
@@ -145,7 +146,7 @@ JSON_to(obj, spacing = 50, block = "    ", level = "1" ) {
 } 
 
 ;  Initialize the shift-reduce tables                                       ; 
-JSON_init(){ 
+JSON_init() { 
 
     #EscapeChar ` 
     global JSON_regexps, JSON_rules 
@@ -185,11 +186,11 @@ JSON_reduce_spaces(c)  {
     return "" 
 } 
 ; Key-value pair                  ; 
-JSON_reduce_keyvalue(c){ 
+JSON_reduce_keyvalue(c) { 
     return Object(c[3], c[1]) 
 } 
 ; Array                           ; 
-JSON_reduce_array(c){ 
+JSON_reduce_array(c) { 
     ret := Object() 
 
     new_idx := (c.maxindex() - 1) \/\/ 2 
@@ -202,7 +203,7 @@ JSON_reduce_array(c){
     return ret 
 } 
 ; Objects                         ; 
-JSON_reduce_object(c){ 
+JSON_reduce_object(c) { 
     ret := Object() 
     for old_idx, key_val in c { 
         if (mod(old_idx,2) == 0) { 
@@ -217,35 +218,35 @@ JSON_reduce_object(c){
 
 
 ; Main parsing method                                                                      ; 
-JSON_from(s){ 
-
+JSON_from(s, file = "") 
+{
     ret     := Object() 
     pos     := 1 
     symbols := "" 
     len     := strLen(s) 
 
     ;   Loop over the tokens         ; 
-    while (pos <= len) { 
-
+    while (pos <= len)
+    {
         ; Shift a token                 ; 
         t := JSON_shift(s,pos,symbols,ret) 
 
         ; Reduce                       ; 
-        symbols := JSON_reduce(t["symbols"],ret), pos := t["pos"] 
-
+        symbols := JSON_reduce(t["symbols"], ret)
+        pos := t["pos"] 
     } 
 
     ; If succesfully reduced, return the object/array    ; 
     if (symbols == "O" || symbols == "A") 
         return ret[""] 
     else 
-        JSON_error("Invalid JSON string, cannot convert to object.") 
+        JSON_error("Invalid JSON string, cannot convert to object.\nFile: " file "\nPosition: " pos) 
 } 
 
 
 
 ;  Read a token and shift in symbol to the stack                                          ; 
-JSON_shift(s, pos, symbols, ret){ 
+JSON_shift(s, pos, symbols, ret) { 
 
     global JSON_regexps 
 
@@ -253,7 +254,7 @@ JSON_shift(s, pos, symbols, ret){
 
         ; match 1 includes quotes, match 2 doesn't       ; 
         RegexMatch(s, "PSi)(" . regexp . ")", match_, pos) 
-        if (match_pos1 == pos){ 
+        if (match_pos1 == pos) { 
 
             ; Add current state to the symbol stack          ; 
             symbols .= symbol 
@@ -277,7 +278,7 @@ JSON_shift(s, pos, symbols, ret){
 
 
 ;  Reduces groups of symbols into others according to the rule table                       ; 
-JSON_reduce(symbols, ret){ 
+JSON_reduce(symbols, ret) { 
 
     global JSON_regexps, JSON_rules 
 

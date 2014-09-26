@@ -1,47 +1,60 @@
 {
-  "version": "2.3.3",
-  "buttonTypes": [
-    "AHK Edit",
-    "Bookmarks",
-    "File",
-    "Folder",
-    "Macro",
-    "Outlook",
-    "Program",
-    "Run",
-    "Shortcut",
-    "Text",
-    "User Function",
-    "User Label"
-  ],
-  "mainHotkey": {
-    "disableIfActive": [
-      "AutoCAD",
-      "Creo Parametric"
-    ],
-    "holdAction": "[R] C:\\SkyDrive\\AHK\\c0bra",
-    "mainHotkey": "MButton"
-  },
-  "theCloser": {
-    "closeTabIfActive": [
-      "SciTEWindow",
-      "Chrome_WidgetWin_1",
-      "IEFrame",
-      "firefox",
-      "Microsoft Visual Studio",
-      "XLMAIN",
-      "Visual Basic"
-    ],
-    "disableIfActive": [
-      "Remote Desktop Connection"
-    ],
-    "hotkey": "~Lbutton & RButton"
-  },
-  "userHotkeys": {
-    "!MButton": "[R] C:\\SkyDrive\\AHK\\GUI Tools\\Get Color Code.ahk",
-    "^!F6": "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
-    "^!MButton": "[P] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
-    "^MButton": "[R] C:\\SkyDrive\\AHK\\To-Do\\To-Do.ahk",
-    "~#MButton": "[L] MeasurePixels"
-  }
+    "buttonTypes": {
+        "1":                         "AHK Edit",
+        "2":                         "Bookmarks",
+        "3":                         "File",
+        "4":                         "Folder",
+        "5":                         "Macro",
+        "6":                         "Outlook",
+        "7":                         "Program",
+        "8":                         "Run",
+        "9":                         "Send Keys",
+        "10":                        "Shortcut",
+        "11":                        "Text",
+        "12":                        "User Function",
+        "13":                        "User Label"
+    },
+    "mainHotkey": {
+        "disableIfActive": {
+            "1":                     "AutoCAD",
+            "2":                     "Creo Parametric",
+            "3":                     "- paint.net"
+        },
+        "holdAction":                "[R] C:\\SkyDrive\\AHK\\c0bra",
+        "mainHotkey":                "MButton"
+    },
+    "theCloser": {
+        "closeTabIfActive": {
+            "1":                     "Chrome_WidgetWin_1",
+            "2":                     "IEFrame",
+            "3":                     "firefox",
+            "4":                     "Microsoft Visual Studio",
+            "5":                     "XLMAIN",
+            "6":                     "Visual Basic",
+            "7":                     "PX_WINDOW_CLASS",
+            "8":                     "Microsoft Visual Studio Express 2013",
+            "9":                     "Notepad++",
+            "10":                    "- SharpDevelop",
+            "11":                    "wxWindowNR",
+            "12":                    "ZeusIDE",
+            "13":                    "SciTEWindow"
+        },
+        "closeTabSpecialIfActive": {
+            "1":                     "Notepad++"
+        },
+        "disableIfActive": {
+            "1":                     "Remote Desktop Connection"
+        },
+        "hotkey":                    "~Lbutton & RButton"
+    },
+    "userHotkeys": {
+        "!MButton":                  "[R] C:\\SkyDrive\\AHK\\GUI Tools\\Get Color Code.ahk",
+        "+MButton":                  "[P] C:\\SkyDrive\\AHK\\Tools\\Window Info.ahk",
+        "^!#MButton":                "[P] C:\\SkyDrive\\AHK\\Find & Replace Buddy\\Find & Replace Buddy.ahk",
+        "^!F6":                      "[R] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
+        "^!MButton":                 "[R] C:\\SkyDrive\\AHK\\Custom Hotstrings\\Custom Hotstrings.ahk",
+        "^MButton":                  "[R] C:\\SkyDrive\\AHK\\To-Do\\To-Do.ahk",
+        "~#MButton":                 "[L] MeasurePixels"
+    },
+    "Version":                       "2.4.4"
 }

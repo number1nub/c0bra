@@ -1,0 +1,34 @@
+{
+    "Version": "2.4.4",
+    "mainHotkey": {
+        "mainHotkey": "MButton",
+        "holdAction": "[R] explore %APPDATA%\\c0bra",
+        "disableIfActive": {}
+    },
+    "theCloser": {
+        "hotkey": "~Lbutton & RButton",
+        "closeTabIfActive": [
+            "Chrome_WidgetWin_1",
+            "IEFrame",
+            "firefox"
+        ],
+        "closeTabSpecialIfActive": {},
+        "disableIfActive": {}
+    },
+    "userHotkeys": {},
+    "buttonTypes": [
+        "AHK Edit",
+        "Bookmarks",
+        "File",
+        "Folder",
+        "Macro",
+        "Outlook",
+        "Program",
+        "Run",
+        "Send Keys",
+        "Shortcut",
+        "Text",
+        "User Function",
+        "User Label"
+    ]
+}

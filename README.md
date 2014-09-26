@@ -12,14 +12,10 @@ A powerful, feature packed application launcher utility that is highly customiza
 
 
 ### CHANGELOG
-  **2.5.0**
-  * Something
-  * Something else..
+**2.5.0**
+* Something
+* Something else..
 
-  **2.4.4**
-  * Change 1
-  * Yeah
-
-
-
-
+**2.4.4**
+* Change 1
+* Yeah
