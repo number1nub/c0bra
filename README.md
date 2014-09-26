@@ -1,3 +1,4 @@
+# Cobra Launcher
 A powerful, feature packed application launcher utility that is highly customizable and very easy to use.
 
 ## Features
