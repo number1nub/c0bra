@@ -75,10 +75,11 @@ guiOldPos:
 	buttonSpacing 		:= Guis.mainGui.buttonSpacing
 	buttonWidth 		:= Guis.mainGui.buttonWidth
 	buttonHeight 		:= Guis.mainGui.buttonHeight
-	search 				:= Guis.mainGui.search
+	search 				:= Guis.search.search
 	textSize 			:= Guis.mainGui.textSize
 	textBold 			:= Guis.mainGui.textBold
-	lastButWidth 		:= (buttonWidth * 2) + (buttonSpacing * 2)
+	textFont			:= Guis.mainGui.textFont
+	lastButWidth 		:= (buttonWidth * 2) + buttonSpacing
 	sideLastButWidth	:= lastButWidth - (4 * buttonSpacing)
 	footerColor			:= Guis.mainGui.footerColor
 	
@@ -101,19 +102,21 @@ guiOldPos:
 	;{````  Create Search Bar  ````}
 	if (search)
 	{
-		searchTextSize 	:= Guis.search.searchTextSize
-		searchHeight    := Guis.search.searchHeight
-		searchBackText  := Guis.search.searchBackText
-		goWidth         := Guis.search.goWidth
+		searchTextSize 	:= Guis.search.textSize
+		searchHeight    := Guis.search.Height
+		searchBackText  := Guis.search.backText
+		goWidth         := Guis.mainGui.goWidth
 		xGo 			:= (buttonWidth * 2) + (buttonSpacing * 2) - goWidth
 		searchWidth 	:= (buttonWidth * 2) - goWidth
 		searchTextWidth := searchWidth - 8
-		searchTextColor := Guis.search.searchTextColor
+		searchTextColor := Guis.search.textColor
+		searchTextFont	:= Guis.search.textFont
+		searchTextBold  := Guis.search.textBold
 
-		GUI, font, s%searchTextSize% w400		
+		GUI, font, s%searchTextSize% w%searchtextBold% c%searchTextColor%, %searchTextFont%
 		GUI, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 vGSEARCH,
 		GUI, Add, Text, xp yp-1 w%searchTextWidth% h%searchHeight%-2 0x200 Center +backgroundtrans hwndBackSearch, %searchBackText%		
-		GUI, font, s%textSize% w%textBold% c%searchTextColor%		
+		GUI, font, s%textSize% w%textBold% c%searchTextColor%, %textFont%	
 		GUI, Add, text, x%xGo% y%buttonSpacing% w%goWidth% h%searchHeight% 0x200 Center gButtonPress hwndGO, GO
 		CTLCOLORS.Attach(GO, ButtonList.GO.BackColor, ButtonList.GO.TextColor)
 	}
@@ -164,12 +167,19 @@ guiOldPos:
 	}
 		
 	; Footer call		
-	if (guis.mainGui.footer)
+	if (guis.footer.footer)
 	{
 		footerWidth := (buttonWidth * 2) + buttonSpacing
+		footerTextSize 	:= Guis.footer.textSize
+		footerHeight    := Guis.footer.Height
+		footerTextColor := Guis.footer.textColor
+		footerTextFont	:= Guis.footer.textFont
+		footerTextBold  := Guis.footer.textBold
+		footerColor		:= Guis.footer.footerColor
 		
-		GUI, font, s7 c%footerColor%
-		GUI, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h10 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
+		GUI, font, s%footerTextSize% w%footerTextBold% c%footerTextColor%, %footerTextFont%
+		GUI, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h%footerHeight% 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
+			CTLCOLORS.Attach(FOOTER, footerColor, footerTextColor)
 	}
 		
 	GUI, show, x%XPOS% y%YPOS%, c0bra Main GUI
@@ -187,6 +197,14 @@ return
 	SIDE_GUI()
 	{
 		global
+
+		sideButtonSpacing 		:= Guis.sideGui.buttonSpacing
+		sideButtonWidth 		:= Guis.sideGui.buttonWidth
+		sideButtonHeight 		:= Guis.sideGui.buttonHeight
+		sideSearch 				:= Guis.sideGui.search
+		sideTextSize 			:= Guis.sideGui.textSize
+		sideTextBold 			:= Guis.sideGui.textBold
+		sideTextFont			:= Guis.sideGui.textFont
 
 		currGui := A_Gui
 		nextGui := currGui = 1 ? currGui + 2 : currGui + 1
@@ -222,7 +240,7 @@ return
 		}
 		else if ON_LEFT
 		{
-			XPOS := x - (2 * buttonSpacing) - buttonWidth
+			XPOS := x - (2 * sideButtonSpacing) - sideButtonWidth
 			YPOS := y + CONTROL_POSY - buttonSpacing
 		}
 		else
@@ -241,10 +259,10 @@ return
 			childrenButtons .= (childrenButtons ? "," : "") value
 		}
 		
-		GUI, %currGui%:Color, % guis.mainGui.guiBackColor
+		GUI, %currGui%:Color, % guis.sideGui.guiBackColor
 		GUI, %currGui%:-caption +ToolWindow +Owner%PREV_GUI%
-		GUI, %currGui%:margin, %buttonSpacing%, %buttonSpacing%
-		GUI, %currGui%:Font, s%textSize% w%textBold%
+		GUI, %currGui%:margin, %sideButtonSpacing%, %sideButtonSpacing%
+		GUI, %currGui%:Font, s%sideTextSize% w%sideTextBold%, %sideTextFont%
 		
 		;Bookmarks
 
@@ -267,12 +285,12 @@ return
 							
 							if (lastButton = "Bookmarks")
 							{
-								GUI, %currGui%:Add, text, x%buttonSpacing% y+%buttonSpacing% w%sideLastButWidth% h%buttonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
+								GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
 									CTLCOLORS.Attach(%A_HWND%, ButtonList.Bookmarks.BackColor, ButtonList.Bookmarks.TextColor)
 							}
 							else
 							{
-								GUI, %currGui%:Add, text, y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
+								GUI, %currGui%:Add, text, y+%sideButtonSpacing% w%sideButtonWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
 									CTLCOLORS.Attach(%A_HWND%, ButtonList.Bookmarks.BackColor, ButtonList.Bookmarks.TextColor)
 							}
 						}
@@ -290,12 +308,12 @@ return
 					
 					if (lastButton = A_GuiControl)
 					{
-						GUI, %currGui%:Add, text, x%buttonSpacing% y+%buttonSpacing% w%sideLastButWidth% h%buttonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
+						GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
 							CTLCOLORS.Attach(%A_HWND%, ChildrenList[A_LoopField].BackColor, ChildrenList[A_LoopField].TextColor)
 					}
 					else
 					{
-						GUI, %currGui%:Add, text, y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
+						GUI, %currGui%:Add, text, y+%sideButtonSpacing% w%sideButtonWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
 							CTLCOLORS.Attach(%A_HWND%, ChildrenList[A_LoopField].BackColor, ChildrenList[A_LoopField].TextColor)
 					}
 				}
@@ -327,17 +345,25 @@ SLR_GUI()
 	
 	MouseGetPos, MouseX1, MouseY1
 	
-	GUI, 2:font, s%textSize% w%textBold%
+	SLRbuttonSpacing 		:= Guis.SLRGui.buttonSpacing
+	SLRbuttonWidth 			:= Guis.SLRGui.buttonWidth
+	SLRbuttonHeight 		:= Guis.SLRGui.buttonHeight
+	SLRguiBackColor			:= Guis.SLRGui.guiBackColor
+	SLRtextSize 			:= Guis.SLRGui.textSize
+	SLRtextBold 			:= Guis.SLRGui.textBold
+	SLRtextFont				:= Guis.SLRGui.textFont
+	
+	GUI, 2:font, s%SLRtextSize% w%SLRtextBold%, %SLRtextFont%
 	GUI, 2:+toolwindow -caption
-	GUI, 2:Color, Guis.mainGui.slrGuiColor
-	GUI, 2:Margin, %buttonSpacing%, %buttonSpacing%
+	GUI, 2:Color, % Guis.SLRGui.guiBackColor
+	GUI, 2:Margin, %SLRbuttonSpacing%, %SLRbuttonSpacing%
 	
 	Loop, Parse, slrButtons, `n
 	{
 		if (A_Index = 1)
-			GUI, 2:Add, text, x%buttonSpacing% y%buttonSpacing% w%buttonWidth% h%buttonHeight% hwnd%A_LoopField% 0x200 Center gSLR, %A_LoopField%
+			GUI, 2:Add, text, x%SLRbuttonSpacing% y%SLRbuttonSpacing% w%SLRbuttonWidth% h%SLRbuttonHeight% hwnd%A_LoopField% 0x200 Center gSLR, %A_LoopField%
 		else
-			GUI, 2:Add, text, y+%buttonSpacing% w%buttonWidth% h%buttonHeight% hwnd%A_LoopField% 0x200 Center gSLR, %A_LoopField%
+			GUI, 2:Add, text, y+%SLRbuttonSpacing% w%SLRbuttonWidth% h%SLRbuttonHeight% hwnd%A_LoopField% 0x200 Center gSLR, %A_LoopField%
 		
 		CTLCOLORS.Attach(%A_LoopField%, slrList[A_LoopField].BackColor, slrList[A_LoopField].TextColor)
 	}
@@ -365,6 +391,36 @@ return
 
 
 
+ColorGui()
+{
+	global
+	
+	if (ColorButton <> "")
+	{
+		daButton := ColorButton
+		me 		 := "Default"
+	}
+	else
+		daButton := A_ThisMenuItem
+	
+	htmlColors := "Black|Silver|Gray|White|Maroon|Red|Purple|Fuchsia|Green|Lime|Olive|Yellow|Navy|Blue|Teal|Aqua"
+	StringReplace, htmlColors, htmlColors, % buttonList[me][daButton], % buttonList[me][daButton] = "Aqua" ? buttonList[me][daButton] "||" : buttonList[me][daButton] "|"
+	
+	GUI, 1:Destroy	
+	GUI, CLR:Margin, 5, 5
+	GUI, CLR:Add, Button, x5 y40 w100 h30 gCustom, Custom
+	GUI, CLR:Add, Text, x25 y13 w40 h20 +Right, Color:
+	GUI, CLR:Add, DropDownList, x75 y10 w120 h20 r16 vdaColor gcolorDrop, % htmlColors
+	GUI, CLR:Add, Text, x+10 w40 h20 hwndColorHwnd, 		
+	GUI, CLR:Add, Button, x105 y40 w60 h30 gbtnDefault, Default
+	GUI, CLR:Add, Button, x165 y40 w100 h30 gokButton Default, OK
+	GUI, CLR:Show, h80, c0bra Colors
+	
+	CTLCOLORS.Attach(ColorHwnd, buttonList[me][daButton], buttonList[me][daButton])
+}
+
+
+
 ;{===== GUI Sizing ====>>>
 
 GuiSize:
@@ -377,6 +433,7 @@ GuiSize:
 8GuiSize:
 9GuiSize:
 10GuiSize:
+CLRGuiSize:
    If (A_EventInfo != 1)
    {
 	  GUI, %A_Gui%:+LastFound
@@ -415,6 +472,7 @@ GuiEscape:
 	CTLCOLORS.free()
 	Loop 10
 		GUI, %A_index%:Destroy
+	ColorButton :=
 	GUI, CLR:Destroy
 return
 
@@ -459,7 +517,7 @@ GuiContextMenu:
 	If !(buttonList[me].Level)
 	{
 		Menu, SubAdd, Add
-		Menu, SubAdd, DeleteAll		
+		Menu, SubAdd, DeleteAll
 		Menu, SubAdd, Add, main Sub-Menu Button, QuickEditMenu
 		Menu, SubAdd, Add
 		
@@ -467,7 +525,8 @@ GuiContextMenu:
 		{
 			Menu, SubAdd, Add, main %A_LoopField%, QuickEditMenu
 			;TODO: check to make sure the same button type doesn't exist already
-			if A_LoopField in %allButtons%
+			if (instr(allButtons,"Bookmarks") && A_LoopField = "Bookmarks")
+			;if A_LoopField in %allButtons%
 				Menu, SubAdd, Disable, main %A_LoopField%
 		}
 		
@@ -483,13 +542,14 @@ GuiContextMenu:
 		Menu, SubAdd1, DeleteAll
 		loop, parse, buttonTypes, |
 		{
+			if (A_LoopField <> "Bookmarks")
 			Menu, SubAdd1, Add, %A_LoopField%, QuickEditMenu
 			;TODO: check to make sure the same button type doesn't exist already
 			;~ if A_LoopField in %allButtons%
 				;~ Menu, SubAdd, Disable, %A_LoopField%
 		}
 		
-		Menu, Title, Add, Add to %me%, :SubAdd1
+		Menu, Title, Add, Add to <%me%>, :SubAdd1
 	}
 
 	; Color button menus
@@ -499,16 +559,16 @@ GuiContextMenu:
 	Menu, colorAdd, Add, % "TextColor", QuickEditMenu
 	Menu, colorAdd, Add, % "HlBackColor", QuickEditMenu
 	Menu, colorAdd, Add, % "HlTextColor", QuickEditMenu
-	Menu, Title, Add, Change %me% Colors, :colorAdd
+	Menu, Title, Add, <%me%> Colors, :colorAdd
 
 	; Edit and Delete button menus
 	if (me != "GO")
 	{
-		Menu, Title, Add, Delete %me% button, QuickEditMenu
-		;TODO: make sure user knows that buttons inside will be lost as well
-		
 		if (!buttonList[me].Children && me != "Bookmarks")
-			Menu, Title, Add, Edit %me%, QuickEditMenu
+			Menu, Title, Add, <%me%> Name, QuickEditMenu
+		
+		Menu, Title, Add, Delete <%me%>, QuickEditMenu
+		;TODO: make sure user knows that buttons inside will be lost as well
 	}
 	
 	Menu, Title, Show, x%XPOS% y%YPOS%
@@ -552,8 +612,7 @@ return
 				GUI, 1:destroy
 				GUI, Destroy
 				
-				goto, guiOldPos
-				;~ Run, `"%C0BRA%\c0bra.ahk`" -kill %A_ScriptHwnd% -x %reloadXpos% -y %reloadYpos%
+				quickReload("Button Color Updated")
 			}
 		}
 	return
@@ -565,6 +624,20 @@ return
 
 		newColor := daColor
 			
+		IfWinExist, GUI Window Settings
+		{
+			if (newColor <> "")
+				GuiControl, Settings:, %ColorButton%, %newColor%
+			
+			for key, value in buttons
+			{
+				if (value.text = "Default")
+					buttons[key][ColorButton] := newColor
+			}
+			ColorButton :=
+			return
+		}
+			
 		for key, value in buttons
 		{
 			if (value.text = me)
@@ -575,11 +648,11 @@ return
 				GUI, 1:destroy
 				GUI, Destroy
 				
-				goto, guiOldPos
-				;~ Run, `"%A_ScriptFullPath%`" -kill `"%A_ScriptHwnd%`" -x %reloadXpos% -y %reloadYpos%			
+				quickReload("Button Color Updated")		
 			}
 		}
 	return
+
 
 
 	Custom:
@@ -597,9 +670,8 @@ return
 				buttons[key][A_ThisMenuItem] := newColor
 				JSON_Save(buttons, buttonSettings)
 				GUI, 1:destroy
-				;~ goto, guiOldPos
-				;~ Run %A_ScriptFullPath% \restart
-				Run, `"%A_ScriptFullPath%`" -kill `"%A_ScriptHwnd%`" -showGUI -x %reloadXpos% -y %reloadYpos%
+				
+				quickReload("Button Color Updated")
 			}
 		}
 	return
@@ -631,7 +703,7 @@ ButtonPress:
 				; if control is held for a website
 				if instr(A_ThisHotkey, "^")
 				{
-					Run % "chrome.exe " instr(GSEARCH, ".com") ? "www." GSEARCH : "www." GSEARCH ".com"
+					Run % "chrome.exe " instr(GSEARCH, ".com") ? "www." GSEARCH ".com": "www." GSEARCH
 					GUI, Destroy
 					return
 				}

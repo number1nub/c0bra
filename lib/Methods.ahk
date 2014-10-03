@@ -11,6 +11,12 @@ reloadMe:
 	Reload	
 return
 
+; Reload the script & display the specified tray tip
+QuickReload(prompt = "", title = "")
+{
+	Run, %A_ScriptFullPath% %A_ScriptHwnd% `"%prompt%`" `"%title%`"
+}
+
 
 editMe:
 	run, edit %COBRA%\c0bra.ahk
@@ -22,11 +28,6 @@ theCloser:
 	WinGetTitle, winTitle, ahk_id %win%
 	WinGetClass, winClass, ahk_id %win%
 	
-	; TODO: Allow customization per "special" entry
-	;~ if winTitle contains %closeTabSpecialWinList%
-		;~ Send, {Blind}^w
-	;~ else if winClass contains %closeTabSpecialWinList%
-		;~ Send, {Blind}^w
 	IfWinActive, ahk_group closeTabSpecialGroup
 	{
 		Send, {Blind}^w
@@ -130,8 +131,9 @@ deleteButton(aText)
 		{
 			if (value.Children[1])
 			{
-				MsgBox, You must delete all children before deleting this button.
-				return
+				MsgBox, 4148, Remove Button, The <%aText%> button has buttons in it.  Deleting the <%aText%> button will remove these buttons as well.`n`nAre you sure you want to delete the <%aText%> button?
+				ifmsgbox No
+					return
 			}
 			buttons.Remove(key)
 		}
@@ -371,75 +373,107 @@ Trimmer(str, omitchars=" `t")
 				* **U** - Upper case (Default)
 				* **L** - Lower case
 				* **T** - Title case
-		origStr - (Optional) String to be converted. If blank or omitted, the currently selected text
-				will be converted and replaced.
 */
-ToggleCase(toCase = "U", origStr = "")
+ToggleCase(toCase = "U")
 {
-	if (!origStr)
+	BLB := A_BatchLines, KDB := A_KeyDelay, CBB := Clipboard
+	SetKeyDelay, -1
+	SetBatchLines, -1
+	Clipboard := ""
+	sleep 50
+	
+	Send, {Blind}^c
+	ClipWait, 2
+	If (ErrorLevel)
 	{
-		replaceSel := 1
-		try origStr := GetSelection(1)
-		catch e
-		{
-			ToolTip, % "Toggle Case Error:`n`n" e
-			SetTimer, TTOff, 1000
-			return
-		}
+		TrayTip, C0bra Launcher, Could't get selected text., 1500
+		return
 	}
 	
 	if (toCase = "L")
-		StringLower, v, origStr
+		StringLower, v, Clipboard
 	else if (toCase = "T")
-		StringUpper, v, origStr, T
-	else if (toCase = "U")
-		StringUpper, v, origStr
-	else
-		throw "Invalid value for toCase parameter """ toCase """.`n`nShould be either 'U', 'L' or 'T'."
+		StringUpper, v, Clipboard, T
+	else (toCase = "U")
+		StringUpper, v, Clipboard
+	;~ else
+		;~ throw "Invalid value for toCase parameter """ toCase """.`n`nShould be either 'U', 'L' or 'T'."
 	
-	if (replaceSel)
-	{
-		CBB := Clipboard
-		Clipboard := ""
-		Clipboard := v
-		sleep 50
-		send, {Blind}^v
-		return
-	}
-	return v
+	PasteVal(v)
+
+	Clipboard := CBB
+	SetKeyDelay, %KDB%
+	SetBatchLines, %BLB%	
 }
 
 
 
 
 /*!
-	Function: GetSelection([CutTxt, NoRestore])
-		Returns the current selection. Optionally deletes the selection.
-
+	Function: PasteVal(sendTxt)
+		Uses the Windows clipboard to insert text at the current
+		carat position, avoiding slow usage of the Send command.
+		The user's clipboard contents are not changed/lost.
 	Parameters:
-		CutTxt - (Optional) Flag indicating that selected text should be cut rather than copied. Default action
-				is to copy text.
-		NoRestore - (Optional) Flag indicating that the original clipboard contents should not be restored.
-				
+		sendTxt - Text to insert.
+*/
+PasteVal(sendTxt)
+{
+	WinGetClass, wClass, A
+	BLBU := A_BatchLines, KDBU := A_KeyDelay, CBBU := Clipboard
+	SetKeyDelay, -1
+	SetBatchLines, -1
+	Clipboard := ""
+	sleep 20
+	Clipboard := ExpandEnv(sendTxt)
+	ClipWait, 1
+	If (!ErrorLevel)
+	{
+		sleep 20
+		if (wClass = "ConsoleWindowClass")
+		{
+			Send, {Blind}!{Space}
+			send, {Blind}ep
+		}		
+		else		
+			Send, {Blind}^v
+	}
+	sleep 150
+	Clipboard := CBBU
+	SetKeyDelay, %KDBU%
+	SetBatchLines, %BLBU%
+}
+
+
+
+/*!
+	Function: GetSelection([CutTxt, NoRestore])
+		Returns the current selection.
+		
 	Returns:
 		User's current selection in specified format. The defualt value returned by the function would return a
 		string of any highlighted text, if text were highlighted, or a string of file paths, if for example, files
 		were selected.
 */
-GetSelection(CutTxt=0, NoRestore=0)
+GetSelection()
 {
-	CBB := Clipboard
+	BLBU := A_BatchLines, KDBU := A_KeyDelay, CBB := Clipboard
+	SetKeyDelay, -1
+	SetBatchLines, -1
 	Clipboard := ""
-	sleep 50
-	Send, % (CutTxt ? "{Blind}^x" : "{Blind}^c")
+	sleep 20
+	
+	Send, {Blind}^c
 	ClipWait, 1
 	If (ErrorLevel)
 		throw "No text selected or copy command timeout."
-		
-	Selection := PlainText ? ClipboardAll : Clipboard
-	Clipboard := NoRestore ? cbb : Clipboard
-			
-	return, Selection
+	
+	selTxt := Clipboard
+	sleep 100	
+	Clipboard := CBB
+	SetKeyDelay, %KDBU%
+	SetBatchLines, %BLBU%			
+	return, sel
 }
 
 

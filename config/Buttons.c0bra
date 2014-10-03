@@ -1,450 +1,69 @@
 {
     "1": {
-        "BackColor":                 454545,
-        "HlBackColor":               "aqua",
-        "HlTextColor":               454545,
+        "BackColor":                 "Maroon",
+        "guiColor":                  "White",
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Main Gui Settings":         "Maroon",
         "Text":                      "Default",
         "TextColor":                 "White"
     },
     "2": {
-        "BackColor":                 454545,
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
+        "BackColor":                 "Maroon",
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
         "Text":                      "GO",
         "TextColor":                 "White"
     },
     "3": {
-        "BackColor":                 454545,
+        "BackColor":                 "Maroon",
         "Children": {
-            "1":                     "Creo",
-            "2":                     "TrueCrypt",
-            "3":                     "KeePass",
-            "4":                     "Sublime Text",
-            "5":                     "Find & Replace Buddy",
-            "6":                     "Window Closer"
+            "1":                     "Internet Explorer"
         },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
         "Text":                      "Programs",
         "TextColor":                 "White"
     },
     "4": {
-        "BackColor":                 454545,
+        "BackColor":                 "Maroon",
         "Cmd": {
-            "Arg":                   "C:\\Users\\e205658\\Documents\\creo\\Creo Runner.ahk",
+            "Arg":                   "iexplore.exe",
             "Type":                  "P"
         },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
         "Level":                     1,
-        "Text":                      "Creo",
+        "Text":                      "Internet Explorer",
         "TextColor":                 "White"
     },
     "5": {
-        "BackColor":                 454545,
+        "BackColor":                 "Maroon",
         "Children": {
-            "1":                     "c0bra",
-            "2":                     "SkyDrive",
-            "3":                     "AHK",
-            "4":                     "DropBox",
-            "5":                     "WFT Calc Sheets",
-            "6":                     "AppData"
+            "1":                     "C"
         },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
         "Text":                      "Folders",
         "TextColor":                 "White"
     },
     "6": {
-        "BackColor":                 454545,
+        "BackColor":                 "Maroon",
         "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\AHK\\c0bra",
+            "Arg":                   "C:\\",
             "Type":                  "R"
         },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
         "Level":                     1,
-        "Text":                      "c0bra",
+        "Text":                      "C",
         "TextColor":                 "White"
     },
     "7": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\SkyDrive",
-            "Type":                  "R"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "SkyDrive",
-        "TextColor":                 "White"
-    },
-    "8": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\AHK",
-            "Type":                  "R"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "AHK",
-        "TextColor":                 "White"
-    },
-    "9": {
         "BackColor":                 "Maroon",
-        "Children": {
-            "1":                     "Calc Sheet",
-            "2":                     "O-Ring Calc",
-            "3":                     "B/C",
-            "4":                     "P15212 Folder",
-            "5":                     "P26205",
-            "6":                     "P26650"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Text":                      "Weatherford",
-        "TextColor":                 "White"
-    },
-    "10": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "\\\\Spencerroad1\\groups-2\\E\\Groups\\Engineering\\Packers\\Guidelines & Check Lists\\Calcs\\Calculations RevF.xlsm",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Calc Sheet",
-        "TextColor":                 "White"
-    },
-    "11": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "\\\\Spencerroad1\\groups-2\\E\\Groups\\Engineering\\Packers\\Guidelines & Check Lists\\Calcs\\ORing Calculator.xlsm",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "O-Ring Calc",
-        "TextColor":                 "White"
-    },
-    "12": {
-        "BackColor":                 454545,
-        "Children": {
-            "1":                     "Pass Viewer",
-            "2":                     "JSON Edit",
-            "3":                     "Resize Enable",
-            "4":                     "Startup Files",
-            "5":                     "RegExr",
-            "6":                     "USurf",
-            "7":                     "Environment Vars",
-            "8":                     "List Items",
-            "9":                     "GrepWin Search",
-            "10":                    "GreenFish Icon",
-            "11":                    "Examine Diff",
-            "12":                    "Window Info"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Text":                      "DB Tools",
-        "TextColor":                 "White"
-    },
-    "13": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\Bullet PassView\\BulletsPassView.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Pass Viewer",
-        "TextColor":                 "White"
-    },
-    "14": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\JSONedit\\JSONedit.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "JSON Edit",
-        "TextColor":                 "White"
-    },
-    "15": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\ResizeEnable\\ResizeEnableRunner.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Resize Enable",
-        "TextColor":                 "White"
-    },
-    "16": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\Startup Files\\WhatInStartup.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Startup Files",
-        "TextColor":                 "White"
-    },
-    "17": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\RegEx Tools\\RegExr\\RegExr.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "RegExr",
-        "TextColor":                 "White"
-    },
-    "18": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox",
-            "Type":                  "R"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "DropBox",
-        "TextColor":                 "White"
-    },
-    "19": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "%A_Desktop%\\..\\Downloads\\UltraSurf\\UltraSurf\\U1304.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "USurf",
-        "TextColor":                 "White"
-    },
-    "20": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "\\\\Spencerroad1\\groups-2\\E\\Groups\\Engineering\\Packers\\Guidelines & Check Lists\\Calcs",
-            "Type":                  "R"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "WFT Calc Sheets",
-        "TextColor":                 "White"
-    },
-    "21": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Program Files\\TrueCrypt\\TrueCrypt.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "TrueCrypt",
-        "TextColor":                 "White"
-    },
-    "22": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\Weatherford\\Calculators\\BC.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "B/C",
-        "TextColor":                 "White"
-    },
-    "23": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\Edit Environment Vars\\rapidee.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Environment Vars",
-        "TextColor":                 "White"
-    },
-    "24": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Program Files (x86)\\KeePass Password Safe 2\\KeePass.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "KeePass",
-        "TextColor":                 "White"
-    },
-    "25": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\AppData\\Sublime Text 3\\sublime_text.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Sublime Text",
-        "TextColor":                 "White"
-    },
-    "26": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\Sys List Items\\sysexp.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "List Items",
-        "TextColor":                 "White"
-    },
-    "27": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\GRepWin RegEx Search\\grepWin.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "GrepWin Search",
-        "TextColor":                 "White"
-    },
-    "28": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\Greenfish Icon Editor\\Greenfish Icon Editor.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "GreenFish Icon",
-        "TextColor":                 "White"
-    },
-    "29": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "Z:\\Active\\P15212",
-            "Type":                  "R"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "P15212 Folder",
-        "TextColor":                 "White"
-    },
-    "30": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\Dropbox\\Tools & Apps\\Examine Difference\\ExamDiff.exe",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Examine Diff",
-        "TextColor":                 "White"
-    },
-    "31": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\AHK\\Tools\\Window Info.ahk",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Window Info",
-        "TextColor":                 "White"
-    },
-    "32": {
-        "BackColor":                 "Green",
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "",
-        "TextColor":                 "White"
-    },
-    "33": {
-        "BackColor":                 "Maroon",
-        "Cmd": {
-            "Arg":                   "Z:\\Active\\P26205",
-            "Type":                  "R"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "P26205",
-        "TextColor":                 "White"
-    },
-    "34": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\AHK\\Find & Replace Buddy\\Find & Replace Buddy.ahk",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Find & Replace Buddy",
-        "TextColor":                 "White"
-    },
-    "35": {
-        "BackColor":                 "Maroon",
-        "Cmd": {
-            "Arg":                   "Z:\\Active\\P26650",
-            "Type":                  "R"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "P26650",
-        "TextColor":                 "White"
-    },
-    "36": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "C:\\SkyDrive\\AHK\\Tools\\WindowFunctions.ahk",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "Window Closer",
-        "TextColor":                 "White"
-    },
-    "37": {
-        "BackColor":                 454545,
-        "Cmd": {
-            "Arg":                   "^#!b",
-            "Type":                  "S"
-        },
-        "HlBackColor":               "Aqua",
-        "HlTextColor":               454545,
-        "Level":                     1,
-        "Text":                      "AppData",
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Text":                      "Bookmarks",
         "TextColor":                 "White"
     }
 }

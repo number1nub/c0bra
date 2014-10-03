@@ -14,8 +14,8 @@ QuickEditMenu:
 	menuCheck := Trim(menuCheck)
 	
 	
-	;{```` Add Outlook or Program Button ````}
-	If (menuCheck = "Outlook" || menuCheck = "Program")
+	;{```` Add Program Button ````}
+	If (menuCheck = "Program")
 	{
 		GUI, Destroy
 		GUI, 1:Destroy
@@ -29,29 +29,47 @@ QuickEditMenu:
 		redoProgram:
 		GUI +LastFound +OwnDialogs +AlwaysOnTop
 		InputBox, aText, Button Title, What is the name of the program?
-		if ErrorLevel
+		if (ErrorLevel || !aText)
 			return
+		if (buttonCheck(buttons, aText))
+			goto, redoProgram
 		
+		GUI +LastFound +OwnDialogs +AlwaysOnTop
+		FileSelectFile, argsCMD,1,, Select the program that the %aText% button will open
+		if (ErrorLevel || !argsCMD)
+			return
+
+		Children := 0				
+	}
+	;}
+
+
+	;{```` Add a Basic Button ````}
+	else if (menuCheck = "Basic Button")
+	{
+		Gui, Destroy
+		GUI, 1:Destroy
+		
+		redoButton:
+		GUI +LastFound +OwnDialogs +AlwaysOnTop
+		InputBox, aText, Button Title, What is the button Title?
+		if (ErrorLevel || !aText)
+				return
+				
+		if (buttonCheck(buttons, aText))
+			goto, redoButton
 		if (aText = "")
 		{
 			MsgBox, 4113, c0bra Button Namer, No button name was entered.`n`nEnter the new button name.
 			IfMsgBox OK
-				goto, redoProgram
+				goto, redoButton
 			else
 				return
 		}
-
-		if (buttonCheck(buttons, aText))
-			goto, redoProgram
-		;~ else
-			;~ return
 		
 		GUI +LastFound +OwnDialogs +AlwaysOnTop
-		FileSelectFile, argsCMD,1,, Select the program that the %aText% button will open
-		if ErrorLevel
-			return
-
-		Children := 0				
+		
+		Children := 1
 	}
 	;}
 
@@ -274,35 +292,60 @@ QuickEditMenu:
 	;{```` Toggle Search Bar ````}
 	else if (A_ThisMenuItem = "Search Bar")
 	{
-		guis.mainGui.search := guis.mainGui.search ? 0 : 1
+		guis.search.search := !guis.search.search
 		JSON_save(guis, guiSettings)
+		quickReload("Search bar " (guis.search.search ? "Enabled" : "Disabled"))
 		
-		IfWinExist, c0bra Main GUI
-		{
-			GUI, Destroy
-			GUI, 1:Destroy
-			goto, guiOldPos
-		}
+		;~ IfWinExist, c0bra Main GUI
+		;~ {
+			;~ GUI, Destroy
+			;~ GUI, 1:Destroy
+			;~ goto, guiOldPos
+		;~ }
 		
+		return
+	}
+	;}
+	
+	
+	;{```` Main Gui Settings ````}
+	else if (A_ThisMenuItem = "Main Gui Settings")
+	{
+		Gui_Settings("Main")
+		theGui := "Main"
+		return
+	}
+	;}
+	
+	
+	;{```` Side Gui Settings ````}
+	else if (A_ThisMenuItem = "Side Gui Settings")
+	{
+		Gui_Settings("Side")
+		return
+	}
+	;}
+	
+	
+	;{```` SLR Gui Settings ````}
+	else if (A_ThisMenuItem = "SLR Gui Settings")
+	{
+		Gui_Settings("SLR")
 		return
 	}
 	;}
 
 
 	;{```` Change search text ````}
-	else if (A_ThisMenuItem = "Change Text: " guis.search.searchBackText)
+	else if (A_ThisMenuItem = "Change Search Text")
 	{
-		InputBox, backText, Search Text, Enter text to be shown in search box.,,,,,,,, % guis.search.searchBackText
-		guis.search.searchBackText := backText
-		JSON_save(guis, guiSettings)
+		InputBox, backText, Search Text, Enter text to be shown in search box.,,,,,,,, % guis.search.BackText
+		if (errorlevel)
+			return
 		
-		IfWinExist, c0bra Main GUI
-		{
-			GUI, Destroy
-			GUI, 1:Destroy
-			goto, guiOldPos
-		}		
-		return
+		guis.search.BackText := backText
+		JSON_save(guis, guiSettings)
+		quickReload("Search text updated...")		
 	}
 	;}
 
@@ -310,48 +353,40 @@ QuickEditMenu:
 	;{```` Toggle Footer ````}
 	else if (A_ThisMenuItem = "Footer")
 	{
-		guis.mainGui.footer := guis.mainGui.footer ? 0 : 1
+		guis.footer.footer := !guis.footer.footer
 		JSON_save(guis, guiSettings)
-
-		IfWinExist, c0bra Main GUI
-		{
-			GUI, Destroy
-			GUI, 1:Destroy
-			goto, guiOldPos
-		}
-		
-		return
+		quickReload("Footer " (guis.footer.footer ? "Enabled" : "Disabled"))		
 	}
 	;}
 
 
 	;{```` Main GUI Options ````}
-	else if temp_MenuItem in %GuiKeys%
-	{
-		InputBox, newOption, c0bra GUI Options, Enter the new value for A_ThisMenuitem.,,,,,,,, % guis.mainGui[temp_MenuItem] != "" ? guis.mainGui[temp_MenuItem] : guis.search[temp_MenuItem]
-		if !(ErrorLevel)
-		{
-			if (guis.mainGui[temp_MenuItem] != "")
-			{
-				guis.mainGui[temp_MenuItem] := newOption
-				JSON_save(guis, guiSettings)
-			}
-			else if (guis.search[temp_MenuItem] != "")
-			{
-				guis.search[temp_MenuItem] := newOption
-				JSON_save(guis, guiSettings)
-			}
-		}
+	;~ else if temp_MenuItem in %GuiKeys%
+	;~ {
+		;~ InputBox, newOption, c0bra GUI Options, Enter the new value for A_ThisMenuitem.,,,,,,,, % guis.mainGui[temp_MenuItem] != "" ? guis.mainGui[temp_MenuItem] : guis.search[temp_MenuItem]
+		;~ if !(ErrorLevel)
+		;~ {
+			;~ if (guis.mainGui[temp_MenuItem] != "")
+			;~ {
+				;~ guis.mainGui[temp_MenuItem] := newOption
+				;~ JSON_save(guis, guiSettings)
+			;~ }
+			;~ else if (guis.search[temp_MenuItem] != "")
+			;~ {
+				;~ guis.search[temp_MenuItem] := newOption
+				;~ JSON_save(guis, guiSettings)
+			;~ }
+		;~ }
 			
-		return
-	}
+		;~ return
+	;~ }
 	;}
 
 
 	;{```` Delete A Button ````}
 	else if (InStr(A_ThisMenuItem, "Delete"))
 	{
-		MsgBox, 262196, c0bra Delete, Delete %me% button? 
+		MsgBox, 262196, c0bra Delete, Are you sure you want to delete the %me% button? 
 		ifmsgbox, Yes
 		{
 			GUI, Destroy
@@ -366,38 +401,7 @@ QuickEditMenu:
 	;{```` Change Button Colors ````}
 	else if (RegExMatch(Trim(A_ThisMenuItem), "i)Color\s*$"))
 	{	
-		;TODO: Move this list to a config file?
-		htmlColors := "Black|Silver|Gray|White|Maroon|Red|Purple|Fuchsia|Green|Lime|Olive|Yellow|Navy|Blue|Teal|Aqua"
-		
-		;CHANGED: Setting the initial dropdown value this way doesn't trigger the color change event & shows an uncolored block.				
-		StringReplace, htmlColors, htmlColors
-					 , % buttonList[me][A_ThisMenuItem]
-					 , % buttonList[me][A_ThisMenuItem] = "Aqua" ? buttonList[me][A_ThisMenuItem] "||" : buttonList[me][A_ThisMenuItem] "|"
-		
-		reloadXpos := A_GuiX
-		reloadYpos := A_GuiY
-		
-		;{````  Custom Color GUI  ````}
-		GUI, 1:Destroy
-		GUI, CLR:Margin, 5, 5
-		GUI, CLR:+AlwaysOnTop
-		
-		GUI, CLR:Add, Button, x5 y40 w100 h30 gCustom, Custom
-		GUI, CLR:Add, Text, x25 y13 w40 h20 +Right, Color:
-		GUI, CLR:Add, DropDownList, x75 y10 w120 h20 r16 vdaColor gcolorDrop, % htmlColors
-		GUI, CLR:Add, Text, x+10 w40 h20 +border hwndColorHwnd,		
-		GUI, CLR:Add, Button, x105 y40 w60 h30 gbtnDefault, Use Default
-		GUI, CLR:Add, Button, x165 y40 w100 h30 gokButton Default, OK
-		
-		GUI, CLR:Show, h80, c0bra Colors
-		;}
-		
-		CTLCOLORS.Attach(ColorHwnd, buttonList[me][A_ThisMenuItem], buttonList[me][A_ThisMenuItem])
-		
-		; Set the dropdown to the current button color if assigned one of the names
-		;~ if (InStr(htmlColors, buttonList[me][A_ThisMenuItem]))
-			;~ GuiControl, Choose, daColor, % buttonList[me][A_ThisMenuItem]
-		
+		ColorGui()
 		return
 	}
 	;}
@@ -456,6 +460,7 @@ QuickEditMenu:
 	}
 		
 	addButton(aText, CMD, typeCmd, argsCmd, aColor, Children, Parent)
+	goto, gui
 	goto, guiOldPos
 	;}
 return
@@ -467,15 +472,17 @@ return
 ;{===== Tray Menu Actions ====>>>
 
 TrayText:
+
 	;{```` Change Main Hotkey ````}
-	if (A_ThisMenuItem = "Trigger: " mainHotkey)
+	if (A_ThisMenuItem = "Trigger: " Settings.mainHotkey.mainHotkey)
 	{
-		InputBox, newTrigger, c0bra Trigger, Enter new c0bra trigger hotkey(s)`nCurrent Hotkey - %mainHotkey%`nExample 1 - ^!1`nExample 2 - ^#1,,,,,,,, % mainHotkey
-		if ErrorLevel
+		mainHotkey := settings.mainHotkey.mainHotkey
+		InputBox, newTrigger, c0bra Trigger, Enter new c0bra trigger hotkey(s)`nCurrent Hotkey - %mainHotkey%`n`nExample 1 - MButton`nExample 2 - ^#1`n,,,,,,,, % mainHotkey
+		if (ErrorLevel || !newTrigger)
 			return		
 		Settings.mainHotkey.mainHotkey := newTrigger
 		JSON_Save(Settings, c0braSettings)
-		Run, %cobraPath% %A_ScriptHwnd% /prompt "Main Hotkey Changed" %newTrigger%
+		quickReload("New Trigger: " newTrigger, "Main Hotkey Changed")
 	}
 	;}
 
@@ -491,7 +498,7 @@ TrayText:
 		
 		Settings.userHotkeys[newTrigger] := newAction
 		JSON_Save(Settings, c0braSettings)
-		Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Added Hotkey <" modReplace(newTrigger) ">"" ""`nACTION:`n" newAction "`n """
+		quickReload("ACTION:`n" newAction, "Added Hotkey <" modReplace(newTrigger) ">")
 	}
 	;}
 	
@@ -505,7 +512,7 @@ TrayText:
 		{
 			Settings.userHotkeys.Remove(hkTrigger)
 			JSON_Save(Settings, c0braSettings)
-			Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Deleted Hotkey <" modReplace(hkTrigger) ">"" ."
+			quickReload("Deleted Hotkey <" modReplace(hkTrigger) ">")
 		}
 		InputBox, newAction, Edit Hotkey, % "Hotkey action:",,600,160,,,,, % hkAction
 		If (ErrorLevel || !newAction)
@@ -513,7 +520,7 @@ TrayText:
 		Settings.userHotkeys.Remove(hkTrigger)
 		Settings.userHotkeys[newTrigger] := newAction
 		JSON_Save(Settings, c0braSettings)
-		Run, % A_ScriptFullPath " " A_ScriptHwnd " /prompt ""Updated Hotkey <" modReplace(hkTrigger) ">"" ""`nUPDATED TRIGGER: <" modReplace(newTrigger) ">`n`nUPDATED ACTION:`n" newAction "`n `n"""
+		quickReload("New Hotkey: " modReplace(newTrigger) "`nAction:`n" newAction, "Updated Hotkey <" modReplace(hkTrigger) ">")
 	}
 	;}
 return

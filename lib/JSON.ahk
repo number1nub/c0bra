@@ -1,4 +1,4 @@
-#Escapechar \ 
+﻿#Escapechar \ 
 
 
 
@@ -18,9 +18,7 @@ $(path, val = "") {
     global $$ 
     tempobj := $$ 
 
-    last := (instr(path, ".") 
-        ? substr(path, 1+instr(path, ".", false, -1)) 
-        : path) 
+    last := (instr(path, ".") ? substr(path, 1+instr(path, ".", false, -1)) : path) 
 
     Loop, Parse, path, \. 
     { 
@@ -36,7 +34,8 @@ $(path, val = "") {
     } 
 
     if (! tempObj) 
-        JSON_error("Cannot find or set entry " . path ) 
+		throw { message: "Cannot find or set entry " path }
+        ;JSON_error("Cannot find or set entry " path) 
     else 
         return (val = "" ?  tempObj : 0 ) 
 } 
@@ -49,28 +48,33 @@ JSON_save(obj, filename, spacing=35, block="    ", level=1) {
     bytesWritten := file.write(jsonString) 
     file.close() 
 
-    if (bytesWritten <= 0) 
-        JSON_error("Cannot write file " . filename) 
+    if (bytesWritten <= 0)
+		throw {message: "Cannot write file.", file: filename }
+        ;JSON_error("Cannot write file " filename)
     else 
         return bytesWritten 
 } 
 
 ;  Load JSON string from file                                            ; 
-JSON_load(filename) { 
-    file := FileOpen(filename, "r") 
-    jsonString := file.read() 
-    file.close() 
-    if (jsonString == "") 
-        JSON_error("No file found, or blank file.") 
-    return JSON_from(jsonString, filename) 
+JSON_load(filename) {
+    file := FileOpen(filename, "r")
+    jsonString := file.read()
+    file.close()
+    if (jsonString == "")
+        throw { message: "No file found, or blank file.", file: filename }
+		;JSON_error("No file found, or blank file.") 
+    try fromJ := JSON_from(jsonString, filename)
+	catch e
+		throw {message: e.message, file: filename, extra: e.extra}
+	return fromJ
 } 
 
 ;  Error handling                                                        ; 
 JSON_error(s)
-{ 
-    Msgbox, % "[" A_now "] " s 
+{
+    Msgbox, % "[" A_now "] " s
     Exit 
-} 
+}
 
 ;  Escape / unescape json keys and values                                ; 
 JSON_escape(s) { 
@@ -146,8 +150,8 @@ JSON_to(obj, spacing = 50, block = "    ", level = "1" ) {
 } 
 
 ;  Initialize the shift-reduce tables                                       ; 
-JSON_init() { 
-
+JSON_init()
+{ 
     #EscapeChar ` 
     global JSON_regexps, JSON_rules 
 
@@ -164,7 +168,7 @@ JSON_init() {
         , "D" , "(true|false|null)" 
         , ":" , "(:)" 
         , "," , "(,)" 
-    . "" ) 
+    . "" )
 
     ;  1) Match "key" in the symbol stack                                   ; 
     ;  2) Replace with "sub" in the symbol stack                            ; 
@@ -177,8 +181,8 @@ JSON_init() {
     JSON_rules[3] := Object( "key", "({}|{_(,_)*})",                     "sub", "O", "func", "JSON_reduce_object"   ) 
 
     #Escapechar \ 
+}
 
-} 
 
 ; Reducing functions                                                       ; 
 ; Space                           ; 
@@ -210,7 +214,7 @@ JSON_reduce_object(c) {
             for key, val in key_val { 
                 ret[key] := val 
             } 
-        } 
+        }
     } 
     return ret 
 } 
@@ -224,23 +228,28 @@ JSON_from(s, file = "")
     pos     := 1 
     symbols := "" 
     len     := strLen(s) 
+	
+	try
+	{
+		; Loop over the tokens         ; 
+		while (pos <= len)
+		{
+			; Shift a token                 ; 
+			t := JSON_shift(s,pos,symbols,ret) 
 
-    ;   Loop over the tokens         ; 
-    while (pos <= len)
-    {
-        ; Shift a token                 ; 
-        t := JSON_shift(s,pos,symbols,ret) 
+			; Reduce                       ; 
+			symbols := JSON_reduce(t["symbols"], ret)
+			pos := t["pos"] 
+		} 
 
-        ; Reduce                       ; 
-        symbols := JSON_reduce(t["symbols"], ret)
-        pos := t["pos"] 
-    } 
-
-    ; If succesfully reduced, return the object/array    ; 
-    if (symbols == "O" || symbols == "A") 
-        return ret[""] 
-    else 
-        JSON_error("Invalid JSON string, cannot convert to object.\nFile: " file "\nPosition: " pos) 
+		; If succesfully reduced, return the object/array    ; 
+		if (symbols == "O" || symbols == "A") 
+			return ret[""] 
+		else
+			throw { message: "Invalid JSON string, cannot convert to object."
+					, extra: "Line number: " pos }
+			;JSON_error("Invalid JSON string, cannot convert to object.\nFile: " file "\nPosition: " pos)
+	}
 } 
 
 
@@ -250,8 +259,8 @@ JSON_shift(s, pos, symbols, ret) {
 
     global JSON_regexps 
 
-    for symbol,regexp in JSON_regexps { 
-
+    for symbol,regexp in JSON_regexps
+	{ 
         ; match 1 includes quotes, match 2 doesn't       ; 
         RegexMatch(s, "PSi)(" . regexp . ")", match_, pos) 
         if (match_pos1 == pos) { 
@@ -268,19 +277,20 @@ JSON_shift(s, pos, symbols, ret) {
             ; Return the updated symbol stack and pos        ; 
             return Object("symbols", symbols, "pos", pos) 
         } 
-    } 
+    }
 
     ; If there is nothing to shift, error  ; 
-    JSON_error("Error at pos:" pos "\n" substr(s,pos-4)) 
+    throw {message: "Error at position: " pos "\n" substr(s,pos-4) }
+	;JSON_error("Error at pos:" pos "\n" substr(s,pos-4)) 
     exit 
-} 
+}
 
 
 
 ;  Reduces groups of symbols into others according to the rule table                       ; 
-JSON_reduce(symbols, ret) { 
-
-    global JSON_regexps, JSON_rules 
+JSON_reduce(symbols, ret)
+{ 
+	global JSON_regexps, JSON_rules 
 
     rule_idx := 0 
 
