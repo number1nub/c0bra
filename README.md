@@ -1,4 +1,4 @@
-# Cobra Launcher 2.5.3
+# Cobra Launcher 2.5.4
 A powerful, feature packed application launcher utility that is highly customizable and very easy to use.
 
 ### Features
