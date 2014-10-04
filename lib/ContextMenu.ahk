@@ -165,22 +165,15 @@ QuickEditMenu:
 
 
 	;{```` Edit A Button ````}
-	else if (A_ThisMenuItem = "Edit " me)
+	else if (A_ThisMenuItem = "Edit <" me ">")
 	{
 		GUI, 1:Destroy
 		
-		bIndex := ""
-		pIndex := ""
-		cIndex := ""
-		curVal := ""
+		bIndex := "", pIndex := "", cIndex := "", curVal := ""
 		
 		InputBox, newText, c0bra Configuration, Button Text:,,,,,,,, %me%
 		if (ErrorLevel || !newText)
-		{
-			msgbox, 4144, c0bra Configuration, Invalid entry.`n`nAborting
 			return
-		}
-		
 		
 		for index, value in Buttons
 		{
@@ -202,17 +195,14 @@ QuickEditMenu:
 		
 		InputBox, newCommand, c0bra Configuration, Button Command:,,,,,,,, %curVal%
 		If (ErrorLevel || !newCommand)
-		{
-			msgbox, 4144, c0bra Configuration, Invalid entry.`n`nAborting
 			return
-		}
 		
 		Buttons[pIndex].Children[cIndex] := newText
 		Buttons[bIndex].Text := newText
 		Buttons[bIndex].Cmd.Arg := newCommand
 		
 		JSON_Save(Buttons, buttonSettings)
-		goto, guiOldPos
+		quickReload("Changes saved...", me " Button Updated")
 	}
 	;}
 
@@ -236,7 +226,7 @@ QuickEditMenu:
 				
 		Settings.mainHotkey.disableIfActive.Insert(addNorun)
 		JSON_Save(Settings, c0braSettings)
-		Reload	
+		quickReload("""" addNorun """ added to No-Run list", "No-Run Window Added")
 	}
 	;}
 	
@@ -255,7 +245,7 @@ QuickEditMenu:
 				{
 					Settings.mainHotkey.disableIfActive.Remove(key)
 					JSON_Save(Settings, c0braSettings)
-					Reload
+					quickReload("""" A_ThisMenuItem """ removed from No-Run list", "No-Run Window Deleted")
 					return
 				}
 		}
@@ -283,10 +273,36 @@ QuickEditMenu:
 			}
 				
 		Settings.theCloser.closeTabIfActive.Insert(addCloseTab)
-		JSON_Save(Settings, c0braSettings)
-		Reload	
+		JSON_Save(Settings, c0braSettings)		
+		quickReload("""" addCloseTab """ added to Close-Tab list", "Close-Tab Window Added")
 	}
 	;}
+	
+	
+	
+	;{```` Remove From Close-Tab List ````}
+	else if A_ThisMenuItem in %closeTabWinList%
+	{
+		GUI, Destroy
+		GUI, 1:Destroy
+		
+		MsgBox, 4113, c0bra Close-Tab, Are you sure you want to remove %A_ThisMenuItem% from the Close-Tab list?
+		IfMsgBox OK
+		{
+			for key, value in Settings.theCloser.closeTabIfActive
+				if (value = A_ThisMenuItem)
+				{
+					Settings.mainHotkey.closeTabIfActive.Remove(key)
+					JSON_Save(Settings, c0braSettings)
+					quickReload("""" A_ThisMenuItem """ removed from Close-Tab list", "Close-Tab Window Deleted")
+					return
+				}
+		}
+		else
+			return
+	}
+	;}
+	
 	
 	
 	;{```` Toggle Search Bar ````}
@@ -295,15 +311,6 @@ QuickEditMenu:
 		guis.search.search := !guis.search.search
 		JSON_save(guis, guiSettings)
 		quickReload("Search bar " (guis.search.search ? "Enabled" : "Disabled"))
-		
-		;~ IfWinExist, c0bra Main GUI
-		;~ {
-			;~ GUI, Destroy
-			;~ GUI, 1:Destroy
-			;~ goto, guiOldPos
-		;~ }
-		
-		return
 	}
 	;}
 	
@@ -312,7 +319,6 @@ QuickEditMenu:
 	else if (A_ThisMenuItem = "Main Gui Settings")
 	{
 		Gui_Settings("Main")
-		theGui := "Main"
 		return
 	}
 	;}
@@ -360,28 +366,6 @@ QuickEditMenu:
 	;}
 
 
-	;{```` Main GUI Options ````}
-	;~ else if temp_MenuItem in %GuiKeys%
-	;~ {
-		;~ InputBox, newOption, c0bra GUI Options, Enter the new value for A_ThisMenuitem.,,,,,,,, % guis.mainGui[temp_MenuItem] != "" ? guis.mainGui[temp_MenuItem] : guis.search[temp_MenuItem]
-		;~ if !(ErrorLevel)
-		;~ {
-			;~ if (guis.mainGui[temp_MenuItem] != "")
-			;~ {
-				;~ guis.mainGui[temp_MenuItem] := newOption
-				;~ JSON_save(guis, guiSettings)
-			;~ }
-			;~ else if (guis.search[temp_MenuItem] != "")
-			;~ {
-				;~ guis.search[temp_MenuItem] := newOption
-				;~ JSON_save(guis, guiSettings)
-			;~ }
-		;~ }
-			
-		;~ return
-	;~ }
-	;}
-
 
 	;{```` Delete A Button ````}
 	else if (InStr(A_ThisMenuItem, "Delete"))
@@ -391,7 +375,7 @@ QuickEditMenu:
 		{
 			GUI, Destroy
 			deleteButton(me)
-			goto, guiOldPos
+			quickReload("""" me """ button removed", "Button Deleted")
 		}
 		return
 	}
@@ -474,15 +458,15 @@ return
 TrayText:
 
 	;{```` Change Main Hotkey ````}
-	if (A_ThisMenuItem = "Trigger: " Settings.mainHotkey.mainHotkey)
+	if (A_ThisMenuItem = "Main Hotkey: " Settings.mainHotkey.mainHotkey)
 	{
 		mainHotkey := settings.mainHotkey.mainHotkey
-		InputBox, newTrigger, c0bra Trigger, Enter new c0bra trigger hotkey(s)`nCurrent Hotkey - %mainHotkey%`n`nExample 1 - MButton`nExample 2 - ^#1`n,,,,,,,, % mainHotkey
+		InputBox, newTrigger, c0bra Trigger, Enter a new hotkey that will launch the c0bra menu:`n,,,,,,,, % mainHotkey
 		if (ErrorLevel || !newTrigger)
-			return		
+			return
 		Settings.mainHotkey.mainHotkey := newTrigger
 		JSON_Save(Settings, c0braSettings)
-		quickReload("New Trigger: " newTrigger, "Main Hotkey Changed")
+		quickReload("New Hotkey: " modReplace(newTrigger), "Main Hotkey Changed")
 	}
 	;}
 
@@ -523,6 +507,24 @@ TrayText:
 		quickReload("New Hotkey: " modReplace(newTrigger) "`nAction:`n" newAction, "Updated Hotkey <" modReplace(hkTrigger) ">")
 	}
 	;}
+	
+	
+	;{````  Main Hotkey Hold Action  ````}
+	else if (A_ThisMenuItem = "Hotkey Hold Action")
+	{
+		InputBox, newAction, C0bra Settings,Enter the action to perform when the main hotkey is held down for longer than 500ms:,,500,160,,,,,% Settings.mainHotkey.holdAction
+		If (ErrorLevel || !newAction)
+			return
+		
+	}
+	;}
+	
+	
+	else
+	{
+		msgbox, 4144, C0bra Launcher Settings, Sorry... This isn't yet implemented!
+		return
+	}
 return
 
 ;}<<<==== Tray Menu Actions =====

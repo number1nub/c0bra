@@ -11,6 +11,8 @@
 		{
 			global
 			
+			Gui 1:Destroy
+			
 			Guis := JSON_Load(guiSettings)
 			Buttons := JSON_Load(buttonSettings)
 			
@@ -33,37 +35,36 @@
 			else if (theGui = "SLR")
 				theGuiJSON := "SLRGui"
 						
-			buttonHeight 		:= Guis[theGuiJSON].buttonHeight
-			buttonWidth 		:= Guis[theGuiJSON].buttonWidth
-			buttonSpacing 		:= Guis[theGuiJSON].buttonSpacing
-			textFont			:= Guis[theGuiJSON].textFont
-			textBold 			:= Guis[theGuiJSON].textBold
-			textSize 			:= Guis[theGuiJSON].textSize
-			guiColor			:= Guis[theGuiJSON].guiBackColor
+			buttonHeight 	:= Guis[theGuiJSON].buttonHeight
+			buttonWidth 	:= Guis[theGuiJSON].buttonWidth
+			buttonSpacing	:= Guis[theGuiJSON].buttonSpacing
+			textFont		:= Guis[theGuiJSON].textFont
+			textBold 		:= Guis[theGuiJSON].textBold
+			textSize 		:= Guis[theGuiJSON].textSize
+			guiColor		:= Guis[theGuiJSON].guiBackColor
 			
-			defBackColor		:= ButtonList.Default.BackColor
-			defTextColor		:= ButtonList.Default.TextColor
-			defHLBackColor		:= ButtonList.Default.HLBackColor
-			defHLTextColor		:= ButtonList.Default.HLTextColor
+			defBackColor	:= ButtonList.Default.BackColor
+			defTextColor	:= ButtonList.Default.TextColor
+			defHLBackColor	:= ButtonList.Default.HLBackColor
+			defHLTextColor	:= ButtonList.Default.HLTextColor
 			
 			Gui, Settings:Margin, 2, 10
 			Gui, Settings:Font, s11 cBlack w700, Times New Roman
+			
 			Gui, Settings:Add, GroupBox, x2 y2 w325 h275, GUI SETTINGS
 			Gui, Settings:Add, Text, xp+5 yp+30 w160 h30 Section, Button Height (pixels)
 			Gui, Settings:Add, Text, xp y+5 wp hp, Button Width (pixels)
 			Gui, Settings:Add, Text, xp y+5 wp hp, Button Spacing (pixels)
 			Gui, Settings:Add, Text, xp y+5 wp hp, Button Text Font
-			Gui, Settings:Add, Text, xp y+5 wp hp, Button Text Boldness
+			Gui, Settings:Add, Text, xp y+5 wp hp, Button Text Weight
 			Gui, Settings:Add, Text, xp y+5 wp hp, Button Text Size
 			Gui, Settings:Add, Text, xp y+5 wp hp, Background Color
 			
 			Gui, Settings:Add, Edit, x+5 ys-5 w150 hp Center vbHeight, %buttonHeight%
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vbWidth, %buttonWidth%
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vbSpacing, %buttonSpacing%
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r6 0x100 Center vtFont, Lucida Sans Unicode|Times New Roman|Arial|Veranda|Calibri|BankGothic Md Bt
-				GuiControl, Settings:ChooseString, tFont, %textFont%
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r2 0x100 Center vtBold, 400|700
-				GuiControl, Settings:ChooseString, tBold, %textBold%
+			Gui, Settings:Add, Edit, xp y+10 wp hp Center vtFont, %textFont%
+			Gui, Settings:Add, Edit, xp y+10 wp hp Center vtBold, %textBold%
 			Gui, Settings:Add, Edit, xp y+10 wp hp Center vtSize, %textSize%
 			Gui, Settings:Add, Button, xp y+5 wp h30 Center vguiColor gGuiColor, %guiColor%
 			
@@ -158,6 +159,7 @@
 			
 			Buttons := []
 			Gui, Settings:Destroy
+			quickReload("GUI Settings Updated...")
 		return
 		
 		

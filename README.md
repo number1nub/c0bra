@@ -19,6 +19,12 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Automatically reposition gui if off screen... also side guis
 
 ### CHANGELOG
+**2.5.4**
+* Fixed more reload handling. All setting changes now handled by quickReload
+* Fixed Main Hotkey & Main Hotkey Hold menu items-- Now editable
+* Added access to the Main/Side/SLR Gui Settings from the Gui's context menu
+* Changed Font and Font Weight inputs to be free edit boxes instead of dropdowns
+
 **2.5.3**
 * Fixed bug caused by last merge-- change color GUI was being called twice
 * Added error handling to JSON object parser to inform user of JSON errors instead of just stopping script

@@ -524,14 +524,11 @@ GuiContextMenu:
 		loop, parse, buttonTypes, |
 		{
 			Menu, SubAdd, Add, main %A_LoopField%, QuickEditMenu
-			;TODO: check to make sure the same button type doesn't exist already
 			if (instr(allButtons,"Bookmarks") && A_LoopField = "Bookmarks")
-			;if A_LoopField in %allButtons%
 				Menu, SubAdd, Disable, main %A_LoopField%
 		}
 		
 		Menu, Title, Add, Add Main Button, :SubAdd
-		Menu, Title, Add
 	}
 	
 	
@@ -564,12 +561,16 @@ GuiContextMenu:
 	; Edit and Delete button menus
 	if (me != "GO")
 	{
-		if (!buttonList[me].Children && me != "Bookmarks")
-			Menu, Title, Add, <%me%> Name, QuickEditMenu
+		if (buttonList[me].Level && me != "Bookmarks")
+			Menu, Title, Add, Edit <%me%>, QuickEditMenu
 		
-		Menu, Title, Add, Delete <%me%>, QuickEditMenu
-		;TODO: make sure user knows that buttons inside will be lost as well
+		Menu, Title, Add, Delete <%me%>, QuickEditMenu		
 	}
+		
+	Menu, Title, Add
+	Menu, Title, Add, Main Gui Settings, QuickEditMenu
+	Menu, Title, Add, Side Gui Settings, QuickEditMenu
+	Menu, Title, Add, SLR Gui Settings, QuickEditMenu
 	
 	Menu, Title, Show, x%XPOS% y%YPOS%
 return
@@ -612,7 +613,7 @@ return
 				GUI, 1:destroy
 				GUI, Destroy
 				
-				quickReload("Button Color Updated")
+				quickReload(me " button set to default colors", "Button Color Updated")
 			}
 		}
 	return
@@ -647,8 +648,7 @@ return
 				
 				GUI, 1:destroy
 				GUI, Destroy
-				
-				quickReload("Button Color Updated")		
+				quickReload(me " button " A_ThisMenuItem " updated", "Button Color Updated")
 			}
 		}
 	return
@@ -671,7 +671,7 @@ return
 				JSON_Save(buttons, buttonSettings)
 				GUI, 1:destroy
 				
-				quickReload("Button Color Updated")
+				quickReload(me " button " A_ThisMenuItem " updated", "Button Color Updated")
 			}
 		}
 	return
