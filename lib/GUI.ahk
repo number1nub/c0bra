@@ -564,8 +564,8 @@ GuiContextMenu:
 	; Edit and Delete button menus
 	if (me != "GO")
 	{
-		if (!buttonList[me].Children && me != "Bookmarks")
-			Menu, Title, Add, <%me%> Name, QuickEditMenu
+		if (me != "Bookmarks")
+			Menu, Title, Add, Rename <%me%>, QuickEditMenu
 		
 		Menu, Title, Add, Delete <%me%>, QuickEditMenu
 		;TODO: make sure user knows that buttons inside will be lost as well
