@@ -67,12 +67,32 @@
 			
 			Gui, Settings:Add, Tab2, x2 y2 w675 h315 Wrap, Hotkeys|Gui Appearance|Colors / Add-ons|No-Run / Closer
 			
-			Gui, Settings:Add, Button, xp+200 y+20 w100 h30 gallSet Default, All Set
-			Gui, Settings:Add, Button, x+50 yp wp hp gsettingsCancel, Cancel
-			
 			; Hotkeys Tab Controls
 			Gui, Settings:Tab, Hotkeys
-			Gui, Settings:Add, edit,, nothing
+			Gui, Settings:Add, GroupBox, x5 y35 w330 h280 Center, TRIGGER HOTKEYS
+			Gui, Settings:Add, Text, xp+5 yp+30 w140 h30 Section, Main Trigger
+			Gui, Settings:Add, Text, xp y+5 wp hp, Hold Trigger Action
+			Gui, Settings:Add, Edit, x+5 ys-5 w175 hp, % Settings.mainHotkey.mainHotkey
+			Gui, Settings:Add, Edit, xp y+5 wp hp, % Settings.mainHotkey.holdAction
+			Gui, Settings:Add, Text, xs y+10 w320 hp Center, Main trigger is disabled for the below items:
+			
+			aList :=
+			for key, value in Settings.mainHotkey.disableIfActive
+				aList := (aList = "" ? "" : aList "|") value
+			Gui, Settings:Add, ListBox, xp y+5 w320 h110, %aList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
+			Gui, Settings:Add, Button, x+25 yp wp hp, Remove
+			
+			Gui, Settings:Add, GroupBox, x340 y35 w330 h280 Center, USER HOTKEYS
+			Gui, Settings:Add, Text, xp+5 yp+30 w320 h30 Section, Text
+			
+			bList :=
+			for key, value in Settings.userHotkeys
+				bList := (bList = "" ? "" : bList "|") key "`t-  " value
+			Gui, Settings:Add, ListBox, xp y+7 wp h190, %bList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
+			Gui, Settings:Add, Button, x+25 yp w100 hp, Remove
+			
 			
 			; Appearance Tab Controls
 			Gui, Settings:Tab, Gui Appearance
@@ -132,7 +152,7 @@
 			
 			; Button Colors Tab Controls
 			Gui, Settings:Tab, Colors / Add-ons
-			Gui, Settings:Add, GroupBox, x5 y35 w335 h200, DEFAULT BUTTON COLORS
+			Gui, Settings:Add, GroupBox, x5 y35 w335 h200 Center, DEFAULT BUTTON COLORS
 			Gui, Settings:Add, Text, xp+5 yp+30 w160 h30 Section, Back Color
 			Gui, Settings:Add, Text, xp y+5 wp hp, Text Color
 			Gui, Settings:Add, Text, xp y+5 wp hp, Highlight Back Color
@@ -143,7 +163,7 @@
 			Gui, Settings:Add, Button, xp y+5 wp h30 Center vHLTextColor gDefaultColor,  %defHLTextColor%
 			Gui, Settings:Add, CheckBox, xs+5 y+5 w310 hp vChangeDefaults, Update all buttons to default colors now?
 			
-			Gui, Settings:Add, GroupBox, x+20 y35 w325 h130, MAIN GUI ADD-ONS
+			Gui, Settings:Add, GroupBox, x+20 y35 w325 h130 Center, MAIN GUI ADD-ONS
 			Gui, Settings:Add, CheckBox, xp+5 yp+25 w310 h30 Section vmainSearch, Show Search Bar on Main Gui?
 			Gui, Settings:Add, Text, xp y+10 w150 h30, Search Bar Text
 			Gui, Settings:Add, Edit, x+5 yp-5 w150 h30 Center vmainSearchText, Search Bar Text
@@ -157,7 +177,8 @@
 			; End Tab Control
 			Gui, Settings:Tab
 			
-			
+			Gui, Settings:Add, Button, x210 y325 w100 h30 gallSet Default, All Set
+			Gui, Settings:Add, Button, x+50 yp wp hp gsettingsCancel, Cancel
 			
 			Gui, Settings:Show, Center, %theGui% GUI Window Settings
 			Return
