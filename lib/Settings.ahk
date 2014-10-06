@@ -38,26 +38,26 @@
 			Gui, Settings:Add, GroupBox, x5 y35 w330 h280 Center, TRIGGER HOTKEYS
 			Gui, Settings:Add, Text, xp+5 yp+30 w140 h30 Section, Main Trigger
 			Gui, Settings:Add, Text, xp y+5 wp hp, Hold Trigger Action
-			Gui, Settings:Add, Edit, x+5 ys-5 w175 hp, % Settings.mainHotkey.mainHotkey
-			Gui, Settings:Add, Edit, xp y+5 wp hp, % Settings.mainHotkey.holdAction
+			Gui, Settings:Add, Edit, x+5 ys-5 w175 hp vmainTrigger, % Settings.mainHotkey.mainHotkey
+			Gui, Settings:Add, Edit, xp y+5 wp hp vmainHoldTrigger, % Settings.mainHotkey.holdAction
 			Gui, Settings:Add, Text, xs y+10 w320 hp Center, Main trigger is disabled for the below items:
 			
 			aList :=
 			for key, value in Settings.mainHotkey.disableIfActive
 				aList := (aList = "" ? "" : aList "|") value
-			Gui, Settings:Add, ListBox, xp y+5 w320 h110, %aList%
-			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
-			Gui, Settings:Add, Button, x+25 yp wp hp, Remove
+			Gui, Settings:Add, ListBox, xp y+5 w320 h110 vdisableIfActive, %aList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddTriggerDisable, Add
+			Gui, Settings:Add, Button, x+25 yp wp hp gremTriggerDisable, Remove
 			
 			Gui, Settings:Add, GroupBox, x340 y35 w330 h280 Center, USER HOTKEYS
-			Gui, Settings:Add, Text, xp+5 yp+30 w320 h30 center Section, Manage any personal hotkeys below:
+			Gui, Settings:Add, Text, xp+5 yp+30 w320 h30 Center Section, Manage any personal hotkeys below:
 			
 			bList :=
 			for key, value in Settings.userHotkeys
 				bList := (bList = "" ? "" : bList "|") key "`t-  " value
-			Gui, Settings:Add, ListBox, xp y+7 wp h190, %bList%
-			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
-			Gui, Settings:Add, Button, x+25 yp w100 hp, Remove
+			Gui, Settings:Add, ListBox, xp y+7 wp h190 vuserHotkeys, %bList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddUserHotkey, Add
+			Gui, Settings:Add, Button, x+25 yp w100 hp gremUserHotkey, Remove
 			
 			
 			;{````  Appearance Tab Controls  ````}
@@ -131,16 +131,16 @@
 			Gui, Settings:Tab, The Closer
 			
 			Gui, Settings:Add, Text, x10 y45 w100 h30 Section, Closer Hotkey
-			Gui, Settings:Add, Edit, x+5 ys-5 w215 hp, % Settings.theCloser.hotkey
+			Gui, Settings:Add, Edit, x+5 ys-5 w215 hp vcloserHotkey, % Settings.theCloser.hotkey
 			Gui, Settings:Add, GroupBox, x5 y+6 w330 h240 Center, DISABLE THE CLOSER
 			Gui, Settings:Add, Text, xp+5 yp+25 w320 h30 Center, The Closer is disabled for the following items:
 			
 			cList :=
 			for key, value in Settings.theCloser.disableIfActive
 				cList := (cList = "" ? "" : cList "|") value
-			Gui, Settings:Add, ListBox, xp y+5 w320 h150, %cList%
-			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
-			Gui, Settings:Add, Button, x+25 yp wp hp, Remove
+			Gui, Settings:Add, ListBox, xp y+5 w320 h150 vcloserDisable, %cList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddCloserDisable, Add
+			Gui, Settings:Add, Button, x+25 yp wp hp gremCloserDisable, Remove
 			
 			Gui, Settings:Add, GroupBox, x340 y35 w330 h280 Center, TAB CLOSER
 			Gui, Settings:Add, Text, xp+5 yp+25 w320 h35 Wrap Center Section, The Closer will close a tab instead of the window for the following items:
@@ -148,18 +148,18 @@
 			dList :=
 			for key, value in Settings.theCloser.closeTabIfActive
 				dList := (dList = "" ? "" : dList "|") value
-			Gui, Settings:Add, ListBox, xp y+7 wp h190, %dList%
-			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
-			Gui, Settings:Add, Button, x+25 yp w100 hp, Remove
+			Gui, Settings:Add, ListBox, xp y+7 wp h190 vCloserTabs, %dList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddCloserTabs, Add
+			Gui, Settings:Add, Button, x+25 yp w100 hp gremCloserTabs, Remove
 			
 			
 			;{````  End Tab Control  ````}
 			Gui, Settings:Tab
 			
-			Gui, Settings:Add, Button, x210 y325 w100 h30 gallSet Default, ALL SET
+			Gui, Settings:Add, Button, x210 y325 w100 h30 gallSet Default Disabled, ALL SET
 			Gui, Settings:Add, Button, x+50 yp wp hp gsettingsCancel, CANCEL
 			
-			Gui, Settings:Show, Center, %theGui% GUI Window Settings
+			Gui, Settings:Show, Center, c0bra Settings
 			Return
 		}
 		
@@ -231,6 +231,54 @@
 		settingsCancel:
 			Gui, Settings:Destroy
 			Buttons := []
+		return
+		
+		
+		
+		addTriggerDisable:
+		
+		return
+		
+		
+		
+		remTriggerDisable:
+		
+		return
+		
+		
+		
+		addUserHotkey:
+		
+		return
+		
+		
+		
+		remUserHotkey:
+		
+		return
+		
+		
+		
+		addCloserDisable:
+		
+		return
+		
+		
+		
+		remCloserDisable:
+		
+		return
+		
+		
+		
+		addCloserTabs:
+		
+		return
+		
+		
+		
+		remCloserTabs:
+		
 		return
 		
 		

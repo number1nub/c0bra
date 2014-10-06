@@ -4,14 +4,60 @@
         "2":                         "Program",
         "3":                         "Folder",
         "4":                         "File",
-        "5":                         "User Function",
-        "6":                         "User Label",
+        "5":                        "User Function",
+        "6":                        "User Label",
         "7":                         "AHK Edit",
-        "8":                         "Bookmarks"
+        "8":                        "Bookmarks"
+    },
+    "footer": {
+        "footer":                    0,
+        "footerColor":               "White",
+        "height":                    10,
+        "textBold":                  400,
+        "textColor":                 "Maroon",
+        "textFont":                  "Veranda",
+        "textSize":                  7
+    },
+    "mainGui": {
+        "buttonHeight":              35,
+        "buttonSpacing":             1,
+        "buttonWidth":               140,
+        "goWidth":                   45,
+        "guiBackColor":              "White",
+        "textBold":                  400,
+        "textFont":                  "BankGothic Md Bt",
+        "textSize":                  14
+    },
+    "search": {
+        "backText":                  "< Search Text >",
+        "goWidth":                   45,
+        "height":                    30,
+        "search":                    1,
+        "textBold":                  400,
+        "textFont":                  "BankGothic Md BT",
+        "textSize":                  11
+    },
+    "sideGui": {
+        "buttonHeight":              25,
+        "buttonSpacing":             2,
+        "buttonWidth":               140,
+        "guiBackColor":              "White",
+        "textBold":                  400,
+        "textFont":                  "Calibri",
+        "textSize":                  10
+    },
+    "SLRGui": {
+        "buttonHeight":              35,
+        "buttonSpacing":             1,
+        "buttonWidth":               160,
+        "guiBackColor":              0,
+        "textBold":                  400,
+        "textFont":                  "BankGothic Md Bt",
+        "textSize":                  11
     },
     "mainHotkey": {
         "disableIfActive": {},
-        "holdAction":                "[R] %A_AppData%\\c0bra",
+        "holdAction":                "[F] quickReload",
         "mainHotkey":                "MButton"
     },
     "theCloser": {
@@ -20,9 +66,10 @@
             "2":                     "IEFrame",
             "3":                     "firefox"
         },
+        "closeTabSpecialIfActive": {},
         "disableIfActive": {},
         "hotkey":                    "~Lbutton & RButton"
     },
     "userHotkeys": {},
-    "Version":                       "2.5.3"
+    "Version":                       "2.4.5"
 }

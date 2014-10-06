@@ -1,9 +1,18 @@
 {
+    "footer": {
+        "footer":                    0,
+        "footerColor":               "White",
+        "height":                    10,
+        "textBold":                  400,
+        "textColor":                 "Maroon",
+        "textFont":                  "Veranda",
+        "textSize":                  7
+    },
     "mainGui": {
-        "buttonHeight":              40,
+        "buttonHeight":              35,
         "buttonSpacing":             1,
-        "buttonWidth":               160,
-        "goWidth":                   40,
+        "buttonWidth":               140,
+        "goWidth":                   45,
         "guiBackColor":              "White",
         "textBold":                  400,
         "textFont":                  "BankGothic Md Bt",
@@ -18,15 +27,6 @@
         "textColor":                 "Maroon",
         "textFont":                  "BankGothic Md BT",
         "textSize":                  11
-    },
-    "footer": {
-        "footer":                    0,
-        "footerColor":               "White",
-        "height":                    10,
-        "textBold":                  400,
-        "textColor":                 "Maroon",
-        "textFont":                  "Veranda",
-        "textSize":                  7
     },
     "sideGui": {
         "buttonHeight":              25,
@@ -46,19 +46,5 @@
         "textBold":                  400,
         "textFont":                  "BankGothic Md Bt",
         "textSize":                  11
-    },
-    "ModifiedKeys": {
-        "mainGui": {
-            "footer":                "footer.footer",
-            "footerColor":           "footer.footerColor",
-            "search":                "search.search",
-            "slrGuiColor":           "SLRGui.guiBackColor"
-        },
-        "search": {
-            "searchBackText":        "search.backText",
-            "searchHeight":          "search.height",
-            "searchTextColor":       "search.textColor",
-            "searchTextSize":        "search.textSize"
-        }
     }
 }
