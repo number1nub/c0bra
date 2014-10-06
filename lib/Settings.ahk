@@ -45,7 +45,7 @@
 			aList :=
 			for key, value in Settings.mainHotkey.disableIfActive
 				aList := (aList = "" ? "" : aList "|") value
-			Gui, Settings:Add, ListBox, xp y+5 w320 h110 vdisableIfActive, %aList%
+			Gui, Settings:Add, ListBox, xp y+5 w320 h110 vdisableIfActive hwndHdisableIfActive, %aList%
 			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddTriggerDisable, Add
 			Gui, Settings:Add, Button, x+25 yp wp hp gremTriggerDisable, Remove
 			
@@ -236,49 +236,84 @@
 		
 		
 		addTriggerDisable:
-		
+			Gui Settings: +OwnDialogs
+			InputBox, aTriggerDisable, c0bra Disable Trigger, Type or paste the window title or program that will disable c0bra from opening.`n`nExample: ahk_exe chrome.exe`n- If Chrome was active`, the main trigger would be disabled.
+			if (ErrorLevel)
+				return
+			if (aTriggerDisable = "")
+			{
+				MsgBox, 4112, c0bra Disable Trigger, No window or class input was found.  Please try again.
+				return
+			}
+			 
+			 GuiControl, Settings:, disableIfActive, % aTriggerDisable
 		return
 		
 		
 		
 		remTriggerDisable:
-		
+			Gui Settings: +OwnDialogs
+			
+			GuiControl, Settings:+AltSubmit, disableIfActive
+			GuiControlGet, aDisableRemovePos, Settings:, disableIfActive
+			if (Errorlevel)
+				return
+			if (aDisableRemovePos = "")
+			{
+				MsgBox, 4144, c0bra Disable Trigger, No window or class was selected.`n`nPlease select an item to remove from the Disable If Active list and try again.
+				return
+			}
+			
+			GuiControl, Settings:-AltSubmit, disableIfActive
+			GuiControlGet, aDisableRemove, Settings:, disableIfActive
+			
+			MsgBox, 4129, c0bra Disable Trigger, Are you sure you want to remove `"%aDisableRemove%`" from the Disable If Active List?
+			IfMsgBox Cancel
+				return
+			
+			Control, Delete, %aDisableRemovePos%,, ahk_id %HdisableIfActive%
 		return
 		
 		
 		
 		addUserHotkey:
-		
+			Gui Settings: +OwnDialogs
+			
 		return
 		
 		
 		
 		remUserHotkey:
-		
+			Gui Settings: +OwnDialogs
+			
 		return
 		
 		
 		
 		addCloserDisable:
-		
+			Gui Settings: +OwnDialogs
+			
 		return
 		
 		
 		
 		remCloserDisable:
-		
+			Gui Settings: +OwnDialogs
+			
 		return
 		
 		
 		
 		addCloserTabs:
-		
+			Gui Settings: +OwnDialogs
+			
 		return
 		
 		
 		
 		remCloserTabs:
-		
+			Gui Settings: +OwnDialogs
+			
 		return
 		
 		
