@@ -69,19 +69,19 @@ guiOldPos:
 	ButtonList 	:= []
 	mainButtons	:= ""
 	
-	Guis 	:= JSON_Load(guiSettings)
+	;Guis 	:= JSON_Load(guiSettings)
 	Buttons := JSON_Load(buttonSettings)
 	
-	buttonSpacing 		:= Guis.mainGui.buttonSpacing
-	buttonWidth 		:= Guis.mainGui.buttonWidth
-	buttonHeight 		:= Guis.mainGui.buttonHeight
-	search 				:= Guis.search.search
-	textSize 			:= Guis.mainGui.textSize
-	textBold 			:= Guis.mainGui.textBold
-	textFont			:= Guis.mainGui.textFont
+	buttonSpacing 		:= Settings.mainGui.buttonSpacing
+	buttonWidth 		:= Settings.mainGui.buttonWidth
+	buttonHeight 		:= Settings.mainGui.buttonHeight
+	search 				:= Settings.search.search
+	textSize 			:= Settings.mainGui.textSize
+	textBold 			:= Settings.mainGui.textBold
+	textFont			:= Settings.mainGui.textFont
 	lastButWidth 		:= (buttonWidth * 2) + buttonSpacing
 	sideLastButWidth	:= lastButWidth - (4 * buttonSpacing)
-	footerColor			:= Guis.mainGui.footerColor
+	footerColor			:= Settings.footer.footerColor
 	
 	;{````  Create CSV button lists  ````}
 	For key, value in Buttons
@@ -102,16 +102,16 @@ guiOldPos:
 	;{````  Create Search Bar  ````}
 	if (search)
 	{
-		searchTextSize 	:= Guis.search.textSize
-		searchHeight    := Guis.search.Height
-		searchBackText  := Guis.search.backText
-		goWidth         := Guis.mainGui.goWidth
+		searchTextSize 	:= Settings.search.textSize
+		searchHeight    := Settings.search.Height
+		searchBackText  := Settings.search.backText
+		goWidth         := Settings.mainGui.goWidth
 		xGo 			:= (buttonWidth * 2) + (buttonSpacing * 2) - goWidth
 		searchWidth 	:= (buttonWidth * 2) - goWidth
 		searchTextWidth := searchWidth - 8
-		searchTextColor := Guis.search.textColor
-		searchTextFont	:= Guis.search.textFont
-		searchTextBold  := Guis.search.textBold
+		searchTextColor := Settings.search.textColor
+		searchTextFont	:= Settings.search.textFont
+		searchTextBold  := Settings.search.textBold
 
 		GUI, font, s%searchTextSize% w%searchtextBold% c%searchTextColor%, %searchTextFont%
 		GUI, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 vGSEARCH,
@@ -167,15 +167,15 @@ guiOldPos:
 	}
 		
 	; Footer call		
-	if (guis.footer.footer)
+	if (Settings.footer.footer)
 	{
 		footerWidth := (buttonWidth * 2) + buttonSpacing
-		footerTextSize 	:= Guis.footer.textSize
-		footerHeight    := Guis.footer.Height
-		footerTextColor := Guis.footer.textColor
-		footerTextFont	:= Guis.footer.textFont
-		footerTextBold  := Guis.footer.textBold
-		footerColor		:= Guis.footer.footerColor
+		footerTextSize 	:= Settings.footer.textSize
+		footerHeight    := Settings.footer.Height
+		footerTextColor := Settings.footer.textColor
+		footerTextFont	:= Settings.footer.textFont
+		footerTextBold  := Settings.footer.textBold
+		footerColor		:= Settings.footer.footerColor
 		
 		GUI, font, s%footerTextSize% w%footerTextBold% c%footerTextColor%, %footerTextFont%
 		GUI, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h%footerHeight% 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
@@ -198,13 +198,13 @@ return
 	{
 		global
 
-		sideButtonSpacing 		:= Guis.sideGui.buttonSpacing
-		sideButtonWidth 		:= Guis.sideGui.buttonWidth
-		sideButtonHeight 		:= Guis.sideGui.buttonHeight
-		sideSearch 				:= Guis.sideGui.search
-		sideTextSize 			:= Guis.sideGui.textSize
-		sideTextBold 			:= Guis.sideGui.textBold
-		sideTextFont			:= Guis.sideGui.textFont
+		sideButtonSpacing 		:= Settings.sideGui.buttonSpacing
+		sideButtonWidth 		:= Settings.sideGui.buttonWidth
+		sideButtonHeight 		:= Settings.sideGui.buttonHeight
+		sideSearch 				:= Settings.sideGui.search
+		sideTextSize 			:= Settings.sideGui.textSize
+		sideTextBold 			:= Settings.sideGui.textBold
+		sideTextFont			:= Settings.sideGui.textFont
 
 		currGui := A_Gui
 		nextGui := currGui = 1 ? currGui + 2 : currGui + 1
@@ -259,7 +259,7 @@ return
 			childrenButtons .= (childrenButtons ? "," : "") value
 		}
 		
-		GUI, %currGui%:Color, % guis.sideGui.guiBackColor
+		GUI, %currGui%:Color, % Settings.sideGui.guiBackColor
 		GUI, %currGui%:-caption +ToolWindow +Owner%PREV_GUI%
 		GUI, %currGui%:margin, %sideButtonSpacing%, %sideButtonSpacing%
 		GUI, %currGui%:Font, s%sideTextSize% w%sideTextBold%, %sideTextFont%
@@ -345,17 +345,17 @@ SLR_GUI()
 	
 	MouseGetPos, MouseX1, MouseY1
 	
-	SLRbuttonSpacing 		:= Guis.SLRGui.buttonSpacing
-	SLRbuttonWidth 			:= Guis.SLRGui.buttonWidth
-	SLRbuttonHeight 		:= Guis.SLRGui.buttonHeight
-	SLRguiBackColor			:= Guis.SLRGui.guiBackColor
-	SLRtextSize 			:= Guis.SLRGui.textSize
-	SLRtextBold 			:= Guis.SLRGui.textBold
-	SLRtextFont				:= Guis.SLRGui.textFont
+	SLRbuttonSpacing 		:= Settings.SLRGui.buttonSpacing
+	SLRbuttonWidth 			:= Settings.SLRGui.buttonWidth
+	SLRbuttonHeight 		:= Settings.SLRGui.buttonHeight
+	SLRguiBackColor			:= Settings.SLRGui.guiBackColor
+	SLRtextSize 			:= Settings.SLRGui.textSize
+	SLRtextBold 			:= Settings.SLRGui.textBold
+	SLRtextFont				:= Settings.SLRGui.textFont
 	
 	GUI, 2:font, s%SLRtextSize% w%SLRtextBold%, %SLRtextFont%
 	GUI, 2:+toolwindow -caption
-	GUI, 2:Color, % Guis.SLRGui.guiBackColor
+	GUI, 2:Color, % Settings.SLRGui.guiBackColor
 	GUI, 2:Margin, %SLRbuttonSpacing%, %SLRbuttonSpacing%
 	
 	Loop, Parse, slrButtons, `n

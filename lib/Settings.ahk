@@ -168,56 +168,77 @@
 		allSet:
 			Gui, Settings:Submit
 			
-			Guis[theGuiJSON].buttonHeight := bHeight
-			Guis[theGuiJSON].buttonWidth := bWidth
-			Guis[theGuiJSON].buttonSpacing := bSpacing
-			Guis[theGuiJSON].textFont := tFont
-			Guis[theGuiJSON].textBold := tBold
-			Guis[theGuiJSON].textSize := tSize
-			GuiControlGet, guiColorText,, guiColor 
-			Guis[theGuiJSON].guiBackColor := guiColorText
+			Settings.mainHotkey.mainHotkey := mainTrigger
+			Settings.mainHotkey.holdAction := mainHoldTrigger
 			
-			JSON_save(guis, guiSettings)
-			ButtonList := []
-
-			if (ChangeDefaults && theGui = "Main")
-			{
-				MsgBox, 4132, Main GUI Colors, Would you like to use these colors for the SIDE guis as well?
-				IfMsgBox Yes
-					sideColor := 1
-				else
-					sideColor := 0
-				
+			;NEED TO SAVE TRIGGER DISABLED ITEMS HERE
+			
+			;NEED TO SAVE USER HOTKEYS HERE
+			
+			Settings.mainGui.buttonHeight := bHeight
+			Settings.mainGui.buttonSpacing := bSpacing
+			Settings.mainGui.buttonWidth := bWidth
+			Settings.mainGui.guiBackColor := guiColor
+			Settings.mainGui.textBold := tBold
+			Settings.mainGui.textFont := tFont
+			Settings.mainGui.textSize := tSize
+			
+			Settings.sideGui.buttonHeight := sbHeight
+			Settings.sideGui.buttonSpacing := sbSpacing
+			Settings.sideGui.buttonWidth := sbWidth
+			Settings.sideGui.guiBackColor := sguiColor
+			Settings.sideGui.textBold := stBold
+			Settings.sideGui.textFont := stFont
+			Settings.sideGui.textSize := stSize
+			
+			Settings.SLRGui.buttonHeight := slrbHeight
+			Settings.SLRGui.buttonSpacing := slrbSpacing
+			Settings.SLRGui.buttonWidth := slrbWidth
+			Settings.SLRGui.guiBackColor := slrguiColor
+			Settings.SLRGui.textBold := slrtBold
+			Settings.SLRGui.textFont := slrtFont
+			Settings.SLRGui.textSize := slrtSize
+			
+			GuiControlGet, BackColorText, Settings:, BackColor
+				Buttons.Defaults.BackColor := BackColorText
+			GuiControlGet, TextColorText, Settings:, TextColor
+				Buttons.Defaults.TextColor := TextColorText
+			GuiControlGet, HLBackColorText, Settings:, HLBackColor
+				Buttons.Defaults.HLBackColor := HLBackColorText
+			GuiControlGet, HLTextColorText, Settings:, HLTextColor
+				Buttons.Defaults.HLTextColor := HLTextColorText
+			
+			if (ChangeDefaults)
+			{				
 				for key, value in buttons
 				{
 					tempButton := value.text
 					ButtonList.Insert(value.text, value)
 					
-					if (!sideColor && ButtonList[tempButton].Level = "" && value.text != "Default")
-					{
-						GuiControlGet, BackColorText, Settings:, BackColor
-							buttons[key].BackColor := BackColorText
-						GuiControlGet, TextColorText, Settings:, TextColor
-							buttons[key].TextColor := TextColorText
-						GuiControlGet, HLBackColorText, Settings:, HLBackColor
-							buttons[key].HLBackColor := HLBackColorText
-						GuiControlGet, HLTextColorText, Settings:, HLTextColor
-							buttons[key].HLTextColor := HLTextColorText
-					}
-					else if (sideColor && value.text != "Default")
-					{
-						GuiControlGet, BackColorText, Settings:, BackColor
-							buttons[key].BackColor := BackColorText
-						GuiControlGet, TextColorText, Settings:, TextColor
-							buttons[key].TextColor := TextColorText
-						GuiControlGet, HLBackColorText, Settings:, HLBackColor
-							buttons[key].HLBackColor := HLBackColorText
-						GuiControlGet, HLTextColorText, Settings:, HLTextColor
-							buttons[key].HLTextColor := HLTextColorText
-					}
+					GuiControlGet, BackColorText, Settings:, BackColor
+						buttons[key].BackColor := BackColorText
+					GuiControlGet, TextColorText, Settings:, TextColor
+						buttons[key].TextColor := TextColorText
+					GuiControlGet, HLBackColorText, Settings:, HLBackColor
+						buttons[key].HLBackColor := HLBackColorText
+					GuiControlGet, HLTextColorText, Settings:, HLTextColor
+						buttons[key].HLTextColor := HLTextColorText
 				}
 			}
 			
+			Settings.search.search := mainSearch ? 1 : 0
+			Settings.search.backText := mainSearchText
+			Settings.footer.footer := mainFooter ? 1 : 0
+			
+			Settings.theCloser.hotkey := closerHotkey
+			
+			;NEED DISABLED CLOSER SAVE HERE
+			
+			;NEED TAB CLOSER SAVE HERE
+			
+			JSON_save(Settings, c0braSettings)
+			ButtonList := []
+
 			JSON_Save(buttons, buttonSettings)
 			
 			Buttons := []
@@ -430,7 +451,7 @@
 		
 		
 		DefaultColor:
-			
+			;this function needs to not save.. just overwrite the button
 			ColorButton := A_GuiControl
 			ColorGui()
 			
