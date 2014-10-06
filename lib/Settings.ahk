@@ -138,7 +138,7 @@
 			cList :=
 			for key, value in Settings.theCloser.disableIfActive
 				cList := (cList = "" ? "" : cList "|") value
-			Gui, Settings:Add, ListBox, xp y+5 w320 h150 vcloserDisable, %cList%
+			Gui, Settings:Add, ListBox, xp y+5 w320 h150 vcloserDisable hwndHcloserDisable, %cList%
 			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddCloserDisable, Add
 			Gui, Settings:Add, Button, x+25 yp wp hp gremCloserDisable, Remove
 			
@@ -148,7 +148,7 @@
 			dList :=
 			for key, value in Settings.theCloser.closeTabIfActive
 				dList := (dList = "" ? "" : dList "|") value
-			Gui, Settings:Add, ListBox, xp y+7 wp h190 vCloserTabs, %dList%
+			Gui, Settings:Add, ListBox, xp y+7 wp h190 vCloserTabs hwndHcloserTabs, %dList%
 			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddCloserTabs, Add
 			Gui, Settings:Add, Button, x+25 yp w100 hp gremCloserTabs, Remove
 			
@@ -237,6 +237,7 @@
 		
 		addTriggerDisable:
 			Gui Settings: +OwnDialogs
+			
 			InputBox, aTriggerDisable, c0bra Disable Trigger, Type or paste the window title or program that will disable c0bra from opening.`n`nExample: ahk_exe chrome.exe`n- If Chrome was active`, the main trigger would be disabled.
 			if (ErrorLevel)
 				return
@@ -332,6 +333,17 @@
 		addCloserDisable:
 			Gui Settings: +OwnDialogs
 			
+			InputBox, aCloserDisable, c0bra Disable Closer, Type or paste the window title or program that will disable c0bra's closer from running.`n`nExample: ahk_exe chrome.exe`n- If Chrome was active`, the closer would be disabled.
+			if (ErrorLevel)
+				return
+			if (aCloserDisable = "")
+			{
+				MsgBox, 4112, c0bra Disable Closer, No window or class input was found.  Please try again.
+				return
+			}
+			;TODO - figure out if this disable if active already exists
+			 
+			 GuiControl, Settings:, closerDisable, % aCloserDisable
 		return
 		
 		
@@ -339,6 +351,24 @@
 		remCloserDisable:
 			Gui Settings: +OwnDialogs
 			
+			GuiControl, Settings:+AltSubmit, closerDisable
+			GuiControlGet, aCloserRemPos, Settings:, closerDisable
+			if (Errorlevel)
+				return
+			if (aCloserRemPos = "")
+			{
+				MsgBox, 4144, c0bra Disable Closer, No window or class was selected.`n`nPlease select an item to remove from the Disable Closer list and try again.
+				return
+			}
+			
+			GuiControl, Settings:-AltSubmit, closerDisable
+			GuiControlGet, aCloserRem, Settings:, closerDisable
+			
+			MsgBox, 4129, c0bra Disable Closer, Are you sure you want to remove `"%aCloserRem%`" from the Disable Closer List?
+			IfMsgBox Cancel
+				return
+			
+			Control, Delete, %aCloserRemPos%,, ahk_id %HcloserDisable%
 		return
 		
 		
@@ -346,6 +376,17 @@
 		addCloserTabs:
 			Gui Settings: +OwnDialogs
 			
+			InputBox, aCloserTabs, c0bra Closer Tabs, Type or paste the window title or program that c0bra's closer will close tabs instead of windows.`n`nExample: ahk_exe chrome.exe`n- If Chrome was active`, the closer would close the active tab.
+			if (ErrorLevel)
+				return
+			if (aCloserTabs = "")
+			{
+				MsgBox, 4112, c0bra Closer Tabs, No window or class input was found.  Please try again.
+				return
+			}
+			;TODO - figure out if this disable if active already exists
+			 
+			 GuiControl, Settings:, closerTabs, % aCloserTabs
 		return
 		
 		
@@ -353,6 +394,24 @@
 		remCloserTabs:
 			Gui Settings: +OwnDialogs
 			
+			GuiControl, Settings:+AltSubmit, closerTabs
+			GuiControlGet, aCloserTabRemPos, Settings:, closerTabs
+			if (Errorlevel)
+				return
+			if (aCloserTabRemPos = "")
+			{
+				MsgBox, 4144, c0bra Closer Tabs, No window or class was selected.`n`nPlease select an item to remove from the Closer Tabs list and try again.
+				return
+			}
+			
+			GuiControl, Settings:-AltSubmit, closerTabs
+			GuiControlGet, aCloserTabs, Settings:, closerTabs
+			
+			MsgBox, 4129, c0bra Closer Tabs, Are you sure you want to remove `"%aCloserTabs%`" from the Closer Tabs List?
+			IfMsgBox Cancel
+				return
+			
+			Control, Delete, %aCloserTabRemPos%,, ahk_id %HcloserTabs%
 		return
 		
 		
