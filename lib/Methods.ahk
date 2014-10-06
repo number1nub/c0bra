@@ -21,6 +21,11 @@ QuickReload(prompt = "", title = "")
 editMe:
 	run, edit %COBRA%\c0bra.ahk
 return
+
+
+meOptions:
+	Gui_Settings()
+return
 	
 
 theCloser:

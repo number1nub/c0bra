@@ -7,16 +7,16 @@
 
 	;~ Gui Settings Call (call Main, Side, or SLR)
 
-		Gui_Settings(theGui)
+		Gui_Settings()
 		{
 			global
 			
-			Guis := JSON_Load(guiSettings)
-			Buttons := JSON_Load(buttonSettings)
+			;Guis := JSON_Load(guiSettings)
 			
-			ButtonList 	:= []
-		
 			;{````  Create CSV button lists  ````}
+			Buttons := JSON_Load(buttonSettings)
+			ButtonList 	:= []
+			
 			For key, value in Buttons
 			{
 				tempButton := value.text
@@ -24,7 +24,7 @@
 			}
 			;}
 			
-			theGui := theGui
+			;~ theGui := theGui
 			
 			Gui, Settings:Margin, 2, 10
 			Gui, Settings:Font, s11 cBlack w700, Times New Roman

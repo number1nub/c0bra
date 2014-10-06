@@ -125,100 +125,18 @@ Menu, SubMenu_About, Add, % "Version " Settings.version, TrayText
 Menu, SubMenu_About, Disable, % "Version " Settings.version
 ;____________________________________}
 
-;{```` SUB-MENU: Hotkeys ````}
-Menu, SubMenu_Hotkeys, Add
-Menu, SubMenu_Hotkeys, DeleteAll
-Menu, SubMenu_Hotkeys, Add, Add New Hotkey, TrayText
-Menu, SubMenu_Hotkeys, Add
-
-for aHotkey, aPath in Settings.userHotkeys
-	Menu, SubMenu_Hotkeys, Add, <%aHotkey%> - <%aPath%>, TrayText
-;}
-
-Menu, SubSearch, Add
-Menu, SubSearch, DeleteAll	
-Menu, SubSearch, Add, Main Gui Settings, QuickEditMenu
-Menu, SubSearch, Add, Side Gui Settings, QuickEditMenu
-Menu, SubSearch, Add, SLR Gui Settings, QuickEditMenu
-Menu, SubSearch, Add
-Menu, SubSearch, Add, Search Bar, QuickEditMenu
-Menu, SubSearch, % guis.search.search ? "Check" : "Uncheck", Search Bar
-Menu, SubSearch, Add, % "Change Search Text", QuickEditMenu
-Menu, SubSearch, Add
-Menu, SubSearch, Add, Footer, QuickEditMenu
-Menu, SubSearch, % guis.footer.footer ? "Check" : "Uncheck", Footer
-Menu, SubSearch, Add
-
-
-;{ ___ No run add and edit
-
-Menu, SubSearch1, Add
-Menu, SubSearch1, DeleteAll
-Menu, SubSearch1, Add, Add to no-run list, QuickEditMenu
-Menu, SubSearch1, Add
-
-Loop, Parse, disableMainHKList, `,
-	Menu, SubSearch1, Add, %A_LoopField%, QuickEditMenu
-
-;}
-
-
-;{ ___ Closer Hotkey
-
-Menu, SubSearch2, Add
-Menu, SubSearch2, DeleteAll
-Menu, SubSearch2, Add, Closer Hotkey, QuickEditMenu
-Menu, SubSearch2, Add
-
-;{ ___ Closer tab list
-
-Menu, SubSearch3, Add
-Menu, SubSearch3, DeleteAll
-Menu, SubSearch3, Add, Add to close tab list, QuickEditMenu
-Menu, SubSearch3, Add
-Loop, Parse, closeTabWinList, `,
-	Menu, SubSearch3, Add, %A_LoopField%, QuickEditMenu
-
-;}
-
-
-;{ ___ Closer disable list
-
-Menu, SubSearch4, Add
-Menu, SubSearch4, DeleteAll
-Menu, SubSearch4, Add, Add to disable close list, QuickEditMenu
-Menu, SubSearch4, Add
-Loop, Parse, disableCloseList, `,
-	Menu, SubSearch4, Add, %A_LoopField%, QuickEditMenu
-
-;}
-
-
-Menu, SubSearch2, Add, Close tab, :SubSearch3
-Menu, SubSearch2, Add, Disable closer, :SubSearch4
-
-;}
-
-Menu, SubSearch, Add, No-run, :SubSearch1
-Menu, SubSearch, Add, Closer, :SubSearch2
-
-Menu, Title, Add, c0bra Options, :SubSearch
-
-;}
-
 
 ;{```` Create The Tray Menu ````}
 Menu, Tray, NoStandard
 Menu, Tray, Add, About, :SubMenu_About
 Menu, Tray, Add
-Menu, Tray, Add, % "Main Hotkey: " Settings.mainHotkey.mainHotkey, TrayText
-Menu, Tray, Add, Hotkey Hold Action, TrayText
+Menu, Tray, Add, % "Trigger: " Settings.mainHotkey.mainHotkey, meOptions
 Menu, Tray, Add
-Menu, Tray, Add, Hotkeys, :SubMenu_Hotkeys
-Menu, Tray, Add, Options, :SubSearch
+Menu, Tray, Add, Options, meOptions
 Menu, Tray, Add
 Menu, Tray, Add, Reload, reloadMe
-Menu, Tray, Add, Edit Script, editMe
+if (!A_IsCompiled)
+	Menu, Tray, Add, Edit Script, editMe
 Menu, Tray, Add
 Menu, Tray, Add, Exit, closer
 Menu, Tray, Default, Reload

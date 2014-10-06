@@ -309,30 +309,30 @@ QuickEditMenu:
 	
 	
 	;{```` Main Gui Settings ````}
-	else if (A_ThisMenuItem = "Main Gui Settings")
-	{
-		Gui_Settings("Main")
-		theGui := "Main"
-		return
-	}
+	;~ else if (A_ThisMenuItem = "Main Gui Settings")
+	;~ {
+		;~ Gui_Settings("Main")
+		;~ theGui := "Main"
+		;~ return
+	;~ }
 	;}
 	
 	
 	;{```` Side Gui Settings ````}
-	else if (A_ThisMenuItem = "Side Gui Settings")
-	{
-		Gui_Settings("Side")
-		return
-	}
+	;~ else if (A_ThisMenuItem = "Side Gui Settings")
+	;~ {
+		;~ Gui_Settings("Side")
+		;~ return
+	;~ }
 	;}
 	
 	
 	;{```` SLR Gui Settings ````}
-	else if (A_ThisMenuItem = "SLR Gui Settings")
-	{
-		Gui_Settings("SLR")
-		return
-	}
+	;~ else if (A_ThisMenuItem = "SLR Gui Settings")
+	;~ {
+		;~ Gui_Settings("SLR")
+		;~ return
+	;~ }
 	;}
 
 
