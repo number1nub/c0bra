@@ -50,7 +50,7 @@
 			Gui, Settings:Add, Button, x+25 yp wp hp, Remove
 			
 			Gui, Settings:Add, GroupBox, x340 y35 w330 h280 Center, USER HOTKEYS
-			Gui, Settings:Add, Text, xp+5 yp+30 w320 h30 Section, Text
+			Gui, Settings:Add, Text, xp+5 yp+30 w320 h30 center Section, Any personal hotkeys created are listed below:
 			
 			bList :=
 			for key, value in Settings.userHotkeys
