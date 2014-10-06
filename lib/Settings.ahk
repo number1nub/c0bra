@@ -55,7 +55,7 @@
 			bList :=
 			for key, value in Settings.userHotkeys
 				bList := (bList = "" ? "" : bList "|") key "`t-  " value
-			Gui, Settings:Add, ListBox, xp y+7 wp h190 vuserHotkeys, %bList%
+			Gui, Settings:Add, ListBox, xp y+7 wp h190 vuserHotkeys hwndHuserHotkeys, %bList%
 			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddUserHotkey, Add
 			Gui, Settings:Add, Button, x+25 yp w100 hp gremUserHotkey, Remove
 			
@@ -245,6 +245,7 @@
 				MsgBox, 4112, c0bra Disable Trigger, No window or class input was found.  Please try again.
 				return
 			}
+			;TODO - figure out if this disable if active already exists
 			 
 			 GuiControl, Settings:, disableIfActive, % aTriggerDisable
 		return
@@ -279,6 +280,26 @@
 		addUserHotkey:
 			Gui Settings: +OwnDialogs
 			
+			InputBox, anewHotkey, c0bra User Hotkeys, What is the new Hotkey?`n`nExample: ^+1`n-This hotkey would be ctrl + shift + 1
+			if (ErrorLevel)
+				return
+			if (anewHotkey = "")
+			{
+				MsgBox, 4112, c0bra User Hotkeys, No hotkey was entered.  Please try again.
+				return
+			}
+			;TODO - figure out if this user hotkey already exists
+			
+			InputBox, anewHotkeyAction, c0bra User Hotkeys, What will the %anewHotkey% hotkey do?`n`nExample: [F] quickReload`n-This would find the function `"quickReload`" and run it.
+			if (ErrorLevel)
+				return
+			if (anewHotkeyAction = "")
+			{
+				MsgBox, 4112, c0bra User Hotkeys, No hotkey action was entered.  Please try again.
+				return
+			}
+			
+			GuiControl, Settings:, userHotkeys, % anewHotkey "`t-  " anewHotkeyAction
 		return
 		
 		
@@ -286,6 +307,24 @@
 		remUserHotkey:
 			Gui Settings: +OwnDialogs
 			
+			GuiControl, Settings:+AltSubmit, userHotkeys
+			GuiControlGet, aHotkeyRemovePos, Settings:, userHotkeys
+			if (Errorlevel)
+				return
+			if (aHotkeyRemovePos = "")
+			{
+				MsgBox, 4144, c0bra User Hotkeys, No user hotkey was selected.`n`nPlease select an item to remove from the User Hotkeys list and try again.
+				return
+			}
+			
+			GuiControl, Settings:-AltSubmit, userHotkeys
+			GuiControlGet, aHotkeyRemove, Settings:, userHotkeys
+			
+			MsgBox, 4129, c0bra User Hotkeys, Are you sure you want to remove `"%aHotkeyRemove%`" from the User Hotkeys List?
+			IfMsgBox Cancel
+				return
+			
+			Control, Delete, %aHotkeyRemovePos%,, ahk_id %HuserHotkeys%
 		return
 		
 		
