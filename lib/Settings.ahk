@@ -29,7 +29,7 @@
 			Gui, Settings:Margin, 2, 10
 			Gui, Settings:Font, s11 cBlack w700, Times New Roman
 			
-			Gui, Settings:Add, Tab2, x2 y2 w675 h315 Wrap, Hotkeys|Gui Appearance|Colors / Add-ons|No-Run / Closer
+			Gui, Settings:Add, Tab2, x2 y2 w675 h315 Wrap, Hotkeys|Gui Appearance|Colors / Add-ons|The Closer
 			
 			
 			;{````  Hotkeys Tab Controls  ````}
@@ -50,7 +50,7 @@
 			Gui, Settings:Add, Button, x+25 yp wp hp, Remove
 			
 			Gui, Settings:Add, GroupBox, x340 y35 w330 h280 Center, USER HOTKEYS
-			Gui, Settings:Add, Text, xp+5 yp+30 w320 h30 center Section, Any personal hotkeys created are listed below:
+			Gui, Settings:Add, Text, xp+5 yp+30 w320 h30 center Section, Manage any personal hotkeys below:
 			
 			bList :=
 			for key, value in Settings.userHotkeys
@@ -75,20 +75,20 @@
 			Gui, Settings:Add, Edit, xp+5 ys-5 w150 h30 Center vbHeight, % Settings.mainGui.buttonHeight
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vbWidth, % Settings.mainGui.buttonWidth
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vbSpacing, % Settings.mainGui.buttonSpacing
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r6 0x100 Center vtFont, Lucida Sans Unicode|Times New Roman|Arial|Veranda|Calibri|BankGothic Md Bt
+			Gui, Settings:Add, ComboBox, xp y+10 wp hp r6 0x100 Center vtFont, Lucida Sans Unicode|Times New Roman|Arial|Veranda|Calibri|BankGothic Md Bt
 				GuiControl, Settings:ChooseString, tFont, % Settings.mainGui.textFont
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r2 0x100 Center vtBold, 400|700
+			Gui, Settings:Add, ComboBox, xp y+10 wp hp r2 0x100 Center vtBold, 400|700
 				GuiControl, Settings:ChooseString, tBold, % Settings.mainGui.textBold
-			Gui, Settings:Add, Edit, xp y+10 wp hp Center vtSize, %textSize%
+			Gui, Settings:Add, Edit, xp y+10 wp hp Center vtSize, % Settings.mainGui.textSize
 			Gui, Settings:Add, Button, xp y+5 wp h30 Center vguiColor gGuiColor, % Settings.mainGui.guiBackColor
 			
 			Gui, Settings:Add, GroupBox, x+10 y35 w160 h275 center, SIDE GUI
 			Gui, Settings:Add, Edit, xp+5 ys-5 w150 h30 Center vsbHeight, % Settings.sideGui.buttonHeight
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vsbWidth, % Settings.sideGui.buttonWidth
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vsbSpacing, % Settings.sideGui.buttonSpacing
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r6 0x100 Center vstFont, Lucida Sans Unicode|Times New Roman|Arial|Veranda|Calibri|BankGothic Md Bt
+			Gui, Settings:Add, ComboBox, xp y+10 wp hp r6 0x100 Center vstFont, Lucida Sans Unicode|Times New Roman|Arial|Veranda|Calibri|BankGothic Md Bt
 				GuiControl, Settings:ChooseString, stFont, % Settings.sideGui.textFont
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r2 0x100 Center vstBold, 400|700
+			Gui, Settings:Add, ComboBox, xp y+10 wp hp r2 0x100 Center vstBold, 400|700
 				GuiControl, Settings:ChooseString, stBold, % Settings.sideGui.textBold
 			Gui, Settings:Add, Edit, xp y+10 wp hp Center vstSize, % Settings.sideGui.textSize
 			Gui, Settings:Add, Button, xp y+5 wp h30 Center vsguiColor gGuiColor, % Settings.sideGui.guiBackColor
@@ -97,9 +97,9 @@
 			Gui, Settings:Add, Edit, xp+5 ys-5 w150 h30 Center vslrbHeight, % Settings.SLRGui.buttonHeight
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vslrbWidth, % Settings.SLRGui.buttonWidth
 			Gui, Settings:Add, Edit, xp y+5 wp hp Center vslrbSpacing, % Settings.SLRGui.buttonSpacing
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r6 0x100 Center vslrtFont, Lucida Sans Unicode|Times New Roman|Arial|Veranda|Calibri|BankGothic Md Bt
+			Gui, Settings:Add, ComboBox, xp y+10 wp hp r6 0x100 Center vslrtFont, Lucida Sans Unicode|Times New Roman|Arial|Veranda|Calibri|BankGothic Md Bt
 				GuiControl, Settings:ChooseString, slrtFont, % Settings.SLRGui.textFont
-			Gui, Settings:Add, DropDownList, xp y+10 wp hp r2 0x100 Center vslrtBold, 400|700
+			Gui, Settings:Add, ComboBox, xp y+10 wp hp r2 0x100 Center vslrtBold, 400|700
 				GuiControl, Settings:ChooseString, slrtBold, % Settings.SLRGui.textBold
 			Gui, Settings:Add, Edit, xp y+10 wp hp Center vslrtSize, % Settings.SLRGui.textSize
 			Gui, Settings:Add, Button, xp y+5 wp h30 Center vslrguiColor gGuiColor, % Settings.SLRGui.guiBackColor
@@ -127,15 +127,37 @@
 				GuiControl, Settings:, mainFooter, % Settings.footer.footer ? 1 : 0
 			
 			
-			;{````  No-Run / Closer Tab Controls  ````}
-			Gui, Settings:Tab, No-Run / Closer
+			;{````  The Closer Tab Controls  ````}
+			Gui, Settings:Tab, The Closer
+			
+			Gui, Settings:Add, Text, x10 y45 w100 h30 Section, Closer Hotkey
+			Gui, Settings:Add, Edit, x+5 ys-5 w215 hp, % Settings.theCloser.hotkey
+			Gui, Settings:Add, GroupBox, x5 y+6 w330 h240 Center, DISABLE THE CLOSER
+			Gui, Settings:Add, Text, xp+5 yp+25 w320 h30 Center, The Closer is disabled for the following items:
+			
+			cList :=
+			for key, value in Settings.theCloser.disableIfActive
+				cList := (cList = "" ? "" : cList "|") value
+			Gui, Settings:Add, ListBox, xp y+5 w320 h150, %cList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
+			Gui, Settings:Add, Button, x+25 yp wp hp, Remove
+			
+			Gui, Settings:Add, GroupBox, x340 y35 w330 h280 Center, TAB CLOSER
+			Gui, Settings:Add, Text, xp+5 yp+25 w320 h35 Wrap Center Section, The Closer will close a tab instead of the window for the following items:
+			
+			dList :=
+			for key, value in Settings.theCloser.closeTabIfActive
+				dList := (dList = "" ? "" : dList "|") value
+			Gui, Settings:Add, ListBox, xp y+7 wp h190, %dList%
+			Gui, Settings:Add, Button, xs+45 y+5 w100 h30, Add
+			Gui, Settings:Add, Button, x+25 yp w100 hp, Remove
 			
 			
 			;{````  End Tab Control  ````}
 			Gui, Settings:Tab
 			
-			Gui, Settings:Add, Button, x210 y325 w100 h30 gallSet Default, All Set
-			Gui, Settings:Add, Button, x+50 yp wp hp gsettingsCancel, Cancel
+			Gui, Settings:Add, Button, x210 y325 w100 h30 gallSet Default, ALL SET
+			Gui, Settings:Add, Button, x+50 yp wp hp gsettingsCancel, CANCEL
 			
 			Gui, Settings:Show, Center, %theGui% GUI Window Settings
 			Return
