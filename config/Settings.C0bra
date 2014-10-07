@@ -4,10 +4,10 @@
         "2":                         "Program",
         "3":                         "Folder",
         "4":                         "File",
-        "5":                        "User Function",
-        "6":                        "User Label",
+        "5":                         "User Function",
+        "6":                         "User Label",
         "7":                         "AHK Edit",
-        "8":                        "Bookmarks"
+        "8":                         "Bookmarks"
     },
     "footer": {
         "footer":                    0,
@@ -28,13 +28,18 @@
         "textFont":                  "BankGothic Md Bt",
         "textSize":                  14
     },
+    "mainHotkey": {
+        "disableIfActive": {},
+        "holdAction":                "[F] quickReload",
+        "mainHotkey":                "MButton"
+    },
     "search": {
         "backText":                  "< Search Text >",
         "goWidth":                   45,
-        "height":                    30,
+        "height":                    35,
         "search":                    1,
         "textBold":                  400,
-        "textFont":                  "BankGothic Md BT",
+        "textFont":                  "BankGothic Md Bt",
         "textSize":                  11
     },
     "sideGui": {
@@ -50,15 +55,10 @@
         "buttonHeight":              35,
         "buttonSpacing":             1,
         "buttonWidth":               160,
-        "guiBackColor":              0,
+        "guiBackColor":              "White",
         "textBold":                  400,
         "textFont":                  "BankGothic Md Bt",
         "textSize":                  11
-    },
-    "mainHotkey": {
-        "disableIfActive": {},
-        "holdAction":                "[F] quickReload",
-        "mainHotkey":                "MButton"
     },
     "theCloser": {
         "closeTabIfActive": {

@@ -4,6 +4,7 @@
         "guiColor":                  "White",
         "HlBackColor":               "Black",
         "HlTextColor":               "White",
+        "Options":                   "Silver",
         "Text":                      "Default",
         "TextColor":                 "White"
     },

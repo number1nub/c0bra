@@ -14,7 +14,6 @@ SetTitleMatchMode, 2
 global COBRA 				:= A_ScriptDir
 global cobraPath			:= A_ScriptFullPath
 global buttonSettings 		:= A_AppData "\c0bra\Buttons.C0bra"
-global guiSettings 			:= A_AppData "\c0bra\Gui.C0bra"
 global c0braSettings 	 	:= A_AppData "\c0bra\Settings.C0bra"
 global slrButtonSettings 	:= A_AppData "\c0bra\SLRButtons.C0bra"
 global _reloaded			:= false
@@ -22,12 +21,11 @@ global disableMainHKList	:= ""
 global closeTabWinList		:= ""
 global disableCloseList		:= ""
 
-if (!FileExist(buttonSettings) || !FileExist(guiSettings) || !FileExist(c0braSettings) || !FileExist(slrButtonSettings))
+if (!FileExist(buttonSettings) || !FileExist(c0braSettings) || !FileExist(slrButtonSettings))
 {
 	IfNotExist, %A_AppData%\c0bra, FileCreateDir, %A_AppData%\c0bra
 		FileCopy, %A_ScriptDir%\config\Buttons.c0bra, %A_AppData%\c0bra\Buttons.c0bra
 	FileCopy, %A_ScriptDir%\config\Settings.c0bra, %A_AppData%\c0bra\Settings.c0bra
-	FileCopy, %A_ScriptDir%\config\Gui.c0bra, %A_AppData%\c0bra\Gui.c0bra
 	FileCopy, %A_ScriptDir%\config\SLRButtons.c0bra, %A_AppData%\c0bra\SLRButtons.c0bra
 	
 	TrayTip, c0bra Launcher, New configuration files copied to user settings directory!, 2, 1
@@ -35,7 +33,7 @@ if (!FileExist(buttonSettings) || !FileExist(guiSettings) || !FileExist(c0braSet
 
 try
 {
-	Guis := JSON_Load(guiSettings)
+	;~ Guis := JSON_Load(guiSettings)
 	Settings := JSON_Load(c0braSettings)
 }
 catch e 
