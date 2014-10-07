@@ -223,33 +223,28 @@ GetModifiers()
 }
 	
 
-ColorPicker(attribute)
+ColorPicker()
 {	
-	;~ MsgBox, 4096, c0bra Colors, Choose the %attribute% color.	;<<== That was annoying me...
-	
 	theColor := RegExReplace(ColorChooser(), "i)0x")
-	if !(theColor)
-		return
-
-	if ((theLen := StrLen(theColor)) < 6)
+	if (theColor = "0" || theColor <> "")
 	{
-		if (theLen = 5)
-			theColor := "0" theColor
-		else if (theLen = 4)
-			theColor := "00" theColor
-		else if (theLen = 3)
-			theColor := "000" theColor
-		else if (theLen = 2)
-			theColor := "0000" theColor
-		else if (theLen = 1)
-			theColor := "00000" theColor
+		if ((theLen := StrLen(theColor)) < 6)
+		{
+			if (theLen = 5)
+				theColor := "0" theColor
+			else if (theLen = 4)
+				theColor := "00" theColor
+			else if (theLen = 3)
+				theColor := "000" theColor
+			else if (theLen = 2)
+				theColor := "0000" theColor
+			else if (theLen = 1)
+				theColor := "00000" theColor
+		}
+
+		SetFormat, integer, d
+		return % theColor
 	}
-
-	if !(theColor)
-		return
-
-	SetFormat, integer, d
-	return % theColor
 }
 	
 
@@ -680,12 +675,15 @@ WM_MOUSEMOVE()
 	SetBatchLines, -1
 	ErrorLevel := 0
 	MouseGetPos,,,, thisHwnd, 2
-	MouseGetPos,,,, controlname
-	ControlGetText, controltext, %controlname% 
-	WinGetActiveTitle, thisWin
+	MouseGetPos,,, mouseWin, controlname
+	WinGetTitle, thisWin, ahk_id %mouseWin%
+	ControlGetText, controltext, %controlname%
 	
-	if (thisWin = "c0bra Colors")
-		return
+	if (instr(thisWin, "c0bra")) ; all c0bra settings guis have "c0bra" in them
+	{
+		if !(instr(thisWin, "Main") || instr(thisWin, "SLR"))
+			return
+	}
 	
 
 	; Still In same control --> Do Nothing 

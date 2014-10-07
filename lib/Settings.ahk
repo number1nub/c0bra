@@ -112,10 +112,10 @@
 			Gui, Settings:Add, Text, xp y+5 wp hp, Text Color
 			Gui, Settings:Add, Text, xp y+5 wp hp, Highlight Back Color
 			Gui, Settings:Add, Text, xp y+5 wp hp, Highlight Text Color
-			Gui, Settings:Add, Button, x+15 ys-5 w150 h30 Center vBackColor gDefaultColor, % ButtonList.Default.BackColor
-			Gui, Settings:Add, Button, xp y+5 wp h30 Center vTextColor gDefaultColor,  % ButtonList.Default.TextColor
-			Gui, Settings:Add, Button, xp y+5 wp h30 Center vHLBackColor gDefaultColor,  % ButtonList.Default.HLBackColor
-			Gui, Settings:Add, Button, xp y+5 wp h30 Center vHLTextColor gDefaultColor,  % ButtonList.Default.HLTextColor
+			Gui, Settings:Add, Button, x+15 ys-5 w150 h30 Center vBackColor gGuiColor, % ButtonList.Default.BackColor
+			Gui, Settings:Add, Button, xp y+5 wp h30 Center vTextColor gGuiColor,  % ButtonList.Default.TextColor
+			Gui, Settings:Add, Button, xp y+5 wp h30 Center vHLBackColor gGuiColor,  % ButtonList.Default.HLBackColor
+			Gui, Settings:Add, Button, xp y+5 wp h30 Center vHLTextColor gGuiColor,  % ButtonList.Default.HLTextColor
 			Gui, Settings:Add, CheckBox, xs+5 y+5 w310 hp vChangeDefaults, Update all buttons to default colors now?
 			
 			Gui, Settings:Add, GroupBox, x+20 y35 w325 h130 Center, MAIN GUI ADD-ONS
@@ -480,8 +480,8 @@
 		
 		
 		
-		DefaultColor:
-			ColorButton := A_GuiControl
-			ColorGui()
-		return
+		;~ DefaultColor:
+			;~ ColorButton := A_GuiControl
+			;~ ColorGui()
+		;~ return
 		

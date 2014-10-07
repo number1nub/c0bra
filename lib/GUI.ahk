@@ -426,7 +426,7 @@ ColorGui()
 	GUI, CLR:Add, Text, x25 y13 w40 h20 +Right, Color:
 	GUI, CLR:Add, DropDownList, x75 y10 w120 h20 r16 vdaColor gcolorDrop, % htmlColors
 	GUI, CLR:Add, Text, x+10 w40 h20 hwndColorHwnd, 		
-	GUI, CLR:Add, Button, x105 y40 w60 h30 gbtnDefault, Default
+	;~ GUI, CLR:Add, Button, x105 y40 w60 h30 gbtnDefault, Default
 	GUI, CLR:Add, Button, x165 y40 w100 h30 gokButton Default, OK
 	GUI, CLR:Show, h80, c0bra Colors
 	
@@ -611,28 +611,28 @@ return
 	return
 
 
-	btnDefault:
-		GUI, 1:Destroy
-		GUI, 2:Destroy
-		GUI, CLR:Submit
-		GUI, CLR:Destroy
+	;~ btnDefault:
+		;~ GUI, 1:Destroy
+		;~ GUI, 2:Destroy
+		;~ GUI, CLR:Submit
+		;~ GUI, CLR:Destroy
 		
-		newColor := buttonList.Default.BackColor
+		;~ newColor := buttonList.Default.BackColor
 		
-		for key, value in buttons
-		{
-			if (value.text = me)
-			{
-				buttons[key][A_ThisMenuItem] := newColor
-				JSON_Save(buttons, buttonSettings)
+		;~ for key, value in buttons
+		;~ {
+			;~ if (value.text = me)
+			;~ {
+				;~ buttons[key][A_ThisMenuItem] := newColor
+				;~ JSON_Save(buttons, buttonSettings)
 				
-				GUI, 1:destroy
-				GUI, Destroy
+				;~ GUI, 1:destroy
+				;~ GUI, Destroy
 				
-				quickReload("Button Color Updated")
-			}
-		}
-	return
+				;~ quickReload("Button Color Updated")
+			;~ }
+		;~ }
+	;~ return
 
 
 	okButton:
@@ -645,15 +645,7 @@ return
 		{
 			if (newColor <> "")
 				GuiControl, Settings:, %ColorButton%, %newColor%
-			
-			if !(instr(ColorButton, "gui"))
-			{
-				for key, value in buttons
-				{
-					if (value.text = "Default")
-						buttons[key][ColorButton] := newColor
-				}
-			}
+
 			aGuiSettings :=
 			ColorButton :=
 			return
@@ -679,24 +671,90 @@ return
 
 
 	Custom:
-		GUI, CLR:submit
-		GUI, CLR:destroy
+		GUI, CLR:Submit
+		GUI, CLR:Destroy
 
-		newColor := ColorPicker(A_ThisMenuItem)
-		if !(newColor)
-			return
-		
-		for key, value in buttons
+		newColor := ColorPicker()
+		If (aGuiSettings)
 		{
-			if (value.text = me)
+			if (newColor <> "")
+				GuiControl, Settings:, %ColorButton%, %newColor%
+
+			aGuiSettings :=
+			ColorButton :=
+			return
+		}
+		else
+		{
+			for key, value in buttons
 			{
-				buttons[key][A_ThisMenuItem] := newColor
-				JSON_Save(buttons, buttonSettings)
-				GUI, 1:destroy
-				
-				quickReload("Button Color Updated")
+				if (value.text = me)
+				{
+					buttons[key][A_ThisMenuItem] := newColor
+					JSON_Save(buttons, buttonSettings)
+					
+					GUI, 1:destroy
+					GUI, Destroy
+					
+					quickReload("Button Color Updated")		
+				}
 			}
 		}
+	
+	
+	
+		;~ GUI, CLR:submit
+		;~ GUI, CLR:destroy
+		;~ MsgBox % A_thismenuitem
+		;~ newColor := ColorPicker(A_ThisMenuItem)
+		;~ MsgBox % newColor
+		;~ if !(newColor)
+			;~ return
+		
+		;~ If (aGuiSettings)
+		;~ {
+			;~ if (newColor <> "")
+				;~ GuiControl, Settings:, %ColorButton%, %newColor%
+			
+			;~ if !(instr(ColorButton, "gui"))
+			;~ {
+				;~ for key, value in buttons
+				;~ {
+					;~ if (value.text = "Default")
+						;~ buttons[key][ColorButton] := newColor
+				;~ }
+			;~ }
+			;~ aGuiSettings :=
+			;~ ColorButton :=
+			;~ return
+		;~ }
+		;~ else
+		;~ {
+			;~ for key, value in buttons
+			;~ {
+				;~ if (value.text = me)
+				;~ {
+					;~ buttons[key][A_ThisMenuItem] := newColor
+					;~ JSON_Save(buttons, buttonSettings)
+					
+					;~ GUI, 1:destroy
+					;~ GUI, Destroy
+					
+					;~ quickReload("Button Color Updated")		
+				;~ }
+			;~ }
+		;~ }
+		;~ for key, value in buttons
+		;~ {
+			;~ if (value.text = me)
+			;~ {
+				;~ buttons[key][A_ThisMenuItem] := newColor
+				;~ JSON_Save(buttons, buttonSettings)
+				;~ GUI, 1:destroy
+				
+				;~ quickReload("Button Color Updated")
+			;~ }
+		;~ }
 	return
 
 ;}<<<==== Color GUI Event Handlers =====
