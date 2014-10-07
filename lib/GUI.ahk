@@ -94,7 +94,7 @@ guiOldPos:
 	}
 	;}
 	
-	GUI, Color, % Guis.mainGui.guiBackColor
+	GUI, Color, % Settings.mainGui.guiBackColor
 	GUI, -caption +ToolWindow +AlwaysOnTop
 	GUI, margin, %buttonSpacing%, %buttonSpacing%
 	
@@ -109,13 +109,13 @@ guiOldPos:
 		xGo 			:= (buttonWidth * 2) + (buttonSpacing * 2) - goWidth
 		searchWidth 	:= (buttonWidth * 2) - goWidth
 		searchTextWidth := searchWidth - 8
-		searchTextColor := Settings.search.textColor
-		searchTextFont	:= Settings.search.textFont
+		;~ searchTextColor := Settings.search.textColor
+		;~ searchTextFont	:= Settings.search.textFont
 		searchTextBold  := Settings.search.textBold
 
-		GUI, font, s%searchTextSize% w%searchtextBold% c%searchTextColor%, %searchTextFont%
+		GUI, font, s%searchTextSize% w%searchtextBold%, %textFont%
 		GUI, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 vGSEARCH,
-		GUI, Add, Text, xp yp-1 w%searchTextWidth% h%searchHeight%-2 0x200 Center +backgroundtrans hwndBackSearch, %searchBackText%		
+		GUI, Add, Text, xp yp-2 w%searchTextWidth% h%searchHeight%-2 0x200 Center BackgroundTrans hwndBackSearch, %searchBackText%		
 		GUI, font, s%textSize% w%textBold% c%searchTextColor%, %textFont%	
 		GUI, Add, text, x%xGo% y%buttonSpacing% w%goWidth% h%searchHeight% 0x200 Center gButtonPress hwndGO, GO
 		CTLCOLORS.Attach(GO, ButtonList.GO.BackColor, ButtonList.GO.TextColor)
@@ -124,7 +124,7 @@ guiOldPos:
 	
 			
 	; Add Main GUI Buttons
-	GUI, font, s%textSize% w%textBold%
+	GUI, font, s%textSize% w%textBold%, %textFont%
 	
 	loop, Parse, mainButtons, `,
 		KEY_COUNT := A_Index
@@ -395,16 +395,30 @@ ColorGui()
 {
 	global
 	
+	htmlColors := "Black|Silver|Gray|White|Maroon|Red|Purple|Fuchsia|Green|Lime|Olive|Yellow|Navy|Blue|Teal|Aqua"
+	
 	if (ColorButton <> "")
 	{
-		daButton := ColorButton
-		me 		 := "Default"
+		if (ColorButton = "BackColor" || ColorButton = "TextColor" || ColorButton = "HLBackColor" || ColorButton = "HLTextColor")
+		{
+			daButton := ColorButton
+			me 		 := "Default"
+			StringReplace, htmlColors, htmlColors, % buttonList[me][daButton], % buttonList[me][daButton] = "Aqua" ? buttonList[me][daButton] "||" : buttonList[me][daButton] "|"
+		}
+		else
+		{
+			GuiControlGet, buttonColor, Settings:, %ColorButton%
+			StringReplace, htmlColors, htmlColors, % buttonColor, % buttonColor = "Aqua" ? buttonColor "||" : buttonColor "|"
+		}
 	}
 	else
+	{
 		daButton := A_ThisMenuItem
+		StringReplace, htmlColors, htmlColors, % buttonList[me][daButton], % buttonList[me][daButton] = "Aqua" ? buttonList[me][daButton] "||" : buttonList[me][daButton] "|"
+	}
 	
-	htmlColors := "Black|Silver|Gray|White|Maroon|Red|Purple|Fuchsia|Green|Lime|Olive|Yellow|Navy|Blue|Teal|Aqua"
-	StringReplace, htmlColors, htmlColors, % buttonList[me][daButton], % buttonList[me][daButton] = "Aqua" ? buttonList[me][daButton] "||" : buttonList[me][daButton] "|"
+	
+	
 	
 	GUI, 1:Destroy	
 	GUI, CLR:Margin, 5, 5
@@ -416,7 +430,10 @@ ColorGui()
 	GUI, CLR:Add, Button, x165 y40 w100 h30 gokButton Default, OK
 	GUI, CLR:Show, h80, c0bra Colors
 	
-	CTLCOLORS.Attach(ColorHwnd, buttonList[me][daButton], buttonList[me][daButton])
+	if (ColorButton <> "" && ColorButton <> "BackColor" && ColorButton <> "TextColor" && ColorButton <> "HLBackColor" && ColorButton <> "HLTextColor")
+		CTLCOLORS.Attach(ColorHwnd, buttonColor, buttonColor)
+	else
+		CTLCOLORS.Attach(ColorHwnd, buttonList[me][daButton], buttonList[me][daButton])
 }
 
 
@@ -624,31 +641,37 @@ return
 
 		newColor := daColor
 			
-		IfWinExist, GUI Window Settings
+		If (aGuiSettings)
 		{
 			if (newColor <> "")
 				GuiControl, Settings:, %ColorButton%, %newColor%
 			
-			for key, value in buttons
+			if !(instr(ColorButton, "gui"))
 			{
-				if (value.text = "Default")
-					buttons[key][ColorButton] := newColor
+				for key, value in buttons
+				{
+					if (value.text = "Default")
+						buttons[key][ColorButton] := newColor
+				}
 			}
+			aGuiSettings :=
 			ColorButton :=
 			return
 		}
-			
-		for key, value in buttons
+		else
 		{
-			if (value.text = me)
+			for key, value in buttons
 			{
-				buttons[key][A_ThisMenuItem] := newColor
-				JSON_Save(buttons, buttonSettings)
-				
-				GUI, 1:destroy
-				GUI, Destroy
-				
-				quickReload("Button Color Updated")		
+				if (value.text = me)
+				{
+					buttons[key][A_ThisMenuItem] := newColor
+					JSON_Save(buttons, buttonSettings)
+					
+					GUI, 1:destroy
+					GUI, Destroy
+					
+					quickReload("Button Color Updated")		
+				}
 			}
 		}
 	return

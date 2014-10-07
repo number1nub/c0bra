@@ -54,7 +54,7 @@
 			
 			bList :=
 			for key, value in Settings.userHotkeys
-				bList := (bList = "" ? "" : bList "|") key "`t-  " value
+				bList := (bList = "" ? "" : bList "|") key "`t" value
 			Gui, Settings:Add, ListBox, xp y+7 wp h190 vuserHotkeys hwndHuserHotkeys, %bList%
 			Gui, Settings:Add, Button, xs+45 y+5 w100 h30 gaddUserHotkey, Add
 			Gui, Settings:Add, Button, x+25 yp w100 hp gremUserHotkey, Remove
@@ -156,7 +156,7 @@
 			;{````  End Tab Control  ````}
 			Gui, Settings:Tab
 			
-			Gui, Settings:Add, Button, x210 y325 w100 h30 gallSet Default Disabled, ALL SET
+			Gui, Settings:Add, Button, x210 y325 w100 h30 gallSet Default, ALL SET
 			Gui, Settings:Add, Button, x+50 yp wp hp gsettingsCancel, CANCEL
 			
 			Gui, Settings:Show, Center, c0bra Settings
@@ -171,22 +171,44 @@
 			Settings.mainHotkey.mainHotkey := mainTrigger
 			Settings.mainHotkey.holdAction := mainHoldTrigger
 			
-			;NEED TO SAVE TRIGGER DISABLED ITEMS HERE
+			ControlGet, disableTriggerList, List,,, ahk_id %HdisableIfActive%
+			Settings.mainHotkey.disableIfActive := [] 
+			Loop, Parse, disableTriggerList, `n
+				Settings.mainHotkey.disableIfActive[A_Index] := A_LoopField
 			
-			;NEED TO SAVE USER HOTKEYS HERE
+			ControlGet, userHotkeysList, List,,, ahk_id %HuserHotkeys%
+			Settings.userHotkeys := []
+			Loop, Parse, userHotkeysList, `n
+			{
+				Loop, Parse, A_LoopField, `t
+				{
+					if (A_Index = 1)
+						aKey := A_LoopField
+					else
+						aValue := A_LoopField
+				}
+				Settings.userHotkeys[aKey] := aValue
+			}
 			
 			Settings.mainGui.buttonHeight := bHeight
 			Settings.mainGui.buttonSpacing := bSpacing
 			Settings.mainGui.buttonWidth := bWidth
-			Settings.mainGui.guiBackColor := guiColor
+			GuiControlGet, aGuiColor, Settings:, guiColor
+			Settings.mainGui.guiBackColor := aGuiColor
 			Settings.mainGui.textBold := tBold
 			Settings.mainGui.textFont := tFont
 			Settings.mainGui.textSize := tSize
 			
+			Settings.search.Height := bHeight
+			Settings.search.textBold := tBold
+			Settings.search.textFont := tFont
+			;;~ Settings.search.textSize := tSize
+			
 			Settings.sideGui.buttonHeight := sbHeight
 			Settings.sideGui.buttonSpacing := sbSpacing
 			Settings.sideGui.buttonWidth := sbWidth
-			Settings.sideGui.guiBackColor := sguiColor
+			GuiControlGet, aSGuiColor, Settings:, sguiColor
+				Settings.sideGui.guiBackColor := aSGuiColor
 			Settings.sideGui.textBold := stBold
 			Settings.sideGui.textFont := stFont
 			Settings.sideGui.textSize := stSize
@@ -194,7 +216,8 @@
 			Settings.SLRGui.buttonHeight := slrbHeight
 			Settings.SLRGui.buttonSpacing := slrbSpacing
 			Settings.SLRGui.buttonWidth := slrbWidth
-			Settings.SLRGui.guiBackColor := slrguiColor
+			GuiControlGet, aSLRGuiColor, Settings:, slrguiColor
+			Settings.SLRGui.guiBackColor := aSLRGuiColor
 			Settings.SLRGui.textBold := slrtBold
 			Settings.SLRGui.textFont := slrtFont
 			Settings.SLRGui.textSize := slrtSize
@@ -232,17 +255,23 @@
 			
 			Settings.theCloser.hotkey := closerHotkey
 			
-			;NEED DISABLED CLOSER SAVE HERE
+			ControlGet, disableCloserList, List,,, ahk_id %HcloserDisable%
+			Settings.theCloser.disableIfActive := []
+			Loop, Parse, disableCloserList, `n
+				Settings.theCloser.disableIfActive[A_Index] := A_LoopField
 			
-			;NEED TAB CLOSER SAVE HERE
+			ControlGet, closerTabList, List,,, ahk_id %HcloserTabs%
+			Settings.theCloser.closeTabIfActive := []
+			Loop, Parse, closerTabList, `n
+				Settings.theCloser.closeTabIfActive[A_Index] := A_LoopField
 			
-			JSON_save(Settings, c0braSettings)
 			ButtonList := []
-
 			JSON_Save(buttons, buttonSettings)
-			
+			JSON_save(Settings, c0braSettings)
 			Buttons := []
+			
 			Gui, Settings:Destroy
+			quickReload("c0bra rebooted with new settings!", "c0bra Settings")
 		return
 		
 		
@@ -321,7 +350,7 @@
 				return
 			}
 			
-			GuiControl, Settings:, userHotkeys, % anewHotkey "`t-  " anewHotkeyAction
+			GuiControl, Settings:, userHotkeys, % anewHotkey "`t" anewHotkeyAction
 		return
 		
 		
@@ -438,8 +467,9 @@
 		
 		
 		guiColor:
-			
+			aGuiSettings := 1
 			ColorButton := A_GuiControl
+
 			ColorGui()
 			
 			;~ theColor := RegExReplace(ColorChooser(), "i)0x")
@@ -451,9 +481,7 @@
 		
 		
 		DefaultColor:
-			;this function needs to not save.. just overwrite the button
 			ColorButton := A_GuiControl
 			ColorGui()
-			
 		return
 		
