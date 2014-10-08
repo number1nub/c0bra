@@ -256,10 +256,11 @@ return
 		
 		ChildrenList := []
 		childrenButtons := ""
+		;~ numChildren := ""
 		
 		For key, value in ButtonList[A_GuiControl].Children
 		{
-			;~ ChildrenButtons .= (ChildrenButtons ? "`n" : "") value
+			;~ numChildren += 1
 			ChildrenList.Insert(value, ButtonList[value])
 			childrenButtons .= (childrenButtons ? "," : "") value
 		}
@@ -277,12 +278,13 @@ return
 				MyFavs := A_MyDocuments "\..\Favorites\Links"
 				
 				;LOOP THROUGH FAVORITES FOLDER FOR KEY, VALUE, AND COUNT
-
-				
+					
+					;~ numChildren := 
 					loop, %MyFavs%\*.url
 					{
 						if (A_LoopFileExt = "URL")
 						{
+							;~ numChildren += 1
 							THE_BOOKMARK := RegExReplace(A_LoopFileName, "i)\.[^.]*$")
 							THE_BOOKMARK_PATH := A_LoopFileLongPath
 							
@@ -310,7 +312,6 @@ return
 				Loop, Parse, childrenButtons, `,
 				{
 					A_HWND := "side" A_Index
-					
 					if (lastButton = A_GuiControl)
 					{
 						GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
@@ -323,6 +324,10 @@ return
 					}
 				}
 			}
+
+		;~ SideHeight := ((1 + numChildren)* sideButtonSpacing) + (numChildren * sideButtonHeight)
+		;~ SideWidth := (2 * sideButtonSpacing) + sideButtonWidth
+		;~ ScreenCheck(XPOS, YPOS, SideWidth, SideHeight)
 		
 		GUI, %currGui%:Show, x%XPOS% y%YPOS%, %A_GuiControl%
 	}
