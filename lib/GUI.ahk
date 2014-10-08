@@ -114,8 +114,8 @@ guiOldPos:
 		searchTextBold  := Settings.search.textBold
 
 		GUI, font, s%searchTextSize% w%searchtextBold%, %textFont%
-		GUI, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 vGSEARCH,
-		GUI, Add, Text, xp yp-2 w%searchTextWidth% h%searchHeight%-2 0x200 Center BackgroundTrans hwndBackSearch, %searchBackText%		
+		GUI, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 -VScroll vGSEARCH,
+		GUI, Add, Text, xp yp-2 w%searchTextWidth% h%searchHeight%-2 0x200 Center +BackgroundTrans hwndBackSearch, %searchBackText%		
 		GUI, font, s%textSize% w%textBold% c%searchTextColor%, %textFont%	
 		GUI, Add, text, x%xGo% y%buttonSpacing% w%goWidth% h%searchHeight% 0x200 Center gButtonPress hwndGO, GO
 		CTLCOLORS.Attach(GO, ButtonList.GO.BackColor, ButtonList.GO.TextColor)
@@ -181,8 +181,13 @@ guiOldPos:
 		GUI, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h%footerHeight% 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
 			CTLCOLORS.Attach(FOOTER, footerColor, footerTextColor)
 	}
+	
+	;is there a better way to get gui width and height that hasn't been created yet?
+	GuiHeight := ((3 + Floor(KEY_COUNT / 2)) * ButtonSpacing) + searchHeight + (ButtonHeight * Ceil(KEY_COUNT / 2))
+	GuiWidth := (3 * ButtonSpacing) + (2 * ButtonWidth)
+	ScreenCheck(XPOS, YPOS, GuiWidth, GuiHeight)
 		
-	GUI, show, x%XPOS% y%YPOS%, c0bra Main GUI
+	GUI, Show, x%XPOS% y%YPOS%, c0bra Main GUI
 	
 	; Insert SLR buttons back into mainButtons variable	
 	mainButtons .= ",GO"
