@@ -373,6 +373,10 @@ SLR_GUI()
 		CTLCOLORS.Attach(%A_LoopField%, slrList[A_LoopField].BackColor, slrList[A_LoopField].TextColor)
 	}
 	
+	SLRHeight := (5 * SLRButtonSpacing) + (ButtonHeight * 4)
+	SLRWidth := (2 * ButtonSpacing) + SLRButtonWidth
+	ScreenCheck(MouseX1, MouseY1, SLRWidth, SLRHeight)
+	
 	GUI, 2:Show, x%MouseX1% y%MouseY1%, c0bra SLR
 }
 	
