@@ -5,9 +5,9 @@
 QuickEditMenu:
 	temp_MenuItem := RegExReplace(A_ThisMenuItem, "\s")
 	
-	for key in guis.mainGui
+	for key in Settings.mainGui
 		GuiKeys := (guiKeys != "" ? guiKeys "," : "") key
-	for key in guis.search
+	for key in Settings.search
 		GuiKeys := (guiKeys != "" ? guiKeys "," : "") key
 
 	StringReplace, menuCheck, A_ThisMenuItem, main%A_Space%
@@ -144,36 +144,43 @@ QuickEditMenu:
 
 
 	;{````  Add a Main Menu Button  ````}
-		else if (menuCheck = "Sub-Menu Button")
-		{
-			GUI, Destroy
-			GUI, 1:Destroy
+	else if (menuCheck = "Sub-Menu Button")
+	{
+		GUI, Destroy
+		GUI, 1:Destroy
+		
+		redoSubMenu:
+		GUI +LastFound +OwnDialogs +AlwaysOnTop
+		InputBox, aText, Sub-Menu Name, Enter the name for the sub-menu button:
+		if (ErrorLevel || !aText)
+			return					
+		if (buttonCheck(buttons, aText))
+			goto, redoSubMenu
 			
-			redoSubMenu:
-			GUI +LastFound +OwnDialogs +AlwaysOnTop
-			InputBox, aText, Sub-Menu Name, Enter the name for the sub-menu button:
-			if (ErrorLevel || !aText)
-				return					
-			if (buttonCheck(buttons, aText))
-				goto, redoSubMenu
-				
-			CMD      := ""
-			typeCMD  := ""
-			Children := []
-		}
+		CMD      := ""
+		typeCMD  := ""
+		Children := []
+	}
 	;}
 
 
 	;{```` Edit A Button ````}
-	else if (A_ThisMenuItem = "Edit <" me ">")
+	else if (A_ThisMenuItem = "Edit " me)
 	{
 		GUI, 1:Destroy
 		
-		bIndex := "", pIndex := "", cIndex := "", curVal := ""
+		bIndex := ""
+		pIndex := ""
+		cIndex := ""
+		curVal := ""
 		
 		InputBox, newText, c0bra Configuration, Button Text:,,,,,,,, %me%
 		if (ErrorLevel || !newText)
+		{
+			msgbox, 4144, c0bra Configuration, Invalid entry.`n`nAborting
 			return
+		}
+		
 		
 		for index, value in Buttons
 		{
@@ -195,7 +202,10 @@ QuickEditMenu:
 		
 		InputBox, newCommand, c0bra Configuration, Button Command:,,,,,,,, %curVal%
 		If (ErrorLevel || !newCommand)
+		{
+			msgbox, 4144, c0bra Configuration, Invalid entry.`n`nAborting
 			return
+		}
 		
 		Buttons[pIndex].Children[cIndex] := newText
 		Buttons[bIndex].Text := newText
@@ -316,11 +326,12 @@ QuickEditMenu:
 	
 	
 	;{```` Main Gui Settings ````}
-	else if (A_ThisMenuItem = "Main Gui Settings")
-	{
-		Gui_Settings("Main")
-		return
-	}
+	;~ else if (A_ThisMenuItem = "Main Gui Settings")
+	;~ {
+		;~ Gui_Settings("Main")
+		;~ theGui := "Main"
+		;~ return
+	;~ }
 	;}
 	
 	
@@ -365,6 +376,28 @@ QuickEditMenu:
 	}
 	;}
 
+
+	;{```` Main GUI Options ````}
+	;~ else if temp_MenuItem in %GuiKeys%
+	;~ {
+		;~ InputBox, newOption, c0bra GUI Options, Enter the new value for A_ThisMenuitem.,,,,,,,, % guis.mainGui[temp_MenuItem] != "" ? guis.mainGui[temp_MenuItem] : guis.search[temp_MenuItem]
+		;~ if !(ErrorLevel)
+		;~ {
+			;~ if (guis.mainGui[temp_MenuItem] != "")
+			;~ {
+				;~ guis.mainGui[temp_MenuItem] := newOption
+				;~ JSON_save(guis, guiSettings)
+			;~ }
+			;~ else if (guis.search[temp_MenuItem] != "")
+			;~ {
+				;~ guis.search[temp_MenuItem] := newOption
+				;~ JSON_save(guis, guiSettings)
+			;~ }
+		;~ }
+			
+		;~ return
+	;~ }
+	;}
 
 
 	;{```` Delete A Button ````}
@@ -458,16 +491,17 @@ return
 TrayText:
 
 	;{```` Change Main Hotkey ````}
-	if (A_ThisMenuItem = "Main Hotkey: " Settings.mainHotkey.mainHotkey)
-	{
-		mainHotkey := settings.mainHotkey.mainHotkey
-		InputBox, newTrigger, c0bra Trigger, Enter a new hotkey that will launch the c0bra menu:`n,,,,,,,, % mainHotkey
-		if (ErrorLevel || !newTrigger)
-			return
-		Settings.mainHotkey.mainHotkey := newTrigger
-		JSON_Save(Settings, c0braSettings)
-		quickReload("New Hotkey: " modReplace(newTrigger), "Main Hotkey Changed")
-	}
+	if (A_ThisMenuItem = "Trigger: " Settings.mainHotkey.mainHotkey || A_ThisMenuItem = "Main Hotkey: " Settings.mainHotkey.mainHotkey)
+	;~ if (A_ThisMenuItem = "Trigger: " Settings.mainHotkey.mainHotkey)
+	;~ {
+		;~ mainHotkey := settings.mainHotkey.mainHotkey
+		;~ InputBox, newTrigger, c0bra Trigger, Enter new c0bra trigger hotkey(s)`nCurrent Hotkey - %mainHotkey%`n`nExample 1 - MButton`nExample 2 - ^#1`n,,,,,,,, % mainHotkey
+		;~ if (ErrorLevel || !newTrigger)
+			;~ return		
+		;~ Settings.mainHotkey.mainHotkey := newTrigger
+		;~ JSON_Save(Settings, c0braSettings)
+		;~ quickReload("New Trigger: " newTrigger, "Main Hotkey Changed")
+	;~ }
 	;}
 
 	;{```` Add new user hotkey ````}
@@ -514,8 +548,8 @@ TrayText:
 	{
 		InputBox, newAction, C0bra Settings,Enter the action to perform when the main hotkey is held down for longer than 500ms:,,500,160,,,,,% Settings.mainHotkey.holdAction
 		If (ErrorLevel || !newAction)
-			return
-		
+return
+
 	}
 	;}
 	

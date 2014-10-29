@@ -72,16 +72,16 @@ guiOldPos:
 	Guis 	:= JSON_Load(guiSettings)
 	Buttons := JSON_Load(buttonSettings)
 	
-	buttonSpacing 		:= Guis.mainGui.buttonSpacing
-	buttonWidth 		:= Guis.mainGui.buttonWidth
-	buttonHeight 		:= Guis.mainGui.buttonHeight
-	search 				:= Guis.search.search
-	textSize 			:= Guis.mainGui.textSize
-	textBold 			:= Guis.mainGui.textBold
-	textFont			:= Guis.mainGui.textFont
+	buttonSpacing 		:= Settings.mainGui.buttonSpacing
+	buttonWidth 		:= Settings.mainGui.buttonWidth
+	buttonHeight 		:= Settings.mainGui.buttonHeight
+	search 				:= Settings.search.search
+	textSize 			:= Settings.mainGui.textSize
+	textBold 			:= Settings.mainGui.textBold
+	textFont			:= Settings.mainGui.textFont
 	lastButWidth 		:= (buttonWidth * 2) + buttonSpacing
 	sideLastButWidth	:= lastButWidth - (4 * buttonSpacing)
-	footerColor			:= Guis.mainGui.footerColor
+	footerColor			:= Settings.footer.footerColor
 	
 	;{````  Create CSV button lists  ````}
 	For key, value in Buttons
@@ -94,7 +94,7 @@ guiOldPos:
 	}
 	;}
 	
-	GUI, Color, % Guis.mainGui.guiBackColor
+	GUI, Color, % Settings.mainGui.guiBackColor
 	GUI, -caption +ToolWindow +AlwaysOnTop
 	GUI, margin, %buttonSpacing%, %buttonSpacing%
 	
@@ -102,20 +102,20 @@ guiOldPos:
 	;{````  Create Search Bar  ````}
 	if (search)
 	{
-		searchTextSize 	:= Guis.search.textSize
-		searchHeight    := Guis.search.Height
-		searchBackText  := Guis.search.backText
-		goWidth         := Guis.mainGui.goWidth
+		searchTextSize 	:= Settings.search.textSize
+		searchHeight    := Settings.search.Height
+		searchBackText  := Settings.search.backText
+		goWidth         := Settings.mainGui.goWidth
 		xGo 			:= (buttonWidth * 2) + (buttonSpacing * 2) - goWidth
 		searchWidth 	:= (buttonWidth * 2) - goWidth
 		searchTextWidth := searchWidth - 8
-		searchTextColor := Guis.search.textColor
-		searchTextFont	:= Guis.search.textFont
-		searchTextBold  := Guis.search.textBold
+		;~ searchTextColor := Settings.search.textColor
+		;~ searchTextFont	:= Settings.search.textFont
+		searchTextBold  := Settings.search.textBold
 
-		GUI, font, s%searchTextSize% w%searchtextBold% c%searchTextColor%, %searchTextFont%
-		GUI, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 vGSEARCH,
-		GUI, Add, Text, xp yp-1 w%searchTextWidth% h%searchHeight%-2 0x200 Center +backgroundtrans hwndBackSearch, %searchBackText%		
+		GUI, font, s%searchTextSize% w%searchtextBold%, %textFont%
+		GUI, Add, Edit, x%buttonSpacing% y%buttonSpacing% w%searchWidth% h%searchHeight% 0x200 -VScroll vGSEARCH,
+		GUI, Add, Text, xp yp-2 w%searchTextWidth% h%searchHeight%-2 0x200 Center +BackgroundTrans hwndBackSearch, %searchBackText%		
 		GUI, font, s%textSize% w%textBold% c%searchTextColor%, %textFont%	
 		GUI, Add, text, x%xGo% y%buttonSpacing% w%goWidth% h%searchHeight% 0x200 Center gButtonPress hwndGO, GO
 		CTLCOLORS.Attach(GO, ButtonList.GO.BackColor, ButtonList.GO.TextColor)
@@ -124,7 +124,7 @@ guiOldPos:
 	
 			
 	; Add Main GUI Buttons
-	GUI, font, s%textSize% w%textBold%
+	GUI, font, s%textSize% w%textBold%, %textFont%
 	
 	loop, Parse, mainButtons, `,
 		KEY_COUNT := A_Index
@@ -167,20 +167,25 @@ guiOldPos:
 	}
 		
 	; Footer call		
-	if (guis.footer.footer)
+	if (Settings.footer.footer)
 	{
 		footerWidth := (buttonWidth * 2) + buttonSpacing
-		footerTextSize 	:= Guis.footer.textSize
-		footerHeight    := Guis.footer.Height
-		footerTextColor := Guis.footer.textColor
-		footerTextFont	:= Guis.footer.textFont
-		footerTextBold  := Guis.footer.textBold
-		footerColor		:= Guis.footer.footerColor
+		footerTextSize 	:= Settings.footer.textSize
+		footerHeight    := Settings.footer.Height
+		footerTextColor := Settings.footer.textColor
+		footerTextFont	:= Settings.footer.textFont
+		footerTextBold  := Settings.footer.textBold
+		footerColor		:= Settings.footer.footerColor
 		
 		GUI, font, s%footerTextSize% w%footerTextBold% c%footerTextColor%, %footerTextFont%
 		GUI, Add, Text, x%buttonSpacing% y+5 w%footerWidth% h%footerHeight% 0x200 Center hwndFOOTER, % "c0bra v" Settings.version
 			CTLCOLORS.Attach(FOOTER, footerColor, footerTextColor)
 	}
+		
+	;is there a better way to get gui width and height that hasn't been created yet?
+	GuiHeight := ((3 + Floor(KEY_COUNT / 2)) * ButtonSpacing) + searchHeight + (ButtonHeight * Ceil(KEY_COUNT / 2))
+	GuiWidth := (3 * ButtonSpacing) + (2 * ButtonWidth)
+	ScreenCheck(XPOS, YPOS, GuiWidth, GuiHeight)
 		
 	GUI, show, x%XPOS% y%YPOS%, c0bra Main GUI
 	
@@ -198,13 +203,13 @@ return
 	{
 		global
 
-		sideButtonSpacing 		:= Guis.sideGui.buttonSpacing
-		sideButtonWidth 		:= Guis.sideGui.buttonWidth
-		sideButtonHeight 		:= Guis.sideGui.buttonHeight
-		sideSearch 				:= Guis.sideGui.search
-		sideTextSize 			:= Guis.sideGui.textSize
-		sideTextBold 			:= Guis.sideGui.textBold
-		sideTextFont			:= Guis.sideGui.textFont
+		sideButtonSpacing 		:= Settings.sideGui.buttonSpacing
+		sideButtonWidth 		:= Settings.sideGui.buttonWidth
+		sideButtonHeight 		:= Settings.sideGui.buttonHeight
+		sideSearch 				:= Settings.sideGui.search
+		sideTextSize 			:= Settings.sideGui.textSize
+		sideTextBold 			:= Settings.sideGui.textBold
+		sideTextFont			:= Settings.sideGui.textFont
 
 		currGui := A_Gui
 		nextGui := currGui = 1 ? currGui + 2 : currGui + 1
@@ -251,15 +256,16 @@ return
 		
 		ChildrenList := []
 		childrenButtons := ""
+		;~ numChildren := ""
 		
 		For key, value in ButtonList[A_GuiControl].Children
 		{
-			;~ ChildrenButtons .= (ChildrenButtons ? "`n" : "") value
+			;~ numChildren += 1
 			ChildrenList.Insert(value, ButtonList[value])
 			childrenButtons .= (childrenButtons ? "," : "") value
 		}
 		
-		GUI, %currGui%:Color, % guis.sideGui.guiBackColor
+		GUI, %currGui%:Color, % Settings.sideGui.guiBackColor
 		GUI, %currGui%:-caption +ToolWindow +Owner%PREV_GUI%
 		GUI, %currGui%:margin, %sideButtonSpacing%, %sideButtonSpacing%
 		GUI, %currGui%:Font, s%sideTextSize% w%sideTextBold%, %sideTextFont%
@@ -274,10 +280,12 @@ return
 				;LOOP THROUGH FAVORITES FOLDER FOR KEY, VALUE, AND COUNT
 
 				
+					;~ numChildren := 
 					loop, %MyFavs%\*.url
 					{
 						if (A_LoopFileExt = "URL")
 						{
+							;~ numChildren += 1
 							THE_BOOKMARK := RegExReplace(A_LoopFileName, "i)\.[^.]*$")
 							THE_BOOKMARK_PATH := A_LoopFileLongPath
 							
@@ -319,6 +327,10 @@ return
 				}
 			}
 		
+		;~ SideHeight := ((1 + numChildren)* sideButtonSpacing) + (numChildren * sideButtonHeight)
+		;~ SideWidth := (2 * sideButtonSpacing) + sideButtonWidth
+		;~ ScreenCheck(XPOS, YPOS, SideWidth, SideHeight)
+		
 		GUI, %currGui%:Show, x%XPOS% y%YPOS%, %A_GuiControl%
 	}
 	
@@ -345,17 +357,17 @@ SLR_GUI()
 	
 	MouseGetPos, MouseX1, MouseY1
 	
-	SLRbuttonSpacing 		:= Guis.SLRGui.buttonSpacing
-	SLRbuttonWidth 			:= Guis.SLRGui.buttonWidth
-	SLRbuttonHeight 		:= Guis.SLRGui.buttonHeight
-	SLRguiBackColor			:= Guis.SLRGui.guiBackColor
-	SLRtextSize 			:= Guis.SLRGui.textSize
-	SLRtextBold 			:= Guis.SLRGui.textBold
-	SLRtextFont				:= Guis.SLRGui.textFont
+	SLRbuttonSpacing 		:= Settings.SLRGui.buttonSpacing
+	SLRbuttonWidth 			:= Settings.SLRGui.buttonWidth
+	SLRbuttonHeight 		:= Settings.SLRGui.buttonHeight
+	SLRguiBackColor			:= Settings.SLRGui.guiBackColor
+	SLRtextSize 			:= Settings.SLRGui.textSize
+	SLRtextBold 			:= Settings.SLRGui.textBold
+	SLRtextFont				:= Settings.SLRGui.textFont
 	
 	GUI, 2:font, s%SLRtextSize% w%SLRtextBold%, %SLRtextFont%
 	GUI, 2:+toolwindow -caption
-	GUI, 2:Color, % Guis.SLRGui.guiBackColor
+	GUI, 2:Color, % Settings.SLRGui.guiBackColor
 	GUI, 2:Margin, %SLRbuttonSpacing%, %SLRbuttonSpacing%
 	
 	Loop, Parse, slrButtons, `n
@@ -367,6 +379,10 @@ SLR_GUI()
 		
 		CTLCOLORS.Attach(%A_LoopField%, slrList[A_LoopField].BackColor, slrList[A_LoopField].TextColor)
 	}
+	
+	SLRHeight := (5 * SLRButtonSpacing) + (ButtonHeight * 4)
+	SLRWidth := (2 * ButtonSpacing) + SLRButtonWidth
+	ScreenCheck(MouseX1, MouseY1, SLRWidth, SLRHeight)
 	
 	GUI, 2:Show, x%MouseX1% y%MouseY1%, c0bra SLR
 }
@@ -395,16 +411,27 @@ ColorGui()
 {
 	global
 	
+	htmlColors := "Black|Silver|Gray|White|Maroon|Red|Purple|Fuchsia|Green|Lime|Olive|Yellow|Navy|Blue|Teal|Aqua"
+	
 	if (ColorButton <> "")
 	{
-		daButton := ColorButton
-		me 		 := "Default"
+		if (ColorButton = "BackColor" || ColorButton = "TextColor" || ColorButton = "HLBackColor" || ColorButton = "HLTextColor")
+		{
+			daButton := ColorButton
+			me 		 := "Default"
+			StringReplace, htmlColors, htmlColors, % buttonList[me][daButton], % buttonList[me][daButton] = "Aqua" ? buttonList[me][daButton] "||" : buttonList[me][daButton] "|"
+		}
+		else
+		{
+			GuiControlGet, buttonColor, Settings:, %ColorButton%
+			StringReplace, htmlColors, htmlColors, % buttonColor, % buttonColor = "Aqua" ? buttonColor "||" : buttonColor "|"
+		}
 	}
 	else
+	{
 		daButton := A_ThisMenuItem
-	
-	htmlColors := "Black|Silver|Gray|White|Maroon|Red|Purple|Fuchsia|Green|Lime|Olive|Yellow|Navy|Blue|Teal|Aqua"
-	StringReplace, htmlColors, htmlColors, % buttonList[me][daButton], % buttonList[me][daButton] = "Aqua" ? buttonList[me][daButton] "||" : buttonList[me][daButton] "|"
+		StringReplace, htmlColors, htmlColors, % buttonList[me][daButton], % buttonList[me][daButton] = "Aqua" ? buttonList[me][daButton] "||" : buttonList[me][daButton] "|"
+	}
 	
 	GUI, 1:Destroy	
 	GUI, CLR:Margin, 5, 5
@@ -412,10 +439,13 @@ ColorGui()
 	GUI, CLR:Add, Text, x25 y13 w40 h20 +Right, Color:
 	GUI, CLR:Add, DropDownList, x75 y10 w120 h20 r16 vdaColor gcolorDrop, % htmlColors
 	GUI, CLR:Add, Text, x+10 w40 h20 hwndColorHwnd, 		
-	GUI, CLR:Add, Button, x105 y40 w60 h30 gbtnDefault, Default
+	;~ GUI, CLR:Add, Button, x105 y40 w60 h30 gbtnDefault, Default
 	GUI, CLR:Add, Button, x165 y40 w100 h30 gokButton Default, OK
 	GUI, CLR:Show, h80, c0bra Colors
 	
+	if (ColorButton <> "" && ColorButton <> "BackColor" && ColorButton <> "TextColor" && ColorButton <> "HLBackColor" && ColorButton <> "HLTextColor")
+		CTLCOLORS.Attach(ColorHwnd, buttonColor, buttonColor)
+	else
 	CTLCOLORS.Attach(ColorHwnd, buttonList[me][daButton], buttonList[me][daButton])
 }
 
@@ -561,8 +591,8 @@ GuiContextMenu:
 	; Edit and Delete button menus
 	if (me != "GO")
 	{
-		if (buttonList[me].Level && me != "Bookmarks")
-			Menu, Title, Add, Edit <%me%>, QuickEditMenu
+		if (me != "Bookmarks")
+			Menu, Title, Add, Rename <%me%>, QuickEditMenu
 		
 		Menu, Title, Add, Delete <%me%>, QuickEditMenu		
 	}
@@ -596,27 +626,28 @@ return
 
 
 	btnDefault:
-		GUI, 1:Destroy
-		GUI, 2:Destroy
-		GUI, CLR:Submit
-		GUI, CLR:Destroy
+	;~ btnDefault:
+		;~ GUI, 1:Destroy
+		;~ GUI, 2:Destroy
+		;~ GUI, CLR:Submit
+		;~ GUI, CLR:Destroy
 		
-		newColor := buttonList.Default.BackColor
+		;~ newColor := buttonList.Default.BackColor
 		
-		for key, value in buttons
-		{
-			if (value.text = me)
-			{
-				buttons[key][A_ThisMenuItem] := newColor
-				JSON_Save(buttons, buttonSettings)
+		;~ for key, value in buttons
+		;~ {
+			;~ if (value.text = me)
+			;~ {
+				;~ buttons[key][A_ThisMenuItem] := newColor
+				;~ JSON_Save(buttons, buttonSettings)
 				
-				GUI, 1:destroy
-				GUI, Destroy
+				;~ GUI, 1:destroy
+				;~ GUI, Destroy
 				
-				quickReload(me " button set to default colors", "Button Color Updated")
-			}
-		}
-	return
+				;~ quickReload("Button Color Updated")
+			;~ }
+		;~ }
+	;~ return
 
 
 	okButton:
@@ -625,30 +656,30 @@ return
 
 		newColor := daColor
 			
-		IfWinExist, GUI Window Settings
+		If (aGuiSettings)
 		{
 			if (newColor <> "")
 				GuiControl, Settings:, %ColorButton%, %newColor%
-			
-			for key, value in buttons
-			{
-				if (value.text = "Default")
-					buttons[key][ColorButton] := newColor
-			}
+
+			aGuiSettings :=
 			ColorButton :=
 			return
 		}
 			
-		for key, value in buttons
+		else
 		{
-			if (value.text = me)
+			for key, value in buttons
 			{
-				buttons[key][A_ThisMenuItem] := newColor
-				JSON_Save(buttons, buttonSettings)
-				
-				GUI, 1:destroy
-				GUI, Destroy
-				quickReload(me " button " A_ThisMenuItem " updated", "Button Color Updated")
+				if (value.text = me)
+				{
+					buttons[key][A_ThisMenuItem] := newColor
+					JSON_Save(buttons, buttonSettings)
+					
+					GUI, 1:destroy
+					GUI, Destroy
+					
+					quickReload("Button Color Updated")		
+				}
 			}
 		}
 	return
@@ -659,21 +690,87 @@ return
 		GUI, CLR:submit
 		GUI, CLR:destroy
 
-		newColor := ColorPicker(A_ThisMenuItem)
-		if !(newColor)
-			return
-		
-		for key, value in buttons
+		newColor := ColorPicker()
+		If (aGuiSettings)
 		{
-			if (value.text = me)
+			if (newColor <> "")
+				GuiControl, Settings:, %ColorButton%, %newColor%
+
+			aGuiSettings :=
+			ColorButton :=
+			return
+		}
+		else
+		{
+			for key, value in buttons
 			{
-				buttons[key][A_ThisMenuItem] := newColor
-				JSON_Save(buttons, buttonSettings)
-				GUI, 1:destroy
-				
-				quickReload(me " button " A_ThisMenuItem " updated", "Button Color Updated")
+				if (value.text = me)
+				{
+					buttons[key][A_ThisMenuItem] := newColor
+					JSON_Save(buttons, buttonSettings)
+					
+					GUI, 1:destroy
+					GUI, Destroy
+					
+					quickReload("Button Color Updated")		
+				}
 			}
 		}
+	
+	
+	
+		;~ GUI, CLR:submit
+		;~ GUI, CLR:destroy
+		;~ MsgBox % A_thismenuitem
+		;~ newColor := ColorPicker(A_ThisMenuItem)
+		;~ MsgBox % newColor
+		;~ if !(newColor)
+			;~ return
+		
+		;~ If (aGuiSettings)
+		;~ {
+			;~ if (newColor <> "")
+				;~ GuiControl, Settings:, %ColorButton%, %newColor%
+			
+			;~ if !(instr(ColorButton, "gui"))
+			;~ {
+				;~ for key, value in buttons
+				;~ {
+					;~ if (value.text = "Default")
+						;~ buttons[key][ColorButton] := newColor
+				;~ }
+			;~ }
+			;~ aGuiSettings :=
+			;~ ColorButton :=
+			;~ return
+		;~ }
+		;~ else
+		;~ {
+			;~ for key, value in buttons
+			;~ {
+				;~ if (value.text = me)
+				;~ {
+					;~ buttons[key][A_ThisMenuItem] := newColor
+					;~ JSON_Save(buttons, buttonSettings)
+					
+					;~ GUI, 1:destroy
+					;~ GUI, Destroy
+					
+					;~ quickReload("Button Color Updated")		
+				;~ }
+			;~ }
+		;~ }
+		;~ for key, value in buttons
+		;~ {
+			;~ if (value.text = me)
+			;~ {
+				;~ buttons[key][A_ThisMenuItem] := newColor
+				;~ JSON_Save(buttons, buttonSettings)
+				;~ GUI, 1:destroy
+				
+				;~ quickReload("Button Color Updated")
+			;~ }
+		;~ }
 	return
 
 ;}<<<==== Color GUI Event Handlers =====
