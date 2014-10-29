@@ -1,4 +1,4 @@
-# Cobra Launcher 2.5.4
+# Cobra Launcher
 A powerful, feature packed application launcher utility that is highly customizable and very easy to use.
 
 ### Features
@@ -19,6 +19,9 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Automatically reposition gui if off screen... also side guis
 
 ### CHANGELOG
+**2.6.0**
+* Created a universal settings GUI that contains all settings, allowing easy access
+
 **2.5.4**
 * Fixed more reload handling. All setting changes now handled by quickReload
 * Fixed Main Hotkey & Main Hotkey Hold menu items-- Now editable
