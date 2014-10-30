@@ -19,6 +19,9 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Automatically reposition gui if off screen... also side guis
 
 ### CHANGELOG
+**2.6.3**
+- Fixed issue in accessing the settings GUI from right-click menu
+
 **2.6.1**
 - Working release version
 - Multiple bug fixes and merge resolves
