@@ -1,0 +1,82 @@
+{
+    "1": {
+        "BackColor":                 "Maroon",
+        "guiColor":                  "White",
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Options":                   "Silver",
+        "Text":                      "Default",
+        "TextColor":                 "White"
+    },
+    "2": {
+        "BackColor":                 "Maroon",
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Text":                      "GO",
+        "TextColor":                 "White"
+    },
+    "3": {
+        "BackColor":                 "Maroon",
+        "Children": {
+            "1":                     "Internet Explorer",
+            "2":                     "Outlook"
+        },
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Text":                      "Programs",
+        "TextColor":                 "White"
+    },
+    "4": {
+        "BackColor":                 "Maroon",
+        "Cmd": {
+            "Arg":                   "iexplore.exe",
+            "Type":                  "P"
+        },
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Level":                     1,
+        "Text":                      "Internet Explorer",
+        "TextColor":                 "White"
+    },
+    "5": {
+        "BackColor":                 "Maroon",
+        "Children": {
+            "1":                     "C"
+        },
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Text":                      "Folders",
+        "TextColor":                 "White"
+    },
+    "6": {
+        "BackColor":                 "Maroon",
+        "Cmd": {
+            "Arg":                   "C:\\",
+            "Type":                  "R"
+        },
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Level":                     1,
+        "Text":                      "C",
+        "TextColor":                 "White"
+    },
+    "7": {
+        "BackColor":                 "Maroon",
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Text":                      "Bookmarks",
+        "TextColor":                 "White"
+    },
+    "8": {
+        "BackColor":                 "Maroon",
+        "Cmd": {
+            "Arg":                   "C:\\Program Files\\Microsoft Office\\Office12\\OUTLOOK.EXE",
+            "Type":                  "P"
+        },
+        "HlBackColor":               "Black",
+        "HlTextColor":               "White",
+        "Level":                     1,
+        "Text":                      "Outlook",
+        "TextColor":                 "White"
+    }
+}

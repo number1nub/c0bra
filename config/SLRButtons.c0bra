@@ -1,0 +1,30 @@
+[
+    {
+        "Text": "Cancel",
+        "BackColor": "Purple",
+        "TextColor": "White",
+        "HlBackColor": "White",
+        "HlTextColor": "Black"    
+    },
+    {
+        "Text": "Logoff",
+        "BackColor": "Red",
+        "TextColor": "White",
+        "HlBackColor": "Yellow",
+        "HlTextColor": "Black"    
+    },
+    {
+        "Text": "Restart",
+        "BackColor": "Red",
+        "TextColor": "White",
+        "HlBackColor": "Yellow",
+        "HlTextColor": "Black"     
+    },
+    {
+        "Text": "Shutdown",
+        "BackColor": "Red",
+        "TextColor": "White",
+        "HlBackColor": "Yellow",
+        "HlTextColor": "Black"     
+    }
+]
