@@ -19,6 +19,10 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Automatically reposition gui if off screen... also side guis
 
 ### CHANGELOG
+**2.6.1**
+- Working release version
+- Multiple bug fixes and merge resolves
+
 **2.6.0**
 * Created a universal settings GUI that contains all settings, allowing easy access
 

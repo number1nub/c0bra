@@ -13,9 +13,9 @@ SetTitleMatchMode, 2
 
 global COBRA 				:= A_ScriptDir
 global cobraPath			:= A_ScriptFullPath
-global buttonSettings 		:= A_AppData "\c0bra\Buttons.C0bra"
-global c0braSettings 	 	:= A_AppData "\c0bra\Settings.C0bra"
-global slrButtonSettings 	:= A_AppData "\c0bra\SLRButtons.C0bra"
+global buttonSettings 		:= A_AppData "\c0bra\Buttons.c0bra"
+global c0braSettings 	 	:= A_AppData "\c0bra\Settings.c0bra"
+global slrButtonSettings 	:= A_AppData "\c0bra\SLRButtons.c0bra"
 global _reloaded			:= false
 global disableMainHKList	:= ""
 global closeTabWinList		:= ""
@@ -23,8 +23,9 @@ global disableCloseList		:= ""
 
 if (!FileExist(buttonSettings) || !FileExist(c0braSettings) || !FileExist(slrButtonSettings))
 {
-	IfNotExist, %A_AppData%\c0bra, FileCreateDir, %A_AppData%\c0bra
-		FileCopy, %A_ScriptDir%\config\Buttons.c0bra, %A_AppData%\c0bra\Buttons.c0bra
+	if (!FileExist(A_AppData "\c0bra"))
+		FileCreateDir, %A_AppData%\c0bra
+	FileCopy, %A_ScriptDir%\config\Buttons.c0bra, %A_AppData%\c0bra\Buttons.c0bra
 	FileCopy, %A_ScriptDir%\config\Settings.c0bra, %A_AppData%\c0bra\Settings.c0bra
 	FileCopy, %A_ScriptDir%\config\SLRButtons.c0bra, %A_AppData%\c0bra\SLRButtons.c0bra
 	
@@ -38,7 +39,7 @@ try
 }
 catch e 
 {
-	MsgBox, 4144, Cobra Config Error, % "There is an error in your config file: " e.extra 
+	MsgBox, 4144, Cobra Config Error, % "There is an error in your config file: " e.file 
 				. "`n`n" e.message (e.extra ? "`n`n" e.extra : "") "`n`nPlease correct this issue and then reload C0bra."
 	ExitApp
 }
@@ -157,7 +158,6 @@ return
 #Include lib\Arguments.ahk
 #Include lib\ContextMenu.ahk
 #Include lib\Settings.ahk
-#Include lib\JSON.ahk
 
 
 ;TillaGoto.ScanFile=lib\Gui.ahk

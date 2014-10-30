@@ -1,13 +1,12 @@
 {
     "buttonTypes": {
-        "1":                         "Basic Button",
-        "2":                         "Program",
-        "3":                         "Folder",
-        "4":                         "File",
-        "5":                         "User Function",
-        "6":                         "User Label",
-        "7":                         "AHK Edit",
-        "8":                         "Bookmarks"
+        "1":                         "Program",
+        "2":                         "Folder",
+        "3":                         "File",
+        "4":                         "User Function",
+        "5":                         "User Label",
+        "6":                         "AHK Edit",
+        "7":                         "Bookmarks"
     },
     "footer": {
         "footer":                    0,
@@ -70,5 +69,5 @@
         "hotkey":                    "~Lbutton & RButton"
     },
     "userHotkeys": {},
-    "Version":                       "2.6.0"
+    "Version":                       "2.6.1"
 }

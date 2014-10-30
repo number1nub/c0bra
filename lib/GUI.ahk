@@ -1,4 +1,4 @@
-
+﻿
 ;{===== Main Hotkey Handler ====>>>
 
 	mainTrigger:
@@ -69,7 +69,7 @@ guiOldPos:
 	ButtonList 	:= []
 	mainButtons	:= ""
 	
-	Guis 	:= JSON_Load(guiSettings)
+	;Guis 	:= JSON_Load(guiSettings)
 	Buttons := JSON_Load(buttonSettings)
 	
 	buttonSpacing 		:= Settings.mainGui.buttonSpacing
@@ -187,7 +187,7 @@ guiOldPos:
 	GuiWidth := (3 * ButtonSpacing) + (2 * ButtonWidth)
 	ScreenCheck(XPOS, YPOS, GuiWidth, GuiHeight)
 		
-	GUI, show, x%XPOS% y%YPOS%, c0bra Main GUI
+	GUI, Show, x%XPOS% y%YPOS%, c0bra Main GUI
 	
 	; Insert SLR buttons back into mainButtons variable	
 	mainButtons .= ",GO"
@@ -279,7 +279,6 @@ return
 				
 				;LOOP THROUGH FAVORITES FOLDER FOR KEY, VALUE, AND COUNT
 
-				
 					;~ numChildren := 
 					loop, %MyFavs%\*.url
 					{
@@ -313,7 +312,6 @@ return
 				Loop, Parse, childrenButtons, `,
 				{
 					A_HWND := "side" A_Index
-					
 					if (lastButton = A_GuiControl)
 					{
 						GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
@@ -534,7 +532,6 @@ GuiContextMenu:
 	for key, value in Settings.buttonTypes
 		buttonTypes .= (buttonTypes ? "|" : "") value
 
-
 	; Common top of menu
 	Menu, Title, Add
 	Menu, Title, DeleteAll		
@@ -571,9 +568,6 @@ GuiContextMenu:
 		{
 			if (A_LoopField <> "Bookmarks")
 			Menu, SubAdd1, Add, %A_LoopField%, QuickEditMenu
-			;TODO: check to make sure the same button type doesn't exist already
-			;~ if A_LoopField in %allButtons%
-				;~ Menu, SubAdd, Disable, %A_LoopField%
 		}
 		
 		Menu, Title, Add, Add to <%me%>, :SubAdd1
@@ -596,11 +590,9 @@ GuiContextMenu:
 		
 		Menu, Title, Add, Delete <%me%>, QuickEditMenu		
 	}
-		
+	
 	Menu, Title, Add
-	Menu, Title, Add, Main Gui Settings, QuickEditMenu
-	Menu, Title, Add, Side Gui Settings, QuickEditMenu
-	Menu, Title, Add, SLR Gui Settings, QuickEditMenu
+	Menu, Title, Add, Options, meOptions
 	
 	Menu, Title, Show, x%XPOS% y%YPOS%
 return
@@ -625,7 +617,6 @@ return
 	return
 
 
-	btnDefault:
 	;~ btnDefault:
 		;~ GUI, 1:Destroy
 		;~ GUI, 2:Destroy
@@ -665,7 +656,6 @@ return
 			ColorButton :=
 			return
 		}
-			
 		else
 		{
 			for key, value in buttons
@@ -687,8 +677,8 @@ return
 
 
 	Custom:
-		GUI, CLR:submit
-		GUI, CLR:destroy
+		GUI, CLR:Submit
+		GUI, CLR:Destroy
 
 		newColor := ColorPicker()
 		If (aGuiSettings)
