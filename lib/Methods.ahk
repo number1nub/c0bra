@@ -1,4 +1,4 @@
-
+﻿
 
 superShorts:
 	command := Settings.userHotkeys[A_ThisHotkey]
@@ -11,11 +11,6 @@ reloadMe:
 	Reload	
 return
 
-; Reload the script & display the specified tray tip
-QuickReload(prompt = "", title = "")
-{
-	Run, %A_ScriptFullPath% %A_ScriptHwnd% `"%prompt%`" `"%title%`"
-}
 
 
 editMe:
@@ -71,6 +66,11 @@ CopyTo:
 return
 
 
+UpdateVer(newVal)
+{
+	Settings.Version := newVal
+	JSON_Save(Settings, c0braSettings)
+}
 
 
 ScreenCheck(ByRef MouseX, ByRef MouseY, GuiWidth, GuiHeight)

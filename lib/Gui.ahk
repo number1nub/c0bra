@@ -69,7 +69,6 @@ guiOldPos:
 	ButtonList 	:= []
 	mainButtons	:= ""
 	
-	;Guis 	:= JSON_Load(guiSettings)
 	Buttons := JSON_Load(buttonSettings)
 	
 	buttonSpacing 		:= Settings.mainGui.buttonSpacing
@@ -599,14 +598,7 @@ return
 
 
 cancelMenuItem:
-	; Do nothing...
 return
-
-
-
-
-
-
 
 
 ;{===== Edit Color GUI Event Handlers ====>>>
@@ -615,31 +607,6 @@ return
 		GUI, CLR:Submit, nohide
 		CTLCOLORS.Change(ColorHwnd, daColor, "White")
 	return
-
-
-	;~ btnDefault:
-		;~ GUI, 1:Destroy
-		;~ GUI, 2:Destroy
-		;~ GUI, CLR:Submit
-		;~ GUI, CLR:Destroy
-		
-		;~ newColor := buttonList.Default.BackColor
-		
-		;~ for key, value in buttons
-		;~ {
-			;~ if (value.text = me)
-			;~ {
-				;~ buttons[key][A_ThisMenuItem] := newColor
-				;~ JSON_Save(buttons, buttonSettings)
-				
-				;~ GUI, 1:destroy
-				;~ GUI, Destroy
-				
-				;~ quickReload("Button Color Updated")
-			;~ }
-		;~ }
-	;~ return
-
 
 	okButton:
 		GUI, CLR:Submit
@@ -674,8 +641,6 @@ return
 		}
 	return
 
-
-
 	Custom:
 		GUI, CLR:Submit
 		GUI, CLR:Destroy
@@ -706,65 +671,9 @@ return
 				}
 			}
 		}
-	
-	
-	
-		;~ GUI, CLR:submit
-		;~ GUI, CLR:destroy
-		;~ MsgBox % A_thismenuitem
-		;~ newColor := ColorPicker(A_ThisMenuItem)
-		;~ MsgBox % newColor
-		;~ if !(newColor)
-			;~ return
-		
-		;~ If (aGuiSettings)
-		;~ {
-			;~ if (newColor <> "")
-				;~ GuiControl, Settings:, %ColorButton%, %newColor%
-			
-			;~ if !(instr(ColorButton, "gui"))
-			;~ {
-				;~ for key, value in buttons
-				;~ {
-					;~ if (value.text = "Default")
-						;~ buttons[key][ColorButton] := newColor
-				;~ }
-			;~ }
-			;~ aGuiSettings :=
-			;~ ColorButton :=
-			;~ return
-		;~ }
-		;~ else
-		;~ {
-			;~ for key, value in buttons
-			;~ {
-				;~ if (value.text = me)
-				;~ {
-					;~ buttons[key][A_ThisMenuItem] := newColor
-					;~ JSON_Save(buttons, buttonSettings)
-					
-					;~ GUI, 1:destroy
-					;~ GUI, Destroy
-					
-					;~ quickReload("Button Color Updated")		
-				;~ }
-			;~ }
-		;~ }
-		;~ for key, value in buttons
-		;~ {
-			;~ if (value.text = me)
-			;~ {
-				;~ buttons[key][A_ThisMenuItem] := newColor
-				;~ JSON_Save(buttons, buttonSettings)
-				;~ GUI, 1:destroy
-				
-				;~ quickReload("Button Color Updated")
-			;~ }
-		;~ }
 	return
 
 ;}<<<==== Color GUI Event Handlers =====
-
 
 
 ;{===== Main GUI Button Click ====>>>
@@ -816,12 +725,12 @@ return
 
 3ButtonPress:
 	Next_Kill := A_GUI + 1
-	
+	TMM := A_TitleMatchMode
 	SetTitleMatchMode, 3
-	if !(WinExist(A_GuiControl))
+	if (!WinExist(A_GuiControl))
 		GUI, %NEXT_KILL%:Destroy ; kill GUI 2 before in case another GUI is selected
 
-	SetTitleMatchMode, 1
+	SetTitleMatchMode, %TMM%
 	WinGetActiveTitle, A_TITLE
 	
 	if (A_TITLE = "Bookmarks")

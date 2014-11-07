@@ -11,15 +11,15 @@ SetTitleMatchMode, 2
 
 ;{===== Global Settings ====>>>
 
-global COBRA 				:= A_ScriptDir
-global cobraPath			:= A_ScriptFullPath
-global buttonSettings 		:= A_AppData "\c0bra\Buttons.c0bra"
-global c0braSettings 	 	:= A_AppData "\c0bra\Settings.c0bra"
-global slrButtonSettings 	:= A_AppData "\c0bra\SLRButtons.c0bra"
-global _reloaded			:= false
-global disableMainHKList	:= ""
-global closeTabWinList		:= ""
-global disableCloseList		:= ""
+global COBRA             := A_ScriptDir
+global cobraPath         := A_ScriptFullPath
+global buttonSettings    := A_AppData "\c0bra\Buttons.c0bra"
+global c0braSettings     := A_AppData "\c0bra\Settings.c0bra"
+global slrButtonSettings := A_AppData "\c0bra\SLRButtons.c0bra"
+global _reloaded         := false
+global disableMainHKList := ""
+global closeTabWinList   := ""
+global disableCloseList  := ""
 
 if (!FileExist(buttonSettings) || !FileExist(c0braSettings) || !FileExist(slrButtonSettings))
 {
@@ -34,8 +34,7 @@ if (!FileExist(buttonSettings) || !FileExist(c0braSettings) || !FileExist(slrBut
 
 try
 {
-	;~ Guis := JSON_Load(guiSettings)
-	Settings := JSON_Load(c0braSettings)
+	global Settings := JSON_Load(c0braSettings)
 }
 catch e 
 {
@@ -44,11 +43,32 @@ catch e
 	ExitApp
 }
 
-
 Menu, Tray, Icon, % FileExist(tIco := (A_ScriptDir "\res\c0bra.ico")) ? tIco : ""
 
 ;}<<<==== Global Settings =====
 
+
+;{===== Update User Config Version ====>>>
+
+if (FileExist(serverSettings := (A_ScriptDir "\config\Settings.json")))
+{
+	serverConfig := JSON_Load(serverConfig)
+	if (serverConfig.Version != Settings.Version)
+	{
+		RegExMatch(serverConfig.Version, "(\d+?)\.(\d+?)(?:\.(\d+?)(?:\.(\d+))?)?", sVer)
+		RegExMatch(Settings.Version, "(\d+?)\.(\d+?)(?:\.(\d+?)(?:\.(\d+))?)?", uVer)
+		if (sVer1 > uVer1)
+			UpdateVer(serverConfig.Version)
+		if (sVer1 = uVer1 && sVer2 > uVer2)
+			UpdateVer(serverConfig.Version)
+		if (sVer1 = uVer1 && sVer2 = uVer2 && sVer3 > uVer3)
+			UpdateVer(serverConfig.Version)
+		if (sVer1 = uVer1 && sVer2 = uVer2 && sVer3 = uVer3 && sVer4 > uVer4)
+			UpdateVer(serverConfig.Version)
+	}
+}
+
+;}<<<==== Update User Config Version =====
 
 
 ;{==== Handle CmdLine Args ====>>
@@ -150,19 +170,18 @@ if (_reloaded)
 return
 
 
+;TillaGoto.ScanFile=lib\Gui.ahk
+;TillaGoto.ScanFile=lib\Methods.ahk
+;TillaGoto.ScanFile=lib\ColorChooser.ahk
+;TillaGoto.ScanFile=lib\ContextMenu.ahk
+;TillaGoto.ScanFile=lib\Settings.ahk
+
+#Include %A_ScriptDir%
 #Include lib\Gui.ahk
 #Include lib\Methods.ahk
 #Include lib\Class_CTLCOLORS.ahk
 #Include lib\cIni.ahk
 #Include lib\ColorChooser.ahk
-#Include lib\Arguments.ahk
 #Include lib\ContextMenu.ahk
 #Include lib\Settings.ahk
-
-
-;TillaGoto.ScanFile=lib\Gui.ahk
-;TillaGoto.ScanFile=lib\Methods.ahk
-;TillaGoto.ScanFile=lib\ColorChooser.ahk
-;TillaGoto.ScanFile=lib\Arguments.ahk
-;TillaGoto.ScanFile=lib\ContextMenu.ahk
-;TillaGoto.ScanFile=lib\Settings.ahk
+#Include QuickReload.ahk
