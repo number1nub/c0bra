@@ -1,82 +1,69 @@
 {
     "1": {
-        "BackColor":                 "Maroon",
+        "BackColor":                 363636,
         "guiColor":                  "White",
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
-        "Options":                   "Silver",
+        "HlBackColor":               "Aqua",
+        "HlTextColor":               "Black",
+        "Main Gui Settings":         "Maroon",
         "Text":                      "Default",
-        "TextColor":                 "White"
+        "TextColor":                 "Aqua"
     },
     "2": {
-        "BackColor":                 "Maroon",
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
+        "BackColor":                 363636,
+        "HlBackColor":               "Aqua",
+        "HlTextColor":               "Black",
         "Text":                      "GO",
-        "TextColor":                 "White"
+        "TextColor":                 "Aqua"
     },
     "3": {
-        "BackColor":                 "Maroon",
+        "BackColor":                 363636,
         "Children": {
-            "1":                     "Internet Explorer",
-            "2":                     "Outlook"
+            "1":                     "Internet Explorer"
         },
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
+        "HlBackColor":               "Aqua",
+        "HlTextColor":               "Black",
         "Text":                      "Programs",
-        "TextColor":                 "White"
+        "TextColor":                 "Aqua"
     },
     "4": {
-        "BackColor":                 "Maroon",
+        "BackColor":                 363636,
         "Cmd": {
             "Arg":                   "iexplore.exe",
             "Type":                  "P"
         },
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
+        "HlBackColor":               "Aqua",
+        "HlTextColor":               "Black",
         "Level":                     1,
         "Text":                      "Internet Explorer",
-        "TextColor":                 "White"
+        "TextColor":                 "Aqua"
     },
     "5": {
-        "BackColor":                 "Maroon",
+        "BackColor":                 363636,
         "Children": {
             "1":                     "C"
         },
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
+        "HlBackColor":               "Aqua",
+        "HlTextColor":               "Black",
         "Text":                      "Folders",
-        "TextColor":                 "White"
+        "TextColor":                 "Aqua"
     },
     "6": {
-        "BackColor":                 "Maroon",
+        "BackColor":                 363636,
         "Cmd": {
             "Arg":                   "C:\\",
             "Type":                  "R"
         },
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
+        "HlBackColor":               "Aqua",
+        "HlTextColor":               "Black",
         "Level":                     1,
         "Text":                      "C",
-        "TextColor":                 "White"
+        "TextColor":                 "Aqua"
     },
     "7": {
-        "BackColor":                 "Maroon",
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
+        "BackColor":                 363636,
+        "HlBackColor":               "Aqua",
+        "HlTextColor":               "Black",
         "Text":                      "Bookmarks",
-        "TextColor":                 "White"
-    },
-    "8": {
-        "BackColor":                 "Maroon",
-        "Cmd": {
-            "Arg":                   "C:\\Program Files\\Microsoft Office\\Office12\\OUTLOOK.EXE",
-            "Type":                  "P"
-        },
-        "HlBackColor":               "Black",
-        "HlTextColor":               "White",
-        "Level":                     1,
-        "Text":                      "Outlook",
-        "TextColor":                 "White"
+        "TextColor":                 "Aqua"
     }
 }

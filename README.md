@@ -7,6 +7,9 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
+2.6.7
+- Fixed major issues in the config file templates in order to allow new user to run for first time
+
 2.6.6
 - Fixed typo in version updater file name
 

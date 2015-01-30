@@ -1,31 +1,32 @@
 {
     "buttonTypes": {
-        "1":                         "Program",
-        "2":                         "Folder",
-        "3":                         "File",
-        "4":                         "User Function",
-        "5":                         "User Label",
-        "6":                         "AHK Edit",
-        "7":                         "Bookmarks"
+        "1":                         "Basic Button",
+        "2":                         "Program",
+        "3":                         "Folder",
+        "4":                         "File",
+        "5":                         "User Function",
+        "6":                         "User Label",
+        "7":                         "AHK Edit",
+        "8":                         "Bookmarks"
     },
     "footer": {
         "footer":                    0,
-        "footerColor":               "White",
-        "height":                    10,
+        "footerColor":               "",
+        "height":                    15,
         "textBold":                  400,
-        "textColor":                 "Maroon",
-        "textFont":                  "Veranda",
-        "textSize":                  7
+        "textColor":                 "",
+        "textFont":                  "Arial",
+        "textSize":                  10
     },
     "mainGui": {
-        "buttonHeight":              35,
+        "buttonHeight":              45,
         "buttonSpacing":             1,
-        "buttonWidth":               140,
-        "goWidth":                   45,
-        "guiBackColor":              "White",
+        "buttonWidth":               180,
+        "guiBackColor":              "Aqua",
+        "guiTextColor":              "Black",
         "textBold":                  400,
-        "textFont":                  "BankGothic Md Bt",
-        "textSize":                  14
+        "textFont":                  "Arial",
+        "textSize":                  16
     },
     "mainHotkey": {
         "disableIfActive": {},
@@ -34,30 +35,31 @@
     },
     "search": {
         "backText":                  "< Search Text >",
-        "goWidth":                   45,
+        "goWidth":                   55,
         "height":                    35,
-        "search":                    1,
+        "Search":                    1,
         "textBold":                  400,
-        "textFont":                  "BankGothic Md Bt",
-        "textSize":                  11
+        "textFont":                  "Arial",
+        "textSize":                  12
     },
     "sideGui": {
-        "buttonHeight":              25,
-        "buttonSpacing":             2,
-        "buttonWidth":               140,
-        "guiBackColor":              "White",
+        "buttonHeight":              45,
+        "buttonSpacing":             1,
+        "buttonWidth":               180,
+        "guiBackColor":              "",
+        "sideSearch":                1,
         "textBold":                  400,
-        "textFont":                  "Calibri",
-        "textSize":                  10
+        "textFont":                  "Arial",
+        "textSize":                  16
     },
     "SLRGui": {
-        "buttonHeight":              35,
+        "buttonHeight":              45,
         "buttonSpacing":             1,
-        "buttonWidth":               160,
-        "guiBackColor":              "White",
+        "buttonWidth":               180,
+        "guiBackColor":              "",
         "textBold":                  400,
-        "textFont":                  "BankGothic Md Bt",
-        "textSize":                  11
+        "textFont":                  "Arial",
+        "textSize":                  16
     },
     "theCloser": {
         "closeTabIfActive": {
@@ -69,5 +71,5 @@
         "hotkey":                    "~Lbutton & RButton"
     },
     "userHotkeys": {},
-    "Version":                       "2.6.6"
+    "Version":                       "2.6.7"
 }

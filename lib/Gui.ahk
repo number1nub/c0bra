@@ -104,7 +104,7 @@ guiOldPos:
 		searchTextSize 	:= Settings.search.textSize
 		searchHeight    := Settings.search.Height
 		searchBackText  := Settings.search.backText
-		goWidth         := Settings.mainGui.goWidth
+		goWidth         := Settings.search.goWidth
 		xGo 			:= (buttonWidth * 2) + (buttonSpacing * 2) - goWidth
 		searchWidth 	:= (buttonWidth * 2) - goWidth
 		searchTextWidth := searchWidth - 8
@@ -134,7 +134,7 @@ guiOldPos:
 		
 		; first key
 		if (A_Index = 1)
-		{	
+		{
 			GUI, Add, text, x%buttonSpacing% y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
 				CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
 			continue
