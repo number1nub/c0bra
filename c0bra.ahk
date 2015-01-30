@@ -25,10 +25,18 @@ SetTitleMatchMode, 2
 	{
 		if (!FileExist(A_AppData "\c0bra"))
 			FileCreateDir, %A_AppData%\c0bra
-		FileCopy, %A_ScriptDir%\config\Buttons.c0bra, %A_AppData%\c0bra\Buttons.c0bra
-		FileCopy, %A_ScriptDir%\config\Settings.c0bra, %A_AppData%\c0bra\Settings.c0bra
-		FileCopy, %A_ScriptDir%\config\SLRButtons.c0bra, %A_AppData%\c0bra\SLRButtons.c0bra
-		
+		if (A_IsCompiled)
+		{			
+			FileInstall, config\Buttons.c0bra, %buttonSettings%
+			FileInstall, config\Settings.c0bra, %c0braSettings%
+			FileInstall, config\SLRButtons.c0bra, %slrButtonSettings%
+		}
+		else
+		{
+			FileCopy, %A_ScriptDir%\config\Buttons.c0bra, %A_AppData%\c0bra\Buttons.c0bra
+			FileCopy, %A_ScriptDir%\config\Settings.c0bra, %A_AppData%\c0bra\Settings.c0bra
+			FileCopy, %A_ScriptDir%\config\SLRButtons.c0bra, %A_AppData%\c0bra\SLRButtons.c0bra
+		}
 		TrayTip, c0bra Launcher, New configuration files copied to user settings directory!, 2, 1
 	}
 

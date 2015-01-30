@@ -7,6 +7,9 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
+3.0.1
+- Added file install handlers to allow running the executable as a standalone for first time users
+
 3.0.0
 - Fixed major issues in the config file templates in order to allow new user to run for first time
 - Adding executable to directory allowing use for users without AutoHotkey
