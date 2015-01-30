@@ -769,3 +769,16 @@ ExpandEnv(str)
    DllCall("ExpandEnvironmentStrings", "str", str, "str", dest, int, 1999, "Cdecl int")
    Return dest
 }
+
+
+/*!
+	Function: QuickReload([prompt, title])
+		Reload the script & display the specified tray tip
+	Parameters:
+		prompt - (Optional) Text to display in tray tip upon restart
+		title - (Optional) Title of tray tip to display upon restart
+*/
+QuickReload(prompt="", title="")
+{
+	Run, %A_ScriptFullPath% %A_ScriptHwnd% `"%prompt%`" `"%title%`"
+}

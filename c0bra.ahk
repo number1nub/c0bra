@@ -1,4 +1,4 @@
-﻿#NoEnv
+#NoEnv
 #SingleInstance, Force
 #Include <JSON>
 #Escapechar ``
@@ -184,4 +184,3 @@ return
 #Include lib\ColorChooser.ahk
 #Include lib\ContextMenu.ahk
 #Include lib\Settings.ahk
-#Include QuickReload.ahk
