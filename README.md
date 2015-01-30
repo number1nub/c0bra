@@ -7,8 +7,9 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
-2.6.7
+3.0.0
 - Fixed major issues in the config file templates in order to allow new user to run for first time
+- Adding executable to directory allowing use for users without AutoHotkey
 
 2.6.6
 - Fixed typo in version updater file name
