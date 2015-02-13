@@ -150,7 +150,7 @@ guiOldPos:
 				GUI, Add, text, x%buttonSpacing% y+%buttonSpacing% w%LastButWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
 					CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
 				continue
-			}			
+			}
 			GUI, Add, text, x%buttonSpacing% y+%buttonSpacing% w%buttonWidth% h%buttonHeight% 0x200 Center gButtonPress hwnd%A_HWND%, % A_LoopField
 				CTLCOLORS.Attach(%A_HWND%, ButtonList[A_LoopField].BackColor, ButtonList[A_LoopField].TextColor)
 			continue
@@ -255,11 +255,9 @@ return
 		
 		ChildrenList := []
 		childrenButtons := ""
-		;~ numChildren := ""
 		
 		For key, value in ButtonList[A_GuiControl].Children
 		{
-			;~ numChildren += 1
 			ChildrenList.Insert(value, ButtonList[value])
 			childrenButtons .= (childrenButtons ? "," : "") value
 		}
@@ -268,62 +266,57 @@ return
 		GUI, %currGui%:-caption +ToolWindow +Owner%PREV_GUI%
 		GUI, %currGui%:margin, %sideButtonSpacing%, %sideButtonSpacing%
 		GUI, %currGui%:Font, s%sideTextSize% w%sideTextBold%, %sideTextFont%
-		
-		;Bookmarks
-
-		
-			if (A_GuiControl = "Bookmarks")
+		;
+		; Bookmarks
+		;
+		if (A_GuiControl = "Bookmarks")
+		{
+			MyFavs := A_MyDocuments "\..\Favorites\Links"
+			
+			; Loop through favorites folder for key, value, and count
+			loop, %MyFavs%\*.url,, 1
 			{
-				MyFavs := A_MyDocuments "\..\Favorites\Links"
-				
-				;LOOP THROUGH FAVORITES FOLDER FOR KEY, VALUE, AND COUNT
-
-					;~ numChildren := 
-					loop, %MyFavs%\*.url
-					{
-						if (A_LoopFileExt = "URL")
-						{
-							;~ numChildren += 1
-							THE_BOOKMARK := RegExReplace(A_LoopFileName, "i)\.[^.]*$")
-							THE_BOOKMARK_PATH := A_LoopFileLongPath
-							
-							A_HWND := "book" A_Index
-							
-							if (lastButton = "Bookmarks")
-							{
-								GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
-									CTLCOLORS.Attach(%A_HWND%, ButtonList.Bookmarks.BackColor, ButtonList.Bookmarks.TextColor)
-							}
-							else
-							{
-								GUI, %currGui%:Add, text, y+%sideButtonSpacing% w%sideButtonWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
-									CTLCOLORS.Attach(%A_HWND%, ButtonList.Bookmarks.BackColor, ButtonList.Bookmarks.TextColor)
-							}
-						}
-					}
-			}
-		
-		;not bookmarks
-
-		
-			else
-			{
-				Loop, Parse, childrenButtons, `,
+				if (A_LoopFileExt = "URL")
 				{
-					A_HWND := "side" A_Index
-					if (lastButton = A_GuiControl)
+					THE_BOOKMARK := RegExReplace(A_LoopFileName, "i)\.[^.]*$")
+					THE_BOOKMARK_PATH := A_LoopFileLongPath
+					
+					A_HWND := "book" A_Index
+					
+					if (lastButton = "Bookmarks")
 					{
-						GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
-							CTLCOLORS.Attach(%A_HWND%, ChildrenList[A_LoopField].BackColor, ChildrenList[A_LoopField].TextColor)
+						GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
+							CTLCOLORS.Attach(%A_HWND%, ButtonList.Bookmarks.BackColor, ButtonList.Bookmarks.TextColor)
 					}
 					else
 					{
-						GUI, %currGui%:Add, text, y+%sideButtonSpacing% w%sideButtonWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
-							CTLCOLORS.Attach(%A_HWND%, ChildrenList[A_LoopField].BackColor, ChildrenList[A_LoopField].TextColor)
+						GUI, %currGui%:Add, text, y+%sideButtonSpacing% w%sideButtonWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % THE_BOOKMARK
+							CTLCOLORS.Attach(%A_HWND%, ButtonList.Bookmarks.BackColor, ButtonList.Bookmarks.TextColor)
 					}
 				}
 			}
-		
+		}
+		;
+		; Not bookmarks
+		;
+		else
+		{
+			Loop, Parse, childrenButtons, `,
+			{
+				A_HWND := "side" A_Index
+				if (lastButton = A_GuiControl)
+				{
+					GUI, %currGui%:Add, text, x%sideButtonSpacing% y+%sideButtonSpacing% w%sideLastButWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
+						CTLCOLORS.Attach(%A_HWND%, ChildrenList[A_LoopField].BackColor, ChildrenList[A_LoopField].TextColor)
+				}
+				else
+				{
+					GUI, %currGui%:Add, text, y+%sideButtonSpacing% w%sideButtonWidth% h%sideButtonHeight% 0x200 Center g3ButtonPress hwnd%A_HWND%, % A_LoopField
+						CTLCOLORS.Attach(%A_HWND%, ChildrenList[A_LoopField].BackColor, ChildrenList[A_LoopField].TextColor)
+				}
+			}
+		}
+	
 		;~ SideHeight := ((1 + numChildren)* sideButtonSpacing) + (numChildren * sideButtonHeight)
 		;~ SideWidth := (2 * sideButtonSpacing) + sideButtonWidth
 		;~ ScreenCheck(XPOS, YPOS, SideWidth, SideHeight)
@@ -520,7 +513,7 @@ GuiContextMenu:
 	MouseGetPos, XPOS, YPOS	
 	
 	; Get button name 
-	me := A_GuiControl	
+	me := A_GuiControl
 	meDisp := RegExReplace(me, "i)(.+)s$", "$1(s)")
 	meAdd  := RegExReplace(me, "i)(.+)s$", "$1")
 	

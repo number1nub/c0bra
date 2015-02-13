@@ -7,6 +7,12 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
+3.0.2
+- Updated Settings GUI to auto-populate the font ComboBoxes with the current font settings. Also adds the current fonts to the ComboBox lists if not one of the default fonts
+- Fixed Delete and Rename button commands
+- Changed Bookmarks button to recurse all favorites folders and list all bookmarks
+- Removed unnecessary cIni.ahk file
+
 3.0.1
 - Added file install handlers to allow running the executable as a standalone for first time users
 

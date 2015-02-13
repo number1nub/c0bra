@@ -1,6 +1,6 @@
 #NoEnv
 #SingleInstance, Force
-#Include <JSON>
+#Include %A_ScriptDir%\lib\JSON.ahk
 #Escapechar ``
 #CommentFlag ;
 SetWorkingDir, %A_ScriptDir%
@@ -87,8 +87,7 @@ SetTitleMatchMode, 2
 		
 		prompt = %2%
 		title = %3%
-		title := title ? title : "Cobra Launcher Config"
-		
+		title := title ? title : "Cobra Launcher Config"		
 		if (prompt || title)
 			TrayTip, %title%, %prompt%, 3500, 1
 	}
@@ -168,7 +167,8 @@ SetTitleMatchMode, 2
 	Menu, Tray, Add, Exit, closer
 	Menu, Tray, Default, Reload
 	Menu, Tray, tip, c0bra!
-
+	;}
+	
 ;}<<<==== Tray Menu =====
 
 OnMessage(0x200, "WM_MOUSEMOVE")
@@ -178,17 +178,16 @@ if (_reloaded)
 return
 
 
+#Include %A_ScriptDir%\lib
+#Include Gui.ahk
+#Include Methods.ahk
+#Include Class_CTLCOLORS.ahk
+#Include ColorChooser.ahk
+#Include ContextMenu.ahk
+#Include Settings.ahk
+
 ;TillaGoto.ScanFile=lib\Gui.ahk
 ;TillaGoto.ScanFile=lib\Methods.ahk
 ;TillaGoto.ScanFile=lib\ColorChooser.ahk
 ;TillaGoto.ScanFile=lib\ContextMenu.ahk
 ;TillaGoto.ScanFile=lib\Settings.ahk
-
-#Include %A_ScriptDir%
-#Include lib\Gui.ahk
-#Include lib\Methods.ahk
-#Include lib\Class_CTLCOLORS.ahk
-#Include lib\cIni.ahk
-#Include lib\ColorChooser.ahk
-#Include lib\ContextMenu.ahk
-#Include lib\Settings.ahk

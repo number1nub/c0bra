@@ -39,7 +39,7 @@ QuickEditMenu:
 		if (ErrorLevel || !argsCMD)
 			return
 
-		Children := 0				
+		Children := 0
 	}
 	;}
 
@@ -102,7 +102,7 @@ QuickEditMenu:
 	;}
 
 
-	;{````  Add a Bookmarks Button  ````}
+	;{```` Add a Bookmarks Button ````}
 	else if (menuCheck = "Bookmarks")
 	{
 		aText := "Bookmarks"
@@ -113,7 +113,7 @@ QuickEditMenu:
 	;}
 
 
-	;{````  Add a Main Menu Button  ````}
+	;{```` Add a Main Menu Button ````}
 	else if (menuCheck = "Sub-Menu Button")
 	{
 		GUI, Destroy
@@ -135,7 +135,7 @@ QuickEditMenu:
 
 
 	;{```` Edit A Button ````}
-	else if (A_ThisMenuItem = "Edit " me)
+	else if (A_ThisMenuItem = "Rename <" me ">")
 	{
 		GUI, 1:Destroy
 		
@@ -150,7 +150,6 @@ QuickEditMenu:
 			msgbox, 4144, c0bra Configuration, Invalid entry.`n`nAborting
 			return
 		}
-		
 		
 		for index, value in Buttons
 		{
@@ -188,7 +187,7 @@ QuickEditMenu:
 
 
 	;{```` Delete A Button ````}
-	else if (InStr(A_ThisMenuItem, "Delete"))
+	else if (InStr(A_ThisMenuItem, "Delete <" me ">"))
 	{
 		MsgBox, 262196, c0bra Delete, Are you sure you want to delete the %me% button? 
 		ifmsgbox, Yes
@@ -220,6 +219,8 @@ QuickEditMenu:
 	}
 	;}
 	
+	
+		
 	;********************************************************
 	;{___  Create The Button  _______________________________
 	
@@ -297,6 +298,3 @@ TrayText:
 return
 
 ;}<<<==== Tray Menu Actions =====
-
-
-

@@ -67,4 +67,3 @@ BGRtoRGB(oldValue)
   Value += ((oldValue & 0x0000ff) << 16)  
   return Value
 }
-return
