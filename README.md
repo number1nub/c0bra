@@ -7,6 +7,9 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
+3.0.3
+- Added Search Bar Height and Go Button Width settings to settings GUI
+
 3.0.2
 - Updated Settings GUI to auto-populate the font ComboBoxes with the current font settings. Also adds the current fonts to the ComboBox lists if not one of the default fonts
 - Fixed Delete and Rename button commands

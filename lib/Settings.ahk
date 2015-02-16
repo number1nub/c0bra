@@ -108,12 +108,16 @@ Gui_Settings()
 	Gui, Settings:Add, Button, xp y+5 wp h30 Center vHLTextColor gGuiColor,  % ButtonList.Default.HLTextColor
 	Gui, Settings:Add, CheckBox, xs+5 y+5 w310 hp vChangeDefaults, Update all buttons to default colors now?
 	
-	Gui, Settings:Add, GroupBox, x+20 y35 w325 h130 Center, MAIN GUI ADD-ONS
+	Gui, Settings:Add, GroupBox, x+20 y35 w325 h230 Center, MAIN GUI ADD-ONS
 	Gui, Settings:Add, CheckBox, xp+5 yp+25 w310 h30 Section vmainSearch, Show Search Bar on Main Gui?
 		GuiControl, Settings:, mainSearch, % Settings.search.search ? 1 : 0
-	Gui, Settings:Add, Text, xp y+10 w125 h30, Search Bar Text
+	Gui, Settings:Add, Text, xp y+10 w125 h30, Search Bar Text:
 	Gui, Settings:Add, Edit, x+5 yp-5 w185 h30 Center vmainSearchText, % Settings.search.backText
-	Gui, Settings:Add, CheckBox, xs y+5 w310 hp vmainFooter, Show Footer on Main Gui?
+	Gui, Settings:Add, Text, xs y+10 h30, Search Bar Height:
+	Gui, Settings:Add, Edit, x+5 yp-5 w50 h30 vmainSearchHeight, % Settings.search.height
+	Gui, Settings:Add, Text, xs y+10 h30 w125, Go Button Width:
+	Gui, Settings:Add, Edit, x+5 yp-5 w50 h30 vmainSearchGoWidth, % Settings.search.goWidth
+	Gui, Settings:Add, CheckBox, xs y+10 w310 hp vmainFooter, Show Footer on Main Gui?
 		GuiControl, Settings:, mainFooter, % Settings.footer.footer ? 1 : 0
 	;}
 	
@@ -259,6 +263,8 @@ allSet:
 	
 	Settings.search.search := mainSearch ? 1 : 0
 	Settings.search.backText := mainSearchText
+	Settings.search.height := mainSearchHeight
+	Settings.search.goWidth := mainSearchGoWidth
 	Settings.footer.footer := mainFooter ? 1 : 0
 	
 	Settings.theCloser.hotkey := closerHotkey
