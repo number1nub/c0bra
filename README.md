@@ -7,6 +7,10 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
+3.0.4
+- Changed the "Rename <button>" command to "Edit <button>"
+- Fixed behavior of rename/edit button command to properly handle editing top-level parent buttons & child buttons
+
 3.0.3
 - Added Search Bar Height and Go Button Width settings to settings GUI
 

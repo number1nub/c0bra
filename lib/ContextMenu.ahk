@@ -135,14 +135,11 @@ QuickEditMenu:
 
 
 	;{```` Edit A Button ````}
-	else if (A_ThisMenuItem = "Rename <" me ">")
+	else if (A_ThisMenuItem = "Edit <" me ">")
 	{
 		GUI, 1:Destroy
 		
-		bIndex := ""
-		pIndex := ""
-		cIndex := ""
-		curVal := ""
+		bIndex:="", pIndex:="", cIndex:="", curVal:=""
 		
 		InputBox, newText, c0bra Configuration, Button Text:,,,,,,,, %me%
 		if (ErrorLevel || !newText)
@@ -150,9 +147,15 @@ QuickEditMenu:
 			msgbox, 4144, c0bra Configuration, Invalid entry.`n`nAborting
 			return
 		}
-		
+
 		for index, value in Buttons
 		{
+			if (value.Text = me && IsObject(value.Children))
+			{
+				Buttons[index].Text := newText
+				JSON_Save(Buttons, buttonSettings)
+				quickReload("Changes saved...", me " Bu")
+			}
 			if (value.Children && !pIndex)
 			{
 				for childIndex, child in value.Children
@@ -161,7 +164,7 @@ QuickEditMenu:
 						pIndex := index
 						cIndex := childIndex
 					}
-			}
+			}			
 			else if (value.Text = me)
 			{
 				bIndex := index

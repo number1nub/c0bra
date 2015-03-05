@@ -327,8 +327,9 @@ Execute(command, Txt)
 		Else if RegExMatch(command, "i)^\[R\]\s\K.+", runPath)
 		{
 			Gui, 1:Destroy
-			Run, % ExpandEnv(runPath),, UseErrorLevel
-			If ErrorLevel
+			try
+				Run, % ExpandEnv(runPath),, UseErrorLevel
+			catch e
 				MsgBox, 262160, Run :, % "Error with this command!`n" ExpandEnv(runPath), 2
 		}
 		
@@ -355,7 +356,8 @@ Execute(command, Txt)
 			}
 			else
 			{
-				Run, % ExpandEnv(theProgram),, UseErrorLevel
+				try
+					Run, % ExpandEnv(theProgram),, UseErrorLevel
 				if (ErrorLevel)
 					MsgBox, 262160, Run :, % "Error with this command!`n" ExpandEnv(runPath), 2
 			}
@@ -781,4 +783,29 @@ ExpandEnv(str)
 QuickReload(prompt="", title="")
 {
 	Run, %A_ScriptFullPath% %A_ScriptHwnd% `"%prompt%`" `"%title%`"
+}
+
+
+totalCommander()
+{
+	TMM:=A_TitleMatchMode, DHW:=A_DetectHiddenWindows
+	DetectHiddenWindows, On
+	SetTitleMatchMode, 2
+	try {
+		Run, C:\TotalCMD\TOTALCMD64.EXE
+		WinWait, ahk_class TNASTYNAGSCREEN
+		WinActivate
+		ControlGetText, pressBtn, Window4	
+		ControlClick, &%pressBtn%
+	}
+	catch e
+		 m("Error!",e.extra,e.message,e.what)
+	SetTitleMatchMode, %TMM%, DetectHiddenWindows, %DHW%
+}
+
+
+m(t*) {
+	Loop % t.MaxIndex()
+		txt .= (txt?"`n":"") (t[A_Index]?t[A_Index]:"`n")
+	MsgBox, 4096,, %txt%
 }

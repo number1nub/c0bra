@@ -578,7 +578,7 @@ GuiContextMenu:
 	if (me != "GO")
 	{
 		if (me != "Bookmarks")
-			Menu, Title, Add, Rename <%me%>, QuickEditMenu
+			Menu, Title, Add, Edit <%me%>, QuickEditMenu
 		
 		Menu, Title, Add, Delete <%me%>, QuickEditMenu		
 	}
