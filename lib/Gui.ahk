@@ -499,6 +499,7 @@ return
 ;}
 
 
+;{===== GUI Context Menu ====>>>
 
 GuiContextMenu:
 2GuiContextMenu:
@@ -589,6 +590,9 @@ GuiContextMenu:
 	Menu, Title, Show, x%XPOS% y%YPOS%
 return
 
+;}<<<==== GUI Context Menu =====
+
+
 
 cancelMenuItem:
 return
@@ -673,12 +677,10 @@ return
 
 ButtonPress:
 	mainBut := A_GuiControl
-
-	; kill GUI 3 before in case another GUI is selected
-	if !(WinExist(A_GuiControl))
-		GUI, 3:Destroy
 	
-	; hwnd of control pressed
+	if !(WinExist(A_GuiControl))
+		GUI, 3:Destroy	; In case another GUI is selected
+	
 	GuiControlGet, controlhwnd, Hwnd, %A_GuiControl%
 		
 	; GOOGLE SEARCH
@@ -688,11 +690,10 @@ ButtonPress:
 		{
 			if SEARCH
 			{
-				GUI, Submit
-				; if control is held for a website
+				GUI, Submit				
 				if instr(A_ThisHotkey, "^")
 				{
-					Run % "chrome.exe " instr(GSEARCH, ".com") ? "www." GSEARCH ".com": "www." GSEARCH
+					Run, % "chrome.exe " GSEARCH (urlPos:=GSEARCH~="i)\.(.{1,4})$" ? SubStr(GSEARCH,1,urlPos-1) : ".com")
 					GUI, Destroy
 					return
 				}

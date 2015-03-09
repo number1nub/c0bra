@@ -1,5 +1,11 @@
 ﻿
 
+openConfigDir:
+	SplitPath, c0braSettings,, configDir
+	Run, explore %configDir%
+return
+
+
 superShorts:
 	command := Settings.userHotkeys[A_ThisHotkey]
 	execute(command, Txt)
@@ -7,7 +13,7 @@ return
 
 
 
-reloadMe:	
+reloadMe:
 	Reload	
 return
 
@@ -213,9 +219,8 @@ ON_LEFT(CONTROL_POSX)
 
 Google(GSEARCH)
 {
-	GSEARCH := RegExReplace(GSEARCH, "i)\s", "+")
-	GSEARCH := "http://www.google.com/search?hl=en&source=hp&q=" GSEARCH "&aq=f&aqi=&aql=&oq="
-	Run chrome.exe %GSEARCH%
+	goUrl := GSEARCH~="i)\.(.{1,4})$" ? GSEARCH : "http://google.com/search?q=" RegExReplace(RegExReplace(GSEARCH, "#", "%23"), "&", "%26")
+	Run % "chrome.exe " goUrl
 }
 
 
@@ -270,7 +275,7 @@ ColorPicker()
 	
 
 
-Execute(command, Txt)
+Execute(command, Txt) ;#[Cobra - Execute]
 {
 	If (!command)
 		return
@@ -324,20 +329,20 @@ Execute(command, Txt)
 	;~~~~~~~~~~~~~~~~~~~~~	
 	; [R] Run as Action
 	
-		Else if RegExMatch(command, "i)^\[R\]\s\K.+", runPath)
+		Else if RegExMatch(command, "i)^\[R\]\s*\K.+", runPath)
 		{
 			Gui, 1:Destroy
 			try
-				Run, % ExpandEnv(runPath),, UseErrorLevel
+				Run, % ExpandEnv(runPath)
 			catch e
-				MsgBox, 262160, Run :, % "Error with this command!`n" ExpandEnv(runPath), 2
+				m("Error with this command!", ExpandEnv(runPath), e.message, "ico:x")
 		}
 		
 			
 	;~~~~~~~~~~~~~~~~~~~~~
 	;[P] PROGRAM AS ACTION
 	
-		else if RegExMatch(command, "i)^\[P\]\s\K.+", theProgram)
+		else if RegExMatch(command, "i)^\[P\]\s*\K.+", theProgram)
 		{
 			Gui, 1:Destroy
 			TMM := A_TitleMatchMode
@@ -357,9 +362,9 @@ Execute(command, Txt)
 			else
 			{
 				try
-					Run, % ExpandEnv(theProgram),, UseErrorLevel
-				if (ErrorLevel)
-					MsgBox, 262160, Run :, % "Error with this command!`n" ExpandEnv(runPath), 2
+					Run, % ExpandEnv(theProgram)
+				catch e
+					m("Error with this command!", ExpandEnv(theProgram), e.message, "ico:x")
 			}
 
 			SetTitleMatchMode, %TMM%
@@ -799,13 +804,17 @@ totalCommander()
 		ControlClick, &%pressBtn%
 	}
 	catch e
-		 m("Error!",e.extra,e.message,e.what)
+		 m("Error!",e.extra,e.message,e.what,"ico:!")
 	SetTitleMatchMode, %TMM%, DetectHiddenWindows, %DHW%
 }
 
 
 m(t*) {
+	opt:=4096, icons:={"x": 16, "?": 32, "!": 48, "i": 64}	
+	if (RegExMatch(t[t.MaxIndex()], "ico:(x|\?|\!|i)", ico))
+		opt+=icons[ico1], t.Remove(t.MaxIndex())
 	Loop % t.MaxIndex()
 		txt .= (txt?"`n":"") (t[A_Index]?t[A_Index]:"`n")
-	MsgBox, 4096,, %txt%
+	MsgBox, % opt,, %txt%
 }
+

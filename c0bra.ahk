@@ -156,9 +156,8 @@ SetTitleMatchMode, 2
 	Menu, Tray, NoStandard
 	Menu, Tray, Add, About, :SubMenu_About
 	Menu, Tray, Add
-	Menu, Tray, Add, % "Trigger: " Settings.mainHotkey.mainHotkey, meOptions
-	Menu, Tray, Add
 	Menu, Tray, Add, Options, meOptions
+	Menu, Tray, Add, Open Config Dir, openConfigDir
 	Menu, Tray, Add
 	Menu, Tray, Add, Reload, reloadMe
 	if (!A_IsCompiled)
