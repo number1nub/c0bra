@@ -7,6 +7,14 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
+3.0.6
+- Fixed version update handling; now updates user's version to version in script config\Settings.c0bra file
+- Lots of cleaning up/re-structuring of config files
+
+3.0.5
+- Added option to open config dir from tray context menu
+- Fixed search bar handling of "Ctrl+Enter" hotkey and URL entries containing a valid url to open site instead of search
+
 3.0.4
 - Changed the "Rename <button>" command to "Edit <button>"
 - Fixed behavior of rename/edit button command to properly handle editing top-level parent buttons & child buttons

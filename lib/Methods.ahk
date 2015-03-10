@@ -1,7 +1,7 @@
 ﻿
 
 openConfigDir:
-	SplitPath, c0braSettings,, configDir
+	SplitPath, mainSettingsPath,, configDir
 	Run, explore %configDir%
 return
 
@@ -20,7 +20,11 @@ return
 
 
 editMe:
-	run, edit %COBRA%\c0bra.ahk
+	if (A_IsCompiled) {
+		m("Option only valid for uncompiled AHK script!", "ico:!")
+		return
+	}
+	run, edit %A_ScriptFullPath%
 return
 
 
@@ -75,7 +79,8 @@ return
 UpdateVer(newVal)
 {
 	Settings.Version := newVal
-	JSON_Save(Settings, c0braSettings)
+	JSON_Save(Settings, mainSettingsPath)
+	QuickReload("Cobra is running...","Cobra Version " newVal)
 }
 
 
@@ -114,7 +119,7 @@ ScreenCheck(ByRef MouseX, ByRef MouseY, GuiWidth, GuiHeight)
 */
 addButton(aText, CMD="", typeCmd="", argsCmd="", aColor="", Children=0, aParent=0)
 {
-	global buttons, buttonSettings
+	global buttons, btnSettingsPath
 	
 	buttonKey				:= buttons.maxindex() + 1
 	buttons[buttonKey]		:= {}
@@ -142,7 +147,7 @@ addButton(aText, CMD="", typeCmd="", argsCmd="", aColor="", Children=0, aParent=
 				buttons[parentKey].Children.Insert(aText)
 	}
 	
-	JSON_Save(buttons, buttonSettings)
+	JSON_Save(buttons, btnSettingsPath)
 }
 
 
@@ -155,7 +160,7 @@ addButton(aText, CMD="", typeCmd="", argsCmd="", aColor="", Children=0, aParent=
 */
 deleteButton(aText)
 {
-	global buttons, buttonSettings
+	global buttons, btnSettingsPath
 	
 	; Remove button
 	for key, value in buttons
@@ -176,7 +181,7 @@ deleteButton(aText)
 			if (childValue = aText)
 				value.Children.Remove(childKey)
 	
-	JSON_Save(buttons, buttonSettings)
+	JSON_Save(buttons, btnSettingsPath)
 }
 	
 

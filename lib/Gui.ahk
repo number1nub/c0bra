@@ -58,18 +58,14 @@ GUI:
 	GUI, Destroy
 	GUI, 1:Destroy
 	GUI, 2:Destroy
-
-	if !(_reloaded)
-		MouseGetPos, XPOS, YPOS
-	else
-		_reloaded := false
-
+	MouseGetPos, XPOS, YPOS
+	
 guiOldPos:
 	currGui 	:= 1	
 	ButtonList 	:= []
 	mainButtons	:= ""
 	
-	Buttons := JSON_Load(buttonSettings)
+	Buttons := JSON_Load(btnSettingsPath)
 	
 	buttonSpacing 		:= Settings.mainGui.buttonSpacing
 	buttonWidth 		:= Settings.mainGui.buttonWidth
@@ -335,7 +331,7 @@ SLR_GUI()
 	
 	GUI, 1:Destroy
 	
-	slrSettings := JSON_Load(slrButtonSettings)
+	slrSettings := JSON_Load(slrBtnSettingsPath)
 	slrList := []
 	slrButtons := ""
 	
@@ -627,7 +623,7 @@ return
 				if (value.text = me)
 				{
 					buttons[key][A_ThisMenuItem] := newColor
-					JSON_Save(buttons, buttonSettings)
+					JSON_Save(buttons, btnSettingsPath)
 					
 					GUI, 1:destroy
 					GUI, Destroy
@@ -659,7 +655,7 @@ return
 				if (value.text = me)
 				{
 					buttons[key][A_ThisMenuItem] := newColor
-					JSON_Save(buttons, buttonSettings)
+					JSON_Save(buttons, btnSettingsPath)
 					
 					GUI, 1:destroy
 					GUI, Destroy

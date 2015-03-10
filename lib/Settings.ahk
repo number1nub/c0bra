@@ -9,7 +9,7 @@ Gui_Settings()
 	Gui, 2:Destroy
 	
 	;{```` Create CSV button lists ````}
-	Buttons    := JSON_Load(buttonSettings)
+	Buttons    := JSON_Load(btnSettingsPath)
 	ButtonList := []
 	
 	For key, value in Buttons
@@ -280,8 +280,8 @@ allSet:
 		Settings.theCloser.closeTabIfActive[A_Index] := A_LoopField
 	
 	ButtonList := []
-	JSON_Save(buttons, buttonSettings)
-	JSON_save(Settings, c0braSettings)
+	JSON_Save(buttons, btnSettingsPath)
+	JSON_save(Settings, mainSettingsPath)
 	Buttons := []
 	
 	Gui, Settings:Destroy
