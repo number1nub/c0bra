@@ -7,6 +7,10 @@ A powerful, feature packed application launcher utility that is highly customiza
 * Fully customizable interface
 
 ### CHANGELOG
+3.0.7
+- Lots of code cleanup & file restructuring
+- Changed handling of global settings (file paths) to use one global object instead of multiple vars
+
 3.0.6
 - Fixed version update handling; now updates user's version to version in script config\Settings.c0bra file
 - Lots of cleaning up/re-structuring of config files

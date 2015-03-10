@@ -1,5 +1,6 @@
 ﻿MenuSetup() 
 {
+	Menu, Tray, NoStandard
 	Menu, SubMenu_About, Add
 	Menu, SubMenu_About, DeleteAll
 	Menu, SubMenu_About, Add, Creators - Nugh && Shugh, TrayText
@@ -7,7 +8,7 @@
 	Menu, SubMenu_About, Add
 	Menu, SubMenu_About, Add, % "Version " Settings.version, TrayText
 	Menu, SubMenu_About, Disable, % "Version " Settings.version
-	Menu, Tray, NoStandard
+	
 	Menu, Tray, Add, About, :SubMenu_About
 	Menu, Tray, Add
 	Menu, Tray, Add, Options, meOptions

@@ -65,7 +65,7 @@ guiOldPos:
 	ButtonList 	:= []
 	mainButtons	:= ""
 	
-	Buttons := JSON_Load(btnSettingsPath)
+	Buttons := JSON_Load(files.user.Buttons)
 	
 	buttonSpacing 		:= Settings.mainGui.buttonSpacing
 	buttonWidth 		:= Settings.mainGui.buttonWidth
@@ -331,7 +331,7 @@ SLR_GUI()
 	
 	GUI, 1:Destroy
 	
-	slrSettings := JSON_Load(slrBtnSettingsPath)
+	slrSettings := JSON_Load(files.user.SLRButtons)
 	slrList := []
 	slrButtons := ""
 	
@@ -623,7 +623,7 @@ return
 				if (value.text = me)
 				{
 					buttons[key][A_ThisMenuItem] := newColor
-					JSON_Save(buttons, btnSettingsPath)
+					JSON_Save(buttons, files.user.Buttons)
 					
 					GUI, 1:destroy
 					GUI, Destroy
@@ -655,7 +655,7 @@ return
 				if (value.text = me)
 				{
 					buttons[key][A_ThisMenuItem] := newColor
-					JSON_Save(buttons, btnSettingsPath)
+					JSON_Save(buttons, files.user.Buttons)
 					
 					GUI, 1:destroy
 					GUI, Destroy

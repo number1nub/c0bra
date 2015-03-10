@@ -9,43 +9,20 @@ DetectHiddenWindows, On
 SetTitleMatchMode, 2
 
 
-;{===== Global Settings ====>>>
+global settings:=[], files:=[], disableMainHKList, closeTabWinList, disableCloseList
 
-global settings:=[], files:=[], btnSettingsPath, mainSettingsPath, slrBtnSettingsPath, disableMainHKList, closeTabWinList, disableCloseList
+files.userDir:=A_AppData "\c0bra\", files.cleanDir:=A_ScriptDir "\config\"
+files.names := ["Buttons.c0bra","Settings.c0bra","SLRButtons.c0bra"]
 
-files.userDir:=A_AppData "\c0bra\"
-files.
-[ "Buttons.c0bra", "Settings.c0bra", "SLRButtons.c0bra" ]
+FileCheck()
 
-btnSettingsPath    := A_AppData "\c0bra\Buttons.c0bra"
-mainSettingsPath   := A_AppData "\c0bra\Settings.c0bra"
-slrBtnSettingsPath := A_AppData "\c0bra\SLRButtons.c0bra"
-
-FileCheck(info="") {
-	fList := []
-	if !(FileExist(btnSettingsPath) || FileExist(mainSettingsPath) || FileExist(slrBtnSettingsPath)) {
-		if (!FileExist(A_AppData "\c0bra"))
-			FileCreateDir, %A_AppData%\c0bra
-		if (A_IsCompiled) {
-			FileInstall, config\Buttons.c0bra, %btnSettingsPath%
-			FileInstall, config\Settings.c0bra, %mainSettingsPath%
-			FileInstall, config\SLRButtons.c0bra, %slrBtnSettingsPath%
-		} else {
-			FileCopy, %A_ScriptDir%\config\Buttons.c0bra, %A_AppData%\c0bra\Buttons.c0bra
-			FileCopy, %A_ScriptDir%\config\Settings.c0bra, %A_AppData%\c0bra\Settings.c0bra
-			FileCopy, %A_ScriptDir%\config\SLRButtons.c0bra, %A_AppData%\c0bra\SLRButtons.c0bra
-		}
-		TrayTip, c0bra Launcher, New configuration files copied to user settings directory!, 2, 1
-	}
-}
-
-try Settings := JSON_Load(mainSettingsPath)
+try Settings := JSON_Load(files.user.Settings)
 catch e {
 	m("There's an error with your config file:", e.file,, e.message, e.extra, "Please correct the issue and reload Cobra", "ico:!")
 	ExitApp
 }
-if (FileExist(serverSettings := (A_ScriptDir "\config\Settings.c0bra"))) {
-	serverConfig := JSON_Load(serverSettings)
+if (FileExist(files.clean.Settings)) {
+	serverConfig := JSON_Load(files.clean.Settings)
 	if (serverConfig.Version != Settings.Version) {
 		RegExMatch(serverConfig.Version, "(\d+?)\.(\d+?)(?:\.(\d+?)(?:\.(\d+))?)?", sVer)
 		RegExMatch(Settings.Version, "(\d+?)\.(\d+?)(?:\.(\d+?)(?:\.(\d+))?)?", uVer)
@@ -83,3 +60,4 @@ return
 #Include Settings.ahk
 #Include RegisterHotkeys.ahk
 #Include MenuSetup.ahk
+#Include FileCheck.ahk

@@ -1,8 +1,7 @@
 ﻿
 
-openConfigDir:
-	SplitPath, mainSettingsPath,, configDir
-	Run, explore %configDir%
+openConfigDir:	
+	Run, % "explore " files.userDir
 return
 
 
@@ -78,7 +77,7 @@ return
 UpdateVer(newVal)
 {
 	Settings.Version := newVal
-	JSON_Save(Settings, mainSettingsPath)
+	JSON_Save(Settings, files.user.Settings)
 	QuickReload("Cobra is running...","Cobra Version " newVal)
 }
 
@@ -118,7 +117,7 @@ ScreenCheck(ByRef MouseX, ByRef MouseY, GuiWidth, GuiHeight)
 */
 addButton(aText, CMD="", typeCmd="", argsCmd="", aColor="", Children=0, aParent=0)
 {
-	global buttons, btnSettingsPath
+	global buttons
 	
 	buttonKey				:= buttons.maxindex() + 1
 	buttons[buttonKey]		:= {}
@@ -146,7 +145,7 @@ addButton(aText, CMD="", typeCmd="", argsCmd="", aColor="", Children=0, aParent=
 				buttons[parentKey].Children.Insert(aText)
 	}
 	
-	JSON_Save(buttons, btnSettingsPath)
+	JSON_Save(buttons, files.user.Buttons)
 }
 
 
@@ -159,7 +158,7 @@ addButton(aText, CMD="", typeCmd="", argsCmd="", aColor="", Children=0, aParent=
 */
 deleteButton(aText)
 {
-	global buttons, btnSettingsPath
+	global buttons
 	
 	; Remove button
 	for key, value in buttons
@@ -180,7 +179,7 @@ deleteButton(aText)
 			if (childValue = aText)
 				value.Children.Remove(childKey)
 	
-	JSON_Save(buttons, btnSettingsPath)
+	JSON_Save(buttons, files.user.Buttons)
 }
 	
 

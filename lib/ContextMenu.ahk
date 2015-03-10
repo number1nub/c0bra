@@ -153,7 +153,7 @@ QuickEditMenu:
 			if (value.Text = me && IsObject(value.Children))
 			{
 				Buttons[index].Text := newText
-				JSON_Save(Buttons, btnSettingsPath)
+				JSON_Save(Buttons, files.user.Buttons)
 				quickReload("Changes saved...", me " Bu")
 			}
 			if (value.Children && !pIndex)
@@ -183,7 +183,7 @@ QuickEditMenu:
 		Buttons[bIndex].Text := newText
 		Buttons[bIndex].Cmd.Arg := newCommand
 		
-		JSON_Save(Buttons, btnSettingsPath)
+		JSON_Save(Buttons, files.user.Buttons)
 		quickReload("Changes saved...", me " Button Updated")
 	}
 	;}
@@ -286,7 +286,7 @@ TrayText:
 		;~ if (!newTrigger)
 		;~ {
 			;~ Settings.userHotkeys.Remove(hkTrigger)
-			;~ JSON_Save(Settings, mainSettingsPath)
+			;~ JSON_Save(Settings, files.user.Settings)
 			;~ quickReload("Deleted Hotkey <" modReplace(hkTrigger) ">")
 		;~ }
 		;~ InputBox, newAction, Edit Hotkey, % "Hotkey action:",,600,160,,,,, % hkAction
@@ -294,7 +294,7 @@ TrayText:
 			;~ return
 		;~ Settings.userHotkeys.Remove(hkTrigger)
 		;~ Settings.userHotkeys[newTrigger] := newAction
-		;~ JSON_Save(Settings, mainSettingsPath)
+		;~ JSON_Save(Settings, files.user.Settings)
 		;~ quickReload("New Hotkey: " modReplace(newTrigger) "`nAction:`n" newAction, "Updated Hotkey <" modReplace(hkTrigger) ">")
 	;~ }
 	;}
