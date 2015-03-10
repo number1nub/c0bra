@@ -13,7 +13,9 @@ SetTitleMatchMode, 2
 
 global settings:=[], files:=[], btnSettingsPath, mainSettingsPath, slrBtnSettingsPath, disableMainHKList, closeTabWinList, disableCloseList
 
-fileNames: [ "Buttons.c0bra", "Settings.c0bra", "SLRButtons.c0bra" ]
+files.userDir:=A_AppData "\c0bra\"
+files.
+[ "Buttons.c0bra", "Settings.c0bra", "SLRButtons.c0bra" ]
 
 btnSettingsPath    := A_AppData "\c0bra\Buttons.c0bra"
 mainSettingsPath   := A_AppData "\c0bra\Settings.c0bra"

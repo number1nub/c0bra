@@ -34,10 +34,9 @@ return
 	
 
 theCloser:
-	mousegetpos,,, win
+	MouseGetPos,,, win
 	WinGetTitle, winTitle, ahk_id %win%
 	WinGetClass, winClass, ahk_id %win%
-	
 	IfWinActive, ahk_group closeTabSpecialGroup
 	{
 		Send, {Blind}^w
