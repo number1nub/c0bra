@@ -1,33 +1,36 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Cobra Launcher : A powerful, feature packed application launcher utility that is highly customizable and very easy to use.">
 
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-    <title>Cobra Launcher by number1nub</title>
+    <title>Cobra Launcher</title>
   </head>
 
   <body>
 
-    <header>
-      <div class="container">
-        <h1>Cobra Launcher</h1>
-        <h2>A powerful, feature packed application launcher utility that is highly customizable and very easy to use.</h2>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/number1nub/c0bra">View on GitHub</a>
 
-        <section id="downloads">
-          <a href="https://github.com/number1nub/c0bra/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/number1nub/c0bra/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/number1nub/c0bra" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+          <h1 id="project_title">Cobra Launcher</h1>
+          <h2 id="project_tagline">A powerful, feature packed application launcher utility that is highly customizable and very easy to use.</h2>
 
-    <div class="container">
-      <section id="main_content">
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/number1nub/c0bra/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/number1nub/c0bra/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>
 <a id="-cobra-launcher" class="anchor" href="#-cobra-launcher" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <img src="http://wsnhapps.com/images/c0bra-logo-sm.png" alt=""> Cobra Launcher</h1>
@@ -44,57 +47,104 @@
 </ul>
 
 <h3>
-<a id="to-do" class="anchor" href="#to-do" aria-hidden="true"><span class="octicon octicon-link"></span></a>TO-DO</h3>
-
-<ul>
-<li>Make sure delete button deletes all necessary JSON buttons
-
-<ul>
-<li>doesn't delete children yet</li>
-</ul>
-</li>
-<li>Button adding and deleting needs to work properly</li>
-<li>No Run tray menu</li>
-<li>Closer tray menu</li>
-<li>Hotkeys tray menu</li>
-<li>Individual button color change</li>
-<li>SLR button color change</li>
-<li>enable adding different button types</li>
-<li>Automatically reposition gui if off screen... also side guis</li>
-</ul>
-
-<h3>
 <a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span class="octicon octicon-link"></span></a>CHANGELOG</h3>
 
-<p><strong>3.0.0</strong></p>
+<p>3.0.7</p>
 
 <ul>
-<li>Added executable file allowing users to run program without requiring AutoHotkey</li>
+<li>Lots of code cleanup &amp; file restructuring</li>
+<li>Changed handling of global settings (file paths) to use one global object instead of multiple vars</li>
 </ul>
 
-<p><strong>2.6.7</strong></p>
+<p>3.0.6</p>
+
+<ul>
+<li>Fixed version update handling; now updates user's version to version in script config\Settings.c0bra file</li>
+<li>Lots of cleaning up/re-structuring of config files</li>
+</ul>
+
+<p>3.0.5</p>
+
+<ul>
+<li>Added option to open config dir from tray context menu</li>
+<li>Fixed search bar handling of "Ctrl+Enter" hotkey and URL entries containing a valid url to open site instead of search</li>
+</ul>
+
+<p>3.0.4</p>
+
+<ul>
+<li>Changed the "Rename " command to "Edit "</li>
+<li>Fixed behavior of rename/edit button command to properly handle editing top-level parent buttons &amp; child buttons</li>
+</ul>
+
+<p>3.0.3</p>
+
+<ul>
+<li>Added Search Bar Height and Go Button Width settings to settings GUI</li>
+</ul>
+
+<p>3.0.2</p>
+
+<ul>
+<li>Updated Settings GUI to auto-populate the font ComboBoxes with the current font settings. Also adds the current fonts to the ComboBox lists if not one of the default fonts</li>
+<li>Fixed Delete and Rename button commands</li>
+<li>Changed Bookmarks button to recurse all favorites folders and list all bookmarks</li>
+<li>Removed unnecessary cIni.ahk file</li>
+</ul>
+
+<p>3.0.1</p>
+
+<ul>
+<li>Added file install handlers to allow running the executable as a standalone for first time users</li>
+</ul>
+
+<p>3.0.0</p>
 
 <ul>
 <li>Fixed major issues in the config file templates in order to allow new user to run for first time</li>
-<li>Added a check to update user's config version based on version in the c0bra.ahk \config folder</li>
-<li>Modifications to the settings GUI</li>
-<li>Fixed access to settings GUI from right-click menu</li>
+<li>Adding executable to directory allowing use for users without AutoHotkey</li>
 </ul>
 
-<p><strong>2.6.1</strong></p>
+<p>2.6.6</p>
+
+<ul>
+<li>Fixed typo in version updater file name</li>
+</ul>
+
+<p>2.6.5</p>
+
+<ul>
+<li>Cleaned up unecessary files</li>
+<li>Added a check to update user's config version based on version in the c0bra.ahk \config folder</li>
+</ul>
+
+<p>2.6.4</p>
+
+<ul>
+<li>Removed unecessary bits here and there</li>
+<li>Minor modifications to the settings GUI</li>
+</ul>
+
+<p>2.6.3</p>
+
+<ul>
+<li>Fixed issue in accessing the settings GUI from right-click menu</li>
+</ul>
+
+<p>2.6.1</p>
 
 <ul>
 <li>Working release version</li>
 <li>Multiple bug fixes and merge resolves</li>
 </ul>
 
-<p><strong>2.6.0</strong></p>
+<p>2.6.0</p>
 
 <ul>
 <li>Created a universal settings GUI that contains all settings, allowing easy access</li>
 </ul>
 
-<p><strong>2.5.4</strong></p>
+<p>2.5.4</p>
 
 <ul>
 <li>Fixed more reload handling. All setting changes now handled by quickReload</li>
@@ -103,37 +153,32 @@
 <li>Changed Font and Font Weight inputs to be free edit boxes instead of dropdowns</li>
 </ul>
 
-<p><strong>2.5.3</strong></p>
+<p>2.5.3</p>
 
 <ul>
 <li>Fixed bug caused by last merge-- change color GUI was being called twice</li>
 <li>Added error handling to JSON object parser to inform user of JSON errors instead of just stopping script</li>
 </ul>
 
-<p><strong>2.5.2</strong></p>
+<p>2.5.2</p>
 
 <ul>
 <li>c0bra icon changed to snake eye</li>
 <li>Tray menu overhauled</li>
 <li>Added a Gui to alter main settings</li>
 </ul>
-
-<p><strong>2.5.0</strong></p>
-
-<ul>
-<li>Something</li>
-<li>Something else..</li>
-</ul>
-
-<p><strong>2.4.4</strong></p>
-
-<ul>
-<li>Change 1</li>
-<li>Yeah</li>
-</ul>
       </section>
     </div>
 
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Cobra Launcher maintained by <a href="https://github.com/number1nub">number1nub</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>
